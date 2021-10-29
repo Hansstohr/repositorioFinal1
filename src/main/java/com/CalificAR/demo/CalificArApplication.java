@@ -13,12 +13,12 @@ public class CalificArApplication {
         SpringApplication.run(CalificArApplication.class, args);
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(alumnoServicio)
-                .passwordEncoder(new BCryptPasswordEncoder());
+    //@Autowired
+    //public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+      //  auth
+        //        .userDetailsService(alumnoServicio)
+          //      .passwordEncoder(new BCryptPasswordEncoder());
 
-    }
+    //}
 
 }

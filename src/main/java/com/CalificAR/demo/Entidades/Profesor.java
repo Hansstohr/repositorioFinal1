@@ -3,11 +3,17 @@ package com.CalificAR.demo.Entidades;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Profesor extends Usuario {
-
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    protected String id;
     @OneToMany
     private List<Materia> materia;
 

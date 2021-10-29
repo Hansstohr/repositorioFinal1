@@ -7,20 +7,29 @@ package com.CalificAR.demo.Entidades;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.GenericGenerator;
 
+//@Data
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Usuario {
-    
+
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name="uuid" , strategy = "uuid2")
+    protected String id;
     protected String dni;
     protected String nombre;
     protected String apellido;
     protected String mail;
     protected String clave;
     protected Date fechaNac;
-    
+
     @OneToOne
     protected Foto foto;
 
@@ -97,9 +106,5 @@ public abstract class Usuario {
     public String toString() {
         return "Usuario{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail + ", clave=" + clave + ", fechaNac=" + fechaNac + ", foto=" + foto + '}';
     }
-    
-    
-    
-    
-    
+
 }

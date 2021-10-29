@@ -46,6 +46,7 @@ public class Foto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        
     }
 
     public String getMime() {

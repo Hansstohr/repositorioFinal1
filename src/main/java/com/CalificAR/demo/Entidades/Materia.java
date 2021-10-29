@@ -1,22 +1,26 @@
 package com.CalificAR.demo.Entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Materia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMateria;
-
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String idMateria;
     private String nombre;
-    private List<Double> nota; //PROBLEMA EXCEPCIÓN
+   
+    private ArrayList<Double> nota; //PROBLEMA EXCEPCIÓN
 
-    public Materia(Long idMateria, String nombre, List<Double> nota) {
+    public Materia(String idMateria, String nombre, ArrayList<Double> nota) {
         this.idMateria = idMateria;
         this.nombre = nombre;
         this.nota = nota;
@@ -25,11 +29,12 @@ public class Materia {
     public Materia() {
     }
 
-    public Long getIdMateria() {
+    public String getIdMateria() {
         return idMateria;
+        
     }
 
-    public void setIdMateria(Long idMateria) {
+    public void setIdMateria(String idMateria) {
         this.idMateria = idMateria;
     }
 
@@ -41,17 +46,17 @@ public class Materia {
         this.nombre = nombre;
     }
 
-    public List<Double> getNota() {
-        return nota;
+    public ArrayList<Double> getNota() {
+       return nota;
     }
 
-    public void setNota(List<Double> nota) {
+    public void setNota(ArrayList<Double> nota) {
         this.nota = nota;
     }
 
     @Override
     public String toString() {
-        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + ", nota=" + nota + '}';
+        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + '}';
     }
     
     

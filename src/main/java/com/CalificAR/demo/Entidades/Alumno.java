@@ -3,7 +3,10 @@ package com.CalificAR.demo.Entidades;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 
 @Entity
 public class Alumno extends Usuario {
@@ -13,7 +16,11 @@ public class Alumno extends Usuario {
     
     @OneToMany
     private List<Asistencia> asistencia;
-
+    
+    @OneToOne
+    private Certificado certificado;
+    
+        
     public Alumno(List<Materia> materia, List<Asistencia> asistencia, String dni, String nombre, String apellido, String mail, String clave, Date fechaNac, Foto foto) {
         super(dni, nombre, apellido, mail, clave, fechaNac, foto);
         this.materia = materia;
@@ -97,7 +104,21 @@ public class Alumno extends Usuario {
 
     @Override
     public String toString() {
-        return "Alumno{" + "materia=" + materia + ", asistencia=" + asistencia + '}';
+        return "Alumno{" + "materia=" + getMateria() + ", asistencia=" + getAsistencia() + '}';
+    }
+
+    /**
+     * @return the certificado
+     */
+    public Certificado getCertificado() {
+        return certificado;
+    }
+
+    /**
+     * @param certificado the certificado to set
+     */
+    public void setCertificado(Certificado certificado) {
+        this.certificado = certificado;
     }
     
     
