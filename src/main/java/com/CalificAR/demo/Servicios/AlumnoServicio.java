@@ -60,7 +60,7 @@ public class AlumnoServicio {
             throw new ErrorServicio("Las claves deben ser iguales");
         }
 
-        if (fechaNacimiento == null || (fechaNacimiento.getYear()<2003)) {
+        if (fechaNacimiento == null) {
             throw new ErrorServicio("Ingrese una fecha válida");
         }
         

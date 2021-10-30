@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Profesor extends Usuario {
+    
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -31,62 +32,6 @@ public class Profesor extends Usuario {
 
     public void setMateria(List<Materia> materia) {
         this.materia = materia;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public Date getFechaNac() {
-        return fechaNac;
-    }
-
-    public void setFechaNac(Date fechaNac) {
-        this.fechaNac = fechaNac;
-    }
-
-    public Foto getFoto() {
-        return foto;
-    }
-
-    public void setFoto(Foto foto) {
-        this.foto = foto;
     }
 
     @Override

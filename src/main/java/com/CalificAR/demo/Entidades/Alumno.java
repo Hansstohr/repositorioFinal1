@@ -104,7 +104,7 @@ public class Alumno extends Usuario {
 
     @Override
     public String toString() {
-        return "Alumno{" + "materia=" + getMateria() + ", asistencia=" + getAsistencia() + '}';
+        return "Alumno{" + "materia=" + materia + ", asistencia=" + asistencia + ", certificado=" + certificado + '}';
     }
 
     /**
