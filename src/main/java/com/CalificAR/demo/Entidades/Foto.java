@@ -15,11 +15,12 @@ public class Foto {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idFoto;
-    
+
     private String nombre;
     private String mime;
-    
-    @Lob @Basic(fetch = FetchType.LAZY)
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] archivo;
 
     public Foto(String idFoto, String nombre, String mime, byte[] archivo) {
@@ -46,7 +47,7 @@ public class Foto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-        
+
     }
 
     public String getMime() {
@@ -64,8 +65,5 @@ public class Foto {
     public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
     }
-    
-    
-    
 
 }

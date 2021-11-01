@@ -1,39 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.CalificAR.demo.Entidades;
 
-import java.util.Date;
-import javax.persistence.Entity;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import org.hibernate.annotations.GenericGenerator;
 
-//@Data
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Usuario {
+//@Entity
+// Este inheritance no debe ir ya que no queremos que se cree la tabla usuario,
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
+public class Usuario {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid" , strategy = "uuid2")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     protected String id;
     protected String dni;
     protected String nombre;
     protected String apellido;
     protected String mail;
     protected String clave;
-    protected Date fechaNac;
+
+    protected LocalDate fechaNac;
+
+    // Se movio la lista de materias de Alumno y Profesor a la entidad Usuario.
+    @OneToMany
+    private List<Materia> materias;
 
     @OneToOne
     protected Foto foto;
 
-    public Usuario(String dni, String nombre, String apellido, String mail, String clave, Date fechaNac, Foto foto) {
+    public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto,
+            List<Materia> materias) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -41,6 +46,17 @@ public abstract class Usuario {
         this.clave = clave;
         this.fechaNac = fechaNac;
         this.foto = foto;
+        this.materias = materias;
+    }
+
+    // Método para obtener un objeto Alumno a partir de un objeto Usuario
+    public Alumno crearAlumno() {
+        return new Alumno(materias, new ArrayList<>(), dni, nombre, apellido, mail, clave, fechaNac, foto);
+    }
+
+    // Método para obtener un objeto Profesor a partir de un objeto Usuario
+    public Profesor crearProfesor() {
+        return new Profesor(materias, dni, nombre, apellido, mail, clave, fechaNac, foto);
     }
 
     public Usuario() {
@@ -86,11 +102,11 @@ public abstract class Usuario {
         this.clave = clave;
     }
 
-    public Date getFechaNac() {
+    public LocalDate getFechaNac() {
         return fechaNac;
     }
 
-    public void setFechaNac(Date fechaNac) {
+    public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
     }
 
@@ -102,9 +118,18 @@ public abstract class Usuario {
         this.foto = foto;
     }
 
+    public List<Materia> getMaterias() {
+        return materias;
+    }
+
+    public void setMateria(List<Materia> materias) {
+        this.materias = materias;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail + ", clave=" + clave + ", fechaNac=" + fechaNac + ", foto=" + foto + '}';
+        return ", id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
+                + ", clave=" + clave + ", fechaNac=" + fechaNac + ", materias=" + materias + ", foto=" + foto + "]";
     }
 
 }

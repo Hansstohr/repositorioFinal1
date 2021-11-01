@@ -2,63 +2,64 @@ package com.CalificAR.demo.Entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Materia {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String idMateria;
-    private String nombre;
-   
-    private ArrayList<Double> nota; //PROBLEMA EXCEPCIÓN
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String idMateria;
+	private String nombre;
 
-    public Materia(String idMateria, String nombre, ArrayList<Double> nota) {
-        this.idMateria = idMateria;
-        this.nombre = nombre;
-        this.nota = nota;
-    }
+	//@OneToMany		Da error con esto
+	@ElementCollection
+	private List<Double> nota;
 
-    public Materia() {
-    }
+	public Materia(String idMateria, String nombre, List<Double> nota) {
+		this.idMateria = idMateria;
+		this.nombre = nombre;
+		this.nota = nota;
+	}
 
-    public String getIdMateria() {
-        return idMateria;
-        
-    }
+	public Materia() {
+	}
 
-    public void setIdMateria(String idMateria) {
-        this.idMateria = idMateria;
-    }
+	public String getIdMateria() {
+		return idMateria;
 
-    public String getNombre() {
-        return nombre;
-    }
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public void setIdMateria(String idMateria) {
+		this.idMateria = idMateria;
+	}
 
-    public ArrayList<Double> getNota() {
-       return nota;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setNota(ArrayList<Double> nota) {
-        this.nota = nota;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    @Override
-    public String toString() {
-        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + '}';
-    }
-    
-    
-    
+	public List<Double> getNota() {
+		return nota;
+	}
+
+	public void setNota(ArrayList<Double> nota) {
+		this.nota = nota;
+	}
+
+	@Override
+	public String toString() {
+		return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + '}';
+	}
+
 }

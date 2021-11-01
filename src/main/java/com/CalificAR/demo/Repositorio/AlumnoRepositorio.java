@@ -7,19 +7,20 @@ package com.CalificAR.demo.Repositorio;
 
 
 import com.CalificAR.demo.Entidades.Alumno;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Hans
- */
 @Repository
-public interface AlumnoRepositorio extends JpaRepository<Alumno, String>{
+public interface AlumnoRepositorio extends UsuarioRepositorio<Alumno> {
     
     @Query("SELECT c FROM Alumno c WHERE c.mail = :mail")
+    @Override
     public Alumno buscarPorMail(@Param("mail") String mail);
     
+    
+    @Query("SELECT c FROM Alumno c WHERE c.dni = :dni")
+    @Override
+    public Alumno buscarPorDni(@Param("dni") String dni);
+
 }

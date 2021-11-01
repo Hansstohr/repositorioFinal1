@@ -1,44 +1,38 @@
 package com.CalificAR.demo.Entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "profesor")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Profesor extends Usuario {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     protected String id;
-    @OneToMany
-    private List<Materia> materia;
 
     public Profesor() {
     }
 
-    public Profesor(List<Materia> materia, String dni, String nombre, String apellido, String mail, String clave, Date fechaNac, Foto foto) {
-        super(dni, nombre, apellido, mail, clave, fechaNac, foto);
-        this.materia = materia;
-    }
-
-    public List<Materia> getMateria() {
-        return materia;
-    }
-
-    public void setMateria(List<Materia> materia) {
-        this.materia = materia;
+    public Profesor(List<Materia> materia, String dni, String nombre, String apellido, String mail, String clave,
+            LocalDate fechaNac, Foto foto) {
+        super(dni, nombre, apellido, mail, clave, fechaNac, foto, materia);
     }
 
     @Override
     public String toString() {
-        return "Profesor{" + "materia=" + materia + '}';
+        return "Profesor [id=" + id + super.toString();
     }
-    
-    
-    
+
 }
