@@ -49,4 +49,13 @@ public class AlumnoServicio extends UsuarioServicio {
         registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
 
     }
+
+    // Método para testeos con Postman
+    public void modificar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String id, String dni, String nombre,
+            String apellido, String mail, String clave, LocalDate fechaNac) throws ErrorServicio {
+        this.alumnoRepositorio = alumnoRepositorio;
+        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
+
+    }
+
 }

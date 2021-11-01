@@ -19,24 +19,30 @@ import com.CalificAR.demo.Servicios.AlumnoServicio;
 @RequestMapping("/api/alumnos")
 public class AlumnoController {
 
-	@Autowired
-	AlumnoRepositorio alumnoRepositorio;
-	
-	@Autowired
-	ProfesorRepositorio profesorRepositorio;
-	
-	AlumnoServicio alumnoServicio = new AlumnoServicio();
+    @Autowired
+    AlumnoRepositorio alumnoRepositorio;
 
-	@RequestMapping(value = "/getAlumnos", method = RequestMethod.GET)
-	public List<Alumno> getAllAlumnos() {
-		List<Alumno> alumnos = alumnoServicio.todos(alumnoRepositorio);
-		return alumnos;
-	}
+    @Autowired
+    ProfesorRepositorio profesorRepositorio;
 
-	@RequestMapping(value = "/newAlumno", method = RequestMethod.POST)
-	public void newAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
-		alumnoServicio.registrar(alumnoRepositorio, null, alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
-				alumno.getClave(), alumno.getClave2(), alumno.getFechaNac());
-	}
+    AlumnoServicio alumnoServicio = new AlumnoServicio();
+
+    @RequestMapping(value = "/getAlumnos", method = RequestMethod.GET)
+    public List<Alumno> getAllAlumnos() {
+        List<Alumno> alumnos = alumnoServicio.todos(alumnoRepositorio);
+        return alumnos;
+    }
+
+    @RequestMapping(value = "/newAlumno", method = RequestMethod.POST)
+    public void newAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
+        alumnoServicio.registrar(alumnoRepositorio, null, alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
+                alumno.getClave(), alumno.getClave2(), alumno.getFechaNac());
+    }
+
+    @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
+    public void modificarAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
+        alumnoServicio.modificar(alumnoRepositorio, null, alumno.getId(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
+                alumno.getClave(), alumno.getFechaNac());
+    }
 
 }

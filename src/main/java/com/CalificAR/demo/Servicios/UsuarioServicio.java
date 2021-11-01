@@ -25,7 +25,7 @@ public abstract class UsuarioServicio implements UserDetailsService {
     @Transactional
     public <U extends Usuario> Usuario registrarUsuario(UsuarioRepositorio<U> repo, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
-        validar(repo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
+        validar(repo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento, null, null);
         Usuario usuario = new Usuario();
         usuario.setDni(dni);
         usuario.setNombre(nombre);
@@ -41,40 +41,20 @@ public abstract class UsuarioServicio implements UserDetailsService {
         return usuario;
     }
 
-    private <U extends Usuario> void validarModificacion(String id, UsuarioRepositorio<U> repo, String dni, String nombre, String apellido, String mail, String clave, String clave0, LocalDate fechaNacimiento) throws ErrorServicio {
+    private <U extends Usuario> void validarModificacion(String id, UsuarioRepositorio<U> repo, String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNacimiento) throws ErrorServicio {
         Optional<U> usuario = repo.findById(id);
-        if(usuario.isPresent()) {
+        if (usuario.isPresent()) {
+
             String dniAnterior = usuario.get().getDni();
-            if(dni == null || dni.isEmpty()) {
-                throw new ErrorServicio("El DNI del usuario no puede ser nulo");
-            }
-            if(!dniAnterior.equals(dni)){
-                // Chequear que el nuevo DNI no esté siendo usado por otro Usuario
-                U nuevoDni = repo.buscarPorDni(dni);
-                if(nuevoDni != null) {
-                    throw new ErrorServicio("El DNI ingresado ya está siendo usado por otro Usuario");
-                }
-            }
-            //
             String mailAnterior = usuario.get().getMail();
-            if(mailAnterior == null || mailAnterior.isEmpty()) {
-                throw new ErrorServicio("El mail del usuario no puede ser nulo");
-            }
-            if(!mailAnterior.equals(mail)){
-                // Chequear que el nuevo DNI no esté siendo usado por otro Usuario
-                U nuevoMail = repo.buscarPorMail(mail);
-                if(nuevoMail != null) {
-                    throw new ErrorServicio("El mail ingresado ya está siendo usado por otro Usuario");
-                }
-            }
-            validar(repo, dni, nombre, apellido, mail, clave, clave0, fechaNacimiento);
+            validar(repo, dni, nombre, apellido, mail, clave, clave, fechaNacimiento, dniAnterior, mailAnterior);
         } else {
             throw new ErrorServicio("El Id del usuario a modificar no existe. Esto no deberia ocurrir");
         }
-        
+
     }
-    
-    private <U extends Usuario> void validar(UsuarioRepositorio<U> repo, String dni, String nombre, String apellido, String mail, String clave, String clave2, LocalDate fechaNacimiento)
+
+    private <U extends Usuario> void validar(UsuarioRepositorio<U> repo, String dni, String nombre, String apellido, String mail, String clave, String clave2, LocalDate fechaNacimiento, String dniAnterior, String mailAnterior)
             throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
@@ -84,23 +64,29 @@ public abstract class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("El apellido del usuario no puede ser nulo");
         }
 
-        if(dni == null || dni.isEmpty()) {
+        if (dni == null || dni.isEmpty()) {
             throw new ErrorServicio("El DNI del usuario no puede ser nulo");
         }
-        // Chequear si el DNI ya existe en la base de datos
-        Optional<U> dniEncontrado = buscarPordDni(repo, dni);
-        if(dniEncontrado.isPresent()) {
-            throw new ErrorServicio("El DNI ya existe");
-        }
-        
-        if(mail == null || mail.isEmpty()) {
-            throw new ErrorServicio("El mail del usuario no puede ser nulo");
-        }
-        
-        // Chquear si el mail ya existe en la base de datos
-        Optional<U> mailEncontrado = buscarPorMail(repo, mail);
-        if(mailEncontrado.isPresent()) {
-            throw new ErrorServicio("El mail ya existe");
+        if (dniAnterior != null) {
+
+            if (!dniAnterior.equals(dni)) {
+                // Chequear que el nuevo DNI no esté siendo usado por otro Usuario
+                U nuevoDni = repo.buscarPorDni(dni);
+                if (nuevoDni != null) {
+                    throw new ErrorServicio("El DNI ingresado ya está siendo usado por otro Usuario");
+                }
+            }
+            if (mailAnterior == null || mailAnterior.isEmpty()) {
+                throw new ErrorServicio("El mail del usuario no puede ser nulo");
+            }
+            if (!mailAnterior.equals(mail)) {
+                // Chequear que el nuevo DNI no esté siendo usado por otro Usuario
+                U nuevoMail = repo.buscarPorMail(mail);
+                if (nuevoMail != null) {
+                    throw new ErrorServicio("El mail ingresado ya está siendo usado por otro Usuario");
+                }
+            }
+
         }
 
         if (clave == null || clave.isEmpty() || clave.length() <= 6) {
@@ -132,7 +118,7 @@ public abstract class UsuarioServicio implements UserDetailsService {
     public <U extends Usuario> void modificar(UsuarioRepositorio<U> repo, String id, MultipartFile archivo,
             String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNacimiento)
             throws ErrorServicio {
-        validarModificacion(id, repo, dni, nombre, apellido, mail, clave, clave, fechaNacimiento);
+        validarModificacion(id, repo, dni, nombre, apellido, mail, clave, fechaNacimiento);
         Optional<U> respuesta = repo.findById(id);
         if (respuesta.isPresent()) {
             U usuarioModificado = respuesta.get();
@@ -160,28 +146,26 @@ public abstract class UsuarioServicio implements UserDetailsService {
         throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
         // Tools | Templates.
     }
-    
-    
+
     // Devuelve un Alumno o Profesor filtrando por Dni
     public <U extends Usuario> Optional<U> buscarPordDni(UsuarioRepositorio<U> repo, String dni) {
         U respuesta = repo.buscarPorDni(dni);
-        if (respuesta!= null) {
+        if (respuesta != null) {
             return Optional.of(respuesta);
         } else {
             return Optional.empty();
         }
-        
+
     }
-    
+
     // Devuelve un Alumno o Profesor filtrando por Mail
     public <U extends Usuario> Optional<U> buscarPorMail(UsuarioRepositorio<U> repo, String mail) {
         U respuesta = repo.buscarPorMail(mail);
-        if (respuesta!= null) {
+        if (respuesta != null) {
             return Optional.of(respuesta);
         } else {
             return Optional.empty();
         }
-        
+
     }
 }
-
