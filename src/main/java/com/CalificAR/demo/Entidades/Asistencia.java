@@ -1,26 +1,29 @@
 package com.CalificAR.demo.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Asistencia {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idAsistencia;
-    
-    @Temporal(javax.persistence.TemporalType.DATE)
+
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean estado;
-    
-    @OneToOne
+
+    @OneToOne(cascade=CascadeType.ALL)
     private Materia materia;
 
     public Asistencia(Date fecha, Boolean estado, Materia materia) {
@@ -60,8 +63,5 @@ public class Asistencia {
     public String toString() {
         return "Asistencia{" + "fecha=" + fecha + ", estado=" + estado + ", materia=" + materia + '}';
     }
-    
-    
-    
-    
+
 }
