@@ -4,7 +4,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,7 +21,7 @@ public class Asistencia {
     private Date fecha;
     private Boolean estado;
     
-    @OneToOne
+    @ManyToOne
     private Materia materia;
 
     public Asistencia(Date fecha, Boolean estado, Materia materia) {

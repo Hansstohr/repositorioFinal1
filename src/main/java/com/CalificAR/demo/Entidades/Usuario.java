@@ -1,7 +1,6 @@
 package com.CalificAR.demo.Entidades;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.GeneratedValue;
@@ -51,7 +50,7 @@ public class Usuario {
 
     // Método para obtener un objeto Alumno a partir de un objeto Usuario
     public Alumno crearAlumno() {
-        return new Alumno(materias, new ArrayList<>(), dni, nombre, apellido, mail, clave, fechaNac, foto);
+        return new Alumno(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
     }
 
     // Método para obtener un objeto Profesor a partir de un objeto Usuario
