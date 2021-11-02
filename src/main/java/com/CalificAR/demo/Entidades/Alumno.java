@@ -19,9 +19,6 @@ public class Alumno extends Usuario {
     @OneToMany
     private List<Asistencia> asistencia;
 
-    @ManyToMany
-    private List<Materia> materia;
-
     @OneToMany
     private List<Nota> nota;
 
@@ -41,14 +38,6 @@ public class Alumno extends Usuario {
 
     public void setAsistencia(List<Asistencia> asistencia) {
         this.asistencia = asistencia;
-    }
-
-    public List<Materia> getMateria() {
-        return materia;
-    }
-
-    public void setMateria(List<Materia> materia) {
-        this.materia = materia;
     }
 
     public List<Nota> getNota() {

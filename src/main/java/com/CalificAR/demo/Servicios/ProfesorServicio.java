@@ -14,6 +14,7 @@ import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
+import java.util.List;
 
 @Service
 public class ProfesorServicio extends UsuarioServicio {
@@ -33,6 +34,33 @@ public class ProfesorServicio extends UsuarioServicio {
     @Transactional
     public void modificar(String Id, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, LocalDate fechaNacimiento) throws ErrorServicio {
-        super.modificar(profesorRepositorio, mail, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
+        super.modificar(profesorRepositorio, Id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
+    }
+    
+    
+    public List<Profesor> todos() {
+        return profesorRepositorio.findAll();
+    }
+
+    // Método para testeos con Postman
+    public List<Profesor> todos(ProfesorRepositorio profesorRepositorio) {
+        this.profesorRepositorio = profesorRepositorio;
+        return todos();
+    }
+
+    // Método para testeos con Postman
+    public void registrar(ProfesorRepositorio profesorRepositorio, MultipartFile archivo, String dni, String nombre,
+            String apellido, String mail, String clave, String clave2, LocalDate fechaNac) throws ErrorServicio {
+        this.profesorRepositorio = profesorRepositorio;
+        registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
+
+    }
+
+    // Método para testeos con Postman
+    public void modificar(ProfesorRepositorio profesorRepositorio, MultipartFile archivo, String id, String dni, String nombre,
+            String apellido, String mail, String clave, LocalDate fechaNac) throws ErrorServicio {
+        this.profesorRepositorio = profesorRepositorio;
+        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
+
     }
 }
