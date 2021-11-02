@@ -6,7 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,8 +23,13 @@ public class Asistencia {
     @Temporal(TemporalType.DATE)
     private Date fecha;
     private Boolean estado;
+<<<<<<< HEAD
 
     @OneToOne(cascade=CascadeType.ALL)
+=======
+    
+    @ManyToOne
+>>>>>>> 7671d560ec2764021ac0738b61591926bb0c5069
     private Materia materia;
 
     public Asistencia(Date fecha, Boolean estado, Materia materia) {

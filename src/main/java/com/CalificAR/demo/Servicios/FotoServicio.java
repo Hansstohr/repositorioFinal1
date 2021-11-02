@@ -17,24 +17,8 @@ public class FotoServicio {
     private FotoRepositorio fotoRepositorio;
 
     @Transactional
-    public Foto guardar(MultipartFile archivo) throws ErrorServicio {
-        if (archivo != null && archivo.isEmpty()) {
-            try {
-                Foto foto = new Foto();
-                foto.setMime(archivo.getContentType());
-                foto.setNombre(archivo.getName());
-                foto.setArchivo(archivo.getBytes());
-                return fotoRepositorio.save(foto);
-            } catch (IOException e) {
-                throw new ErrorServicio(e.getMessage());
-            }
-        }
-        return null;
-    }
-
-    @Transactional
-    public Foto actualizar(String idFoto, MultipartFile archivo) throws ErrorServicio {
-        if (archivo != null) {
+    public Foto guardar(String idFoto, MultipartFile archivo) throws ErrorServicio {
+        if (archivo != null && !archivo.isEmpty()) {
             try {
                 Foto foto = new Foto();
                 if (idFoto != null) {
@@ -52,5 +36,11 @@ public class FotoServicio {
             }
         }
         return null;
+    }
+    
+    // Método para testeo con Postman
+    public Foto guardar(FotoRepositorio fotoRepositorio, String idFoto, MultipartFile archivo) throws ErrorServicio {
+    	this.fotoRepositorio = fotoRepositorio;
+        return guardar(idFoto, archivo);
     }
 }

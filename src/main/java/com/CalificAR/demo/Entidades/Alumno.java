@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -18,13 +19,14 @@ public class Alumno extends Usuario {
     @OneToMany
     private List<Asistencia> asistencia;
 
+    @OneToMany
+    private List<Nota> nota;
+
     @OneToOne
     private Certificado certificado;
 
-    public Alumno(List<Materia> materia, List<Asistencia> asistencia, String dni, String nombre, String apellido,
-            String mail, String clave, LocalDate fechaNac, Foto foto) {
-        super(dni, nombre, apellido, mail, clave, fechaNac, foto, materia);
-        this.asistencia = asistencia;
+    public Alumno(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto, List<Materia> materias) {
+        super(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
     }
 
     public Alumno() {
@@ -38,23 +40,19 @@ public class Alumno extends Usuario {
         this.asistencia = asistencia;
     }
 
-    /**
-     * @return the certificado
-     */
+    public List<Nota> getNota() {
+        return nota;
+    }
+
+    public void setNota(List<Nota> nota) {
+        this.nota = nota;
+    }
+
     public Certificado getCertificado() {
         return certificado;
     }
 
-    /**
-     * @param certificado the certificado to set
-     */
     public void setCertificado(Certificado certificado) {
         this.certificado = certificado;
     }
-
-    @Override
-    public String toString() {
-        return "Alumno [asistencia=" + asistencia + ", certificado=" + certificado + super.toString();
-    }
-
 }

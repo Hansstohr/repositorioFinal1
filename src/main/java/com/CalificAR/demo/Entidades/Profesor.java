@@ -25,14 +25,10 @@ public class Profesor extends Usuario {
     public Profesor() {
     }
 
-    public Profesor(List<Materia> materia, String dni, String nombre, String apellido, String mail, String clave,
-            LocalDate fechaNac, Foto foto) {
-        super(dni, nombre, apellido, mail, clave, fechaNac, foto, materia);
+    public Profesor(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto, List<Materia> materias) {
+        super(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
     }
 
-    @Override
-    public String toString() {
-        return "Profesor [id=" + id + super.toString();
-    }
+    
 
 }

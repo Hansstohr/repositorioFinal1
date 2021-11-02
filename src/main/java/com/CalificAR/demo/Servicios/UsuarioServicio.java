@@ -34,7 +34,7 @@ public abstract class UsuarioServicio implements UserDetailsService {
         usuario.setFechaNac(fechaNacimiento);
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(encriptada);
-        Foto foto = fotoServicio.guardar(archivo);
+        Foto foto = fotoServicio.guardar(null, archivo);
         usuario.setFoto(foto);
         // notificacionServicio.enviar("Bienvenidos a Calific-AR", " ",
         // usuario.getMail());
@@ -132,7 +132,7 @@ public abstract class UsuarioServicio implements UserDetailsService {
             String idFoto = null;
             if (usuarioModificado.getFoto() != null) {
                 idFoto = usuarioModificado.getFoto().getIdFoto();
-                Foto foto = fotoServicio.actualizar(idFoto, archivo);
+                Foto foto = fotoServicio.guardar(idFoto, archivo);
                 usuarioModificado.setFoto(foto);
             }
             repo.save(usuarioModificado);

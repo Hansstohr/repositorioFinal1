@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -31,7 +32,7 @@ public class Usuario {
     protected LocalDate fechaNac;
 
     // Se movio la lista de materias de Alumno y Profesor a la entidad Usuario.
-    @OneToMany
+    @ManyToMany
     private List<Materia> materias;
 
     @OneToOne
@@ -51,12 +52,12 @@ public class Usuario {
 
     // Método para obtener un objeto Alumno a partir de un objeto Usuario
     public Alumno crearAlumno() {
-        return new Alumno(materias, new ArrayList<>(), dni, nombre, apellido, mail, clave, fechaNac, foto);
+        return new Alumno(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
     }
 
     // Método para obtener un objeto Profesor a partir de un objeto Usuario
     public Profesor crearProfesor() {
-        return new Profesor(materias, dni, nombre, apellido, mail, clave, fechaNac, foto);
+        return new Profesor(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
     }
 
     public Usuario() {
