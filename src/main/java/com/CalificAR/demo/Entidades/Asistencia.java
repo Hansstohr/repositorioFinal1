@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Asistencia {
 
@@ -22,6 +24,8 @@ public class Asistencia {
 	@ManyToOne
 	private Materia materia;
 
+	// Se agrega esta notacion para evitar un bucle infinito ya que un alumno tiene una lista de asistencias y cada asistencia tiene un alumno en la clase.
+	@JsonBackReference
 	@ManyToOne
 	private Alumno alumno;
 

@@ -3,20 +3,24 @@ package com.CalificAR.demo.Entidades;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "alumno")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Alumno extends Usuario {
 
-    @OneToMany
+	// Se agrega esta notacion para evitar un bucle infinito ya que un alumno tiene una lista de asistencias y cada asistencia tiene un alumno en la clase.
+	@JsonManagedReference
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL)
     private List<Asistencia> asistencia;
 
     @OneToMany
