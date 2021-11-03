@@ -33,8 +33,8 @@ public class AsistenciaController {
 		return new ResponseEntity(asistencia, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/consultarAsistenciaAlumno/{idAlumno}")
-	public List<Asistencia> consultarAsistencia(@PathVariable String idAlumno) {
+	@GetMapping("/consultarAsistenciaAlumno")
+	public List<Asistencia> consultarAsistencia(@RequestParam String idAlumno) {
 		List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(asistenciaRepo, idAlumno);
 		return asistencias;
 	}
@@ -67,5 +67,5 @@ public class AsistenciaController {
 	}
 
 	4) Obtener asistencias de un usuario. El último valor pasado en el GET es el Id del usuario del cual se quieren saber las asistencias
-	GET: http://localhost:8080/api/asistencia/consultarAsistenciaAlumno/6d1b476a-5210-4947-b8cc-443328d1859f
+	GET: http://localhost:8080/api/asistencia/consultarAsistenciaAlumno?idAlumno=6d1b476a-5210-4947-b8cc-443328d1859f
 */
