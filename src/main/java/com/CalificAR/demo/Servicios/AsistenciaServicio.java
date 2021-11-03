@@ -1,31 +1,32 @@
 package com.CalificAR.demo.Servicios;
 
-import java.util.Date;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Asistencia;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.CalificAR.demo.Entidades.Alumno;
 
 @Service
 public class AsistenciaServicio {
 
 	@Autowired
 	private AsistenciaRepositorio asistenciaRepositorio;
+	
 
 	@Transactional
 	public Asistencia crearAsistencia(Boolean estado, Materia materia, Alumno alumno) {
 		Asistencia asistencia = new Asistencia();
 		// Primero anio con 4 digitos, 2do mes con dos digitos // 3ero dia con 2 digitos
-//        Date fecha = new Date(leer.nextInt(),leer.nextInt(),leer.nextInt());
+//      LocalDate fecha = new LocalDate(leer.nextInt(),leer.nextInt(),leer.nextInt());
 
-//       LocalDate fechaI= LocalDate.of(anioI, mesI, diaI);
-		asistencia.setFecha(new Date());
+//      LocalLocalDate fechaI= LocalLocalDate.of(anioI, mesI, diaI);
+
+		asistencia.setFecha(LocalDate.now());
 		asistencia.setAlumno(alumno);
 		asistencia.setEstado(estado);
 		asistencia.setMateria(materia);
@@ -34,11 +35,9 @@ public class AsistenciaServicio {
 	}
 
 	@Transactional
-	public Asistencia consultarAsistencia(Date fecha) {
-		Asistencia consulta = asistenciaRepositorio.buscarAsistenciaFecha(fecha);
-//        if (respuesta.isPresent()) {
-//        Asistencia consulta = respuesta.get();
-		return consulta;
+	public List<Asistencia> consultarAsistencia(String idAlumno) {
+		List<Asistencia> asistencias = asistenciaRepositorio.buscarAsistenciaPorAlumno(idAlumno);
+		return asistencias;
 	}
 
 	public Asistencia crearAsistencia(AsistenciaRepositorio asistenciaRepositorio, Asistencia asistencia) {
@@ -47,9 +46,8 @@ public class AsistenciaServicio {
 	}
 
 	// Método para testeos con Postman
-	public Asistencia consultarAsistencia(AsistenciaRepositorio asistenciaRepositorio, Date fecha) {
+	public List<Asistencia> consultarAsistencia(AsistenciaRepositorio asistenciaRepositorio, String idAlumno) {
 		this.asistenciaRepositorio = asistenciaRepositorio;
-		return consultarAsistencia(fecha);
-
+		return consultarAsistencia(idAlumno);
 	}
 }

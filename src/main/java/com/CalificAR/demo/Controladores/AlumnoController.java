@@ -3,6 +3,7 @@ package com.CalificAR.demo.Controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,7 +41,7 @@ public class AlumnoController {
     }
 
     @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
-    public void modificarAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
+    public void modificarAlumno(@PathVariable AlumnoExtendido alumno) throws ErrorServicio {
         alumnoServicio.modificar(alumnoRepositorio, null, alumno.getId(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
                 alumno.getClave(), alumno.getFechaNac());
     }
