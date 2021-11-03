@@ -3,6 +3,7 @@ package com.CalificAR.demo.Servicios;
 import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,14 @@ public class NotaServicio {
     
     public Notas crearNotas(Notas notas){
         for (Nota nota : notas.getNotas()) {
+            notaRepositorio.save(nota);
+        }
+        
+        return notas;
+    }
+    
+    public List<Nota> crearNotas(List<Nota> notas){
+        for (Nota nota : notas) {
             notaRepositorio.save(nota);
         }
         

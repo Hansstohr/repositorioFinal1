@@ -18,12 +18,12 @@ public class AlumnoServicio extends UsuarioServicio {
     private AlumnoRepositorio alumnoRepositorio;
 
     @Transactional
-    public void registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave,
+    public Alumno registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave,
             String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
         // Valida los datos del usuario y devuelve una instancia de Usuario.
         Usuario usuario = super.registrarUsuario(alumnoRepositorio, archivo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
         Alumno alumno = usuario.crearAlumno();
-        alumnoRepositorio.save(alumno);
+        return alumnoRepositorio.save(alumno);
     }
 
     @Transactional
@@ -43,10 +43,10 @@ public class AlumnoServicio extends UsuarioServicio {
     }
 
     // Método para testeos con Postman
-    public void registrar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String dni, String nombre,
+    public Alumno registrar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String dni, String nombre,
             String apellido, String mail, String clave, String clave2, LocalDate fechaNac) throws ErrorServicio {
         this.alumnoRepositorio = alumnoRepositorio;
-        registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
+        return registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
 
     }
 

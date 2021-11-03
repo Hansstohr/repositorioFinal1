@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotaRepositorio extends JpaRepository<Nota, Alumno> {
     
-    @Query("SELECT c FROM Nota c WHERE c.alumno_id = :alumnoId and c.materia_id_materia = :materiaId")
-    public List<Nota> obtenerNotas(@Param("alumno_id") String alumnoId , @Param("materia_id_materia")String materiaId);
-    
+    @Query("SELECT c FROM Nota c WHERE c.alumno.id = :alumno_id and c.materia.idMateria = :materia_id_materia")
+    public List<Nota> obtenerNotas(@Param("alumno_id") String alumno_id, @Param("materia_id_materia") String materia_id_materia);
 }

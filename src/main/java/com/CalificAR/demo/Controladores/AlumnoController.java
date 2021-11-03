@@ -3,6 +3,8 @@ package com.CalificAR.demo.Controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +36,12 @@ public class AlumnoController {
         return alumnos;
     }
 
-    @RequestMapping(value = "/newAlumno", method = RequestMethod.POST)
-    public void newAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
-        alumnoServicio.registrar(alumnoRepositorio, null, alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
+    @RequestMapping(value = "/crearAlumno", method = RequestMethod.POST)
+    public ResponseEntity newAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
+        Alumno alumnoCreado = alumnoServicio.registrar(alumnoRepositorio, null, alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
                 alumno.getClave(), alumno.getClave2(), alumno.getFechaNac());
+        
+        return new ResponseEntity(alumnoCreado, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)

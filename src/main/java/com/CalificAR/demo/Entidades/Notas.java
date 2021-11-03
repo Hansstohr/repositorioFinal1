@@ -1,27 +1,33 @@
 package com.CalificAR.demo.Entidades;
 
 import java.util.List;
-import javax.persistence.Entity;
 
-
-//@Entity
 public class Notas {
-    
-    private List<Nota> notas;
 
-    public Notas() {
-    }
+	private Materia materia;
+	private List<Nota> notas;
 
-    public Notas(List<Nota> notas) {
-        this.notas = notas;
-    }
+	public Notas() {
+	}
 
-    public List<Nota> getNotas() {
-        return notas;
-    }
+	public Notas(List<Nota> notas, Materia materia) {
+		this.notas = notas;
+		this.materia = materia;
+	}
 
-    public void setNotas(List<Nota> notas) {
-        this.notas = notas;
-    }
+	public List<Nota> getNotas() {
+		return notas;
+	}
 
+	public void setNotas(List<Nota> notas) {
+		this.notas = notas;
+	}
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
 }
