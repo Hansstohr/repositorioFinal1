@@ -22,7 +22,7 @@ public class MateriaController {
     
     @RequestMapping(value = "/crearMateria", method = RequestMethod.POST)
     public void newMateria(@RequestBody Materia materia) throws ErrorServicio {
-        materiaServicio.crearMateria(materiaRepositorio, materia.getNombre(), null);
+        materiaServicio.crearMateria(materiaRepositorio, materia.getNombre());
     }
     
     @RequestMapping(value = "/getMaterias", method = RequestMethod.GET)

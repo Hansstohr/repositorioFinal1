@@ -40,6 +40,7 @@ public class AsistenciaServicio {
 		return asistencias;
 	}
 
+        // Método para testeos con Postman
 	public Asistencia crearAsistencia(AsistenciaRepositorio asistenciaRepositorio, Asistencia asistencia) {
 		this.asistenciaRepositorio = asistenciaRepositorio;
 		return crearAsistencia(asistencia.getEstado(), asistencia.getMateria(), asistencia.getAlumno());

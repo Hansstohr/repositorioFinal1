@@ -1,11 +1,10 @@
 package com.CalificAR.demo.Servicios;
 
 import com.CalificAR.demo.Entidades.Materia;
-import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +34,12 @@ public class MateriaServicio {
         }
         
         //Validamos que no haya otra materia con el mismo nombre
-        if (nombreMateria.equals(materiaRepositorio.buscarPorNombre(nombreMateria))) {
-           throw new ErrorServicio("El nombre de la materia ingresada ya existe");
-        }
+        //Preguntar si es distinto de nulo y si es así devuelvo excepción.
         
+        Materia respuesta = materiaRepositorio.buscarPorNombre(nombreMateria);
+        if (respuesta != null) {
+            throw new ErrorServicio("El nombre de la materia ingresada ya existe");
+        }
     }
     
     public List<Materia> todos() {
@@ -52,7 +53,7 @@ public class MateriaServicio {
     }
     
     // Método para testeos con Postman
-    public void crearMateria(MateriaRepositorio materiaRepositorio,String nombreMateria, List<Double> nota) throws ErrorServicio {
+    public void crearMateria(MateriaRepositorio materiaRepositorio,String nombreMateria) throws ErrorServicio {
         this.materiaRepositorio = materiaRepositorio;
         crearMateria(nombreMateria);
     }
