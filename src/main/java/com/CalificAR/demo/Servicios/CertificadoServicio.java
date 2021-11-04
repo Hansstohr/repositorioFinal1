@@ -6,7 +6,9 @@ import com.CalificAR.demo.Entidades.Certificado;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
+import com.CalificAR.demo.Repositorio.CertificadoRepositorio;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,29 +19,35 @@ public class CertificadoServicio {
     private AsistenciaRepositorio asistenciaRepositorio;
 
     @Autowired
-    private AlumnoRepositorio alumnorepositorio;
+    private AlumnoRepositorio alumnoRepositorio;
 
-    public Certificado solicitarCertificado(String alumno_id) throws ErrorServicio {
+    @Autowired
+    private CertificadoRepositorio certificadoRepositorio;
+
+    public void solicitarCertificado(String alumno_id) throws ErrorServicio {
         //Ver Query (supongamos que esto devuelve un arrayList con tas las asistencias de un alumno) 
         List<Asistencia> respuesta = asistenciaRepositorio.buscarAsistenciaPorAlumno(alumno_id);
 
-        if (respuesta.size()>0) {
-            return ValidarCertificado(respuesta);
+        if (respuesta.size() > 0) {
+            ValidarCertificado(respuesta, alumno_id);
         } else {
             throw new ErrorServicio("No existen asistencias cargadas. Imposible Generar Certificado");
         }
     }
 
-    private Certificado ValidarCertificado(List<Asistencia> respuesta) throws ErrorServicio {
+    private void ValidarCertificado(List<Asistencia> respuesta, String alumno_id) throws ErrorServicio {
         int cont = 0;
         for (Asistencia asistencia : respuesta) {
             if (asistencia.getEstado()) {
                 cont++;
             }
         }
-        
+
         if ((cont / respuesta.size()) > 0.7) {
-            return new Certificado();
+            Certificado certificado = certificadoRepositorio.save(new Certificado());
+            Optional<Alumno> alumno = alumnoRepositorio.findById(alumno_id);
+            alumno.get().setCertificado(certificado);
+            alumnoRepositorio.save(alumno.get());
         } else {
             throw new ErrorServicio("Su asistencia es inferior al 70% -  Imposible Generar Certificado");
         }
@@ -47,7 +55,7 @@ public class CertificadoServicio {
 
     public Alumno consultarCertificados(String certificado_codigo) throws ErrorServicio {
 
-        Alumno alumno = alumnorepositorio.buscarPorCertificado(certificado_codigo);
+        Alumno alumno = alumnoRepositorio.buscarPorCertificado(certificado_codigo);
 
         if (alumno != null) {
             return alumno;
@@ -57,8 +65,17 @@ public class CertificadoServicio {
     }
 
     //TEST POSTMAN
-    public Certificado solicitarCertificado(AsistenciaRepositorio asistenciarepositorio, String alumno_id) throws ErrorServicio {
+    public void solicitarCertificado(AsistenciaRepositorio asistenciarepositorio, CertificadoRepositorio certificadoRepositorio, AlumnoRepositorio alumnoRepositorio, String alumno_id) throws ErrorServicio {
         this.asistenciaRepositorio = asistenciarepositorio;
-        return this.solicitarCertificado(alumno_id);
+        this.certificadoRepositorio = certificadoRepositorio;
+        this.alumnoRepositorio = alumnoRepositorio;
+        this.solicitarCertificado(alumno_id);
+    }
+
+    //TESTPOSTMAN
+    public Alumno consultarCertificados(AlumnoRepositorio alumnoRepositorio, String certificado_codigo) throws ErrorServicio {
+        this.alumnoRepositorio = alumnoRepositorio;
+        return this.consultarCertificados(certificado_codigo);
     }
 }
+

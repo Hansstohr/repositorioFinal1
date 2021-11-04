@@ -23,7 +23,6 @@ public interface AlumnoRepositorio extends UsuarioRepositorio<Alumno> {
     @Override
     public Alumno buscarPorDni(@Param("dni") String dni);
 
-    //ESTPO ESTA MAL HECVHO
     @Query("SELECT c FROM Alumno c WHERE c.certificado.codigo = :certificado_codigo")
     public Alumno buscarPorCertificado(@Param("certificado_codigo") String certificado_codigo);
 
