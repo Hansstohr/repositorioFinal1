@@ -37,8 +37,6 @@ public class NotaServicio {
 		return notaRepositorio.findAll();
 	}
 
-	public void consultarNota() {
-	}
 //    public void modificarNota() {
 //        
 //    }

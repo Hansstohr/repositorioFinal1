@@ -47,8 +47,25 @@ public class NotaController {
  * "chinofirmat@gmail.com", "clave": "12345678", "clave2": "12345678",
  * "fechaNac": "1996-04-10" }
  * 
- * 3) Crear nota POST: http://localhost:8080/notas/agregarNota { "materia": {
- * "idMateria":"e6a2de25-237a-4970-b233-33edf3235be1" }, "notas": [ { "alumno":
- * { "id":"21f52625-0c8a-4edb-9385-b1ddb1c46953" }, "nota": "8.0" }, { "alumno":
- * { "id":"188bd81b-421d-41a1-a644-0d054ff9ce37" }, "nota": "6.0" } ] }
+ * 3) Crear nota POST: http://localhost:8080/notas/agregarNota
+{
+    "materia":
+        {
+            "idMateria":"e6a2de25-237a-4970-b233-33edf3235be1"
+        },
+    "notas": [
+        {
+            "alumno": {
+                "id":"21f52625-0c8a-4edb-9385-b1ddb1c46953"
+            },
+            "nota": "8.0"
+        },
+        {
+            "alumno": {
+                "id":"188bd81b-421d-41a1-a644-0d054ff9ce37"
+            },
+            "nota": "6.0"
+        }
+    ]
+}
  */

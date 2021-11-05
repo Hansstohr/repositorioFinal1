@@ -1,6 +1,7 @@
 package com.CalificAR.demo.Controladores;
 
 import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 import com.CalificAR.demo.Servicios.ProfesorServicio;
 import com.CalificAR.demo.Servicios.UsuarioServicio;
@@ -19,13 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class PortalControlador {
 
     @Autowired
-    private UsuarioServicio usuarioServicio;
-
-    @Autowired
     private ProfesorServicio profesorServicio;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private ProfesorRepositorio profesorRepositorio;
 
     @GetMapping("/")
     public String index() {

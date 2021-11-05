@@ -45,7 +45,7 @@ public class AlumnoController {
     }
 
     @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
-    public void modificarAlumno(@PathVariable AlumnoExtendido alumno) throws ErrorServicio {
+    public void modificarAlumno(@RequestBody Alumno alumno) throws ErrorServicio {
         alumnoServicio.modificar(alumnoRepositorio, null, alumno.getId(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
                 alumno.getClave(), alumno.getFechaNac());
     }

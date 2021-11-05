@@ -18,14 +18,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Alumno extends Usuario {
 
-	// Se agrega esta notacion para evitar un bucle infinito ya que un alumno tiene una lista de asistencias y cada asistencia tiene un alumno en la clase.
-	@JsonManagedReference
-    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL)
-    private List<Asistencia> asistencia;
-
-    @OneToMany
-    private List<Nota> nota;
-
     @OneToOne
     private Certificado certificado;
 
@@ -35,23 +27,7 @@ public class Alumno extends Usuario {
 
     public Alumno() {
     }
-
-    public List<Asistencia> getAsistencia() {
-        return asistencia;
-    }
-
-    public void setAsistencia(List<Asistencia> asistencia) {
-        this.asistencia = asistencia;
-    }
-
-    public List<Nota> getNota() {
-        return nota;
-    }
-
-    public void setNota(List<Nota> nota) {
-        this.nota = nota;
-    }
-
+    
     public Certificado getCertificado() {
         return certificado;
     }
