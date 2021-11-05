@@ -60,7 +60,7 @@ public class PortalControlador {
 
     @GetMapping("/registroProfesor")
     public String registroProfesor() {
-        return "validarProfesor.html";
+        return "/profesor/validarProfesor";
     }
 
     @PostMapping("/validarProfesor")
@@ -76,7 +76,7 @@ public class PortalControlador {
 
     //REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
     @PostMapping("/registrarProfesor")
-    public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac) throws ErrorServicio {
+    public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac) throws ErrorServicio {
 
         try {
             profesorServicio.registrar(archivo, dni, nombre, apellido, mail, clave2, clave2, fechaNac);

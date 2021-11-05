@@ -73,17 +73,15 @@ public class ProfesorServicio extends UsuarioServicio {
         modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
 
     }
-    
-    public Boolean validarProfesor(String claveingresada) {
+
+    public void validarProfesor(String claveingresada) throws ErrorServicio {
         String claveacomparar = "soyprofesor";
-        if (claveacomparar.equals(claveingresada)) {
-           return true; 
-        }else{
-            return false;
+        if (!claveacomparar.equals(claveingresada)) {
+            throw new ErrorServicio("Clave incorrecta");
+
         }
-        
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         Profesor profesor = profesorRepositorio.buscarPorMail(mail);
