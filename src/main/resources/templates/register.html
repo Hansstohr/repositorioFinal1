@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalificAR - Registro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="estilos.css">
+        <link rel="icon" href="">
+</head>
+<body bgcolor="#E5E9F2" align="center">
+    <section class="registro">
+    <h1 style="color: #47525E;">Registro</h1>
+    <form action="/registrar" method="post" enctype="multipart/form-data">
+     <input type="text" name="nombre" placeholder="Nombre">
+     <input type="password" name="contraseña" placeholder="Contraseña"> <br>
+     <input type="text" name="apellido" placeholder="Apellido">
+     <input type="password" name="contraseña2" placeholder="Confirmar contraseña"> <br>
+     <input type="text" name="dni" placeholder="DNI" maxlength="8">
+     <input type="email" name="email" placeholder="Email"> <br>
+     <label style="color: #8190A5;">Soy</label> <br>
+     <input type="radio" name="rol" value="1">Alumno
+     <input type="radio" name="rol" value="2">Profesor
+     <br>
+     <label style="color: #8190A5;">Fecha de nacimiento</label><br>
+     <input type="date" name="fechanac">
+     <label class="foto">Cargar foto
+     <input class="none" type="file" name="archivo" >
+    </label> <br>
+    <br>
+     <a class="button2" href="/" role="button" type="submit">Registrarse</a>
+    </form>
+</section>
+</body>
+</html>
