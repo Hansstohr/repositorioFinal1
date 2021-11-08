@@ -1,12 +1,16 @@
 package com.CalificAR.demo.Controladores;
 
+import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Servicios.ProfesorServicio;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class PortalControlador {
@@ -20,6 +24,11 @@ public class PortalControlador {
     @GetMapping("/")
     public String index() {
         return "index.html";
+    }
+    
+    @GetMapping("validarCertificado")
+    public String validarCertificado() {
+        return "/certificado/validarCertificado";
     }
 
     //PANTALLA DE INICIO, CUANDO EL USUARIO SE LOGUEA EXITOSAMENTE.
@@ -50,6 +59,38 @@ public class PortalControlador {
     @GetMapping("/registroProfesor")
     public String registroProfesor(ModelMap modelo) {
         return "validarProfesor.html";
+    }
+
+   @PostMapping("/validarProfesor")
+    public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
+        try {
+            profesorServicio.validarProfesor(claveingresada);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            return "validarProfesor.html";
+        }
+        return "registrarProfesor.html";
+    }
+            
+    //REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
+    @PostMapping("/registrarProfesor")
+    public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac) throws ErrorServicio {
+
+        try {
+            profesorServicio.registrar(archivo, dni, nombre, apellido, mail, clave2, clave2, fechaNac);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("mail", mail);
+            modelo.put("clave1", clave1);
+            modelo.put("clave2", clave2);
+            modelo.put("fechaNac", fechaNac);
+            return "registro.html";
+        }
+        modelo.put("titulo", "Bienvenido a CalificAR");
+        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+        return "exito.html";
     }
     
     
