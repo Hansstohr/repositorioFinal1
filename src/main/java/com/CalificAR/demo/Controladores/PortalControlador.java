@@ -29,6 +29,11 @@ public class PortalControlador {
     public String index() {
         return "index.html";
     }
+    
+    @GetMapping("validarCertificado")
+    public String validarCertificado() {
+        return "/certificado/validarCertificado";
+    }
 
     //PANTALLA DE INICIO, CUANDO EL USUARIO SE LOGUEA EXITOSAMENTE.
     //@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
