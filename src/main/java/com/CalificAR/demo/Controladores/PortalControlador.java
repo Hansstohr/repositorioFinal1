@@ -66,7 +66,7 @@ public class PortalControlador {
         return "/profesor/validarProfesor";
     }
 
-    @PostMapping("/validarProfesor")
+   @PostMapping("/validarProfesor")
     public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
         try {
             profesorServicio.validarProfesor(claveingresada);
@@ -76,7 +76,7 @@ public class PortalControlador {
         }
         return "registrarProfesor.html";
     }
-
+            
     //REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
     @PostMapping("/registrarProfesor")
     public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac) throws ErrorServicio {

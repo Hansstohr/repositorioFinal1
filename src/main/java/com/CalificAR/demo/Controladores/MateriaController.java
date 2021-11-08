@@ -8,13 +8,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/materias")
+@RequestMapping("/materia")
 public class MateriaController {
     
     @Autowired
@@ -22,26 +24,37 @@ public class MateriaController {
     
     MateriaServicio materiaServicio = new MateriaServicio();
     
+    
+    @GetMapping("/crearMateria")
+    public String crearMateria(){
+        return "crearMateria.html";
+    }
+    
+    
+    
     @RequestMapping(value = "/crearMateria", method = RequestMethod.POST)
-    public ResponseEntity newMateria(@RequestBody Materia materia) throws ErrorServicio {
-        Materia materiaCreada = materiaServicio.crearMateria(materiaRepositorio, materia.getNombre());
-        return new ResponseEntity(materiaCreada, HttpStatus.CREATED);
+    public String crearMateria(ModelMap modelo, @RequestBody String nombreMateria) throws ErrorServicio{
+        try {
+            materiaServicio.validarMateria(nombreMateria);
+        } catch (Exception ex) {
+           modelo.put("error",ex.getMessage());
+           return "crearMateria.html";
+        }
+        //donde va??
+        return "index.html";
     }
     
-    @RequestMapping(value = "/getMaterias", method = RequestMethod.GET)
-    public List<Materia> getAllMaterias() {
-        List<Materia> materias = materiaServicio.todos(materiaRepositorio);
-        return materias;
+    @RequestMapping(value = "/todasLasMaterias", method = RequestMethod.GET)
+    public List<Materia> enlistarMaterias() {
+        List<Materia> todas = materiaServicio.todos(); 
+        return todas;
     }
     
-    /*
-    1) Crear materia
-    POST: http://localhost:8080/api/materias/crearMateria
-    {
-    "nombre":"Fisica"
-	}
     
-    2) Consultar materias
-    GET: http://localhost:8080/api/materias/getMaterias
-    */
+    
+    
+    
+    
+    
+
 }

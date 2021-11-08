@@ -23,7 +23,7 @@ public class MateriaServicio {
 		return materiaRepositorio.save(materia);
 	}
 
-	private void validarMateria(String nombreMateria) throws ErrorServicio {
+	public void validarMateria(String nombreMateria) throws ErrorServicio {
 		// Validamos que el nombre de la materia no sea nulo
 		if (nombreMateria == null || nombreMateria.isEmpty()) {
 			throw new ErrorServicio("El nombre de la materia no debe ser nulo");
