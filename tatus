@@ -1,0 +1,115 @@
+[33mcommit 229c1b158035cd58587454cb7e169d9d04f71dec[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Agustin Salinas <agustin.cs96@gmail.com>
+Date:   Wed Nov 3 18:32:24 2021 -0300
+
+    Notas
+
+[33mcommit b4e4ed42683b0d21e619d5ca7d03a539cafc760f[m
+Author: GuadaAlberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Wed Nov 3 00:55:35 2021 -0300
+
+    Eliminado archivo de prueba
+
+[33mcommit ffaf25e261e49baf4b3dcf568157b289f9d19ae1[m
+Merge: 0a1e0e8 c9b530a
+Author: GuadaAlberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Wed Nov 3 00:52:02 2021 -0300
+
+    Cambios en Asistencia
+
+[33mcommit 0a1e0e8f52d87f6681236d3aae7989c1037029b4[m
+Author: GuadaAlberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Tue Nov 2 21:56:52 2021 -0300
+
+    Cambios en Asistencia
+
+[33mcommit c9b530a0945a8542ad110186b9a02913ddbcea57[m
+Author: Agustin Salinas <agustin.cs96@gmail.com>
+Date:   Tue Nov 2 21:52:58 2021 -0300
+
+    Asistencia Incompleto1
+
+[33mcommit b233fbc3407def9af38722600ca5bfc912acbc31[m
+Author: Agustin Salinas <agustin.cs96@gmail.com>
+Date:   Tue Nov 2 20:31:34 2021 -0300
+
+    Asistencia incompleto
+
+[33mcommit 7f03c9b805a1622944d88d48836d4c8694601a08[m
+Merge: 44a30a6 7671d56
+Author: Agustin Salinas <agustin.cs96@gmail.com>
+Date:   Tue Nov 2 20:24:13 2021 -0300
+
+    Asistencia incompleto
+
+[33mcommit 44a30a607f16d64339f1b822867d865839004a7d[m
+Author: Agustin Salinas <agustin.cs96@gmail.com>
+Date:   Tue Nov 2 20:22:30 2021 -0300
+
+    Asistencia incompleto
+
+[33mcommit 7671d560ec2764021ac0738b61591926bb0c5069[m
+Author: Guadalupe Alberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Tue Nov 2 20:13:48 2021 -0300
+
+    Agregada funcionalidad de foto
+
+[33mcommit 452b10285b888c1e848b9cead0979c6f9d29c675[m
+Author: Joaquin Vega <jvegaangelozzi@gmail.com>
+Date:   Tue Nov 2 20:10:13 2021 -0300
+
+    Solucionado Profesor, agregada entendida Nota y Todo lo de materia
+
+[33mcommit 5f324a653e445249cd970e79ff0b1f13af48c66d[m
+Author: Joaquin Vega <jvegaangelozzi@gmail.com>
+Date:   Tue Nov 2 19:00:52 2021 -0300
+
+    Entidades Final
+
+[33mcommit a860942abbabffd47ea2bd4978a96727752d43f0[m
+Author: Joaquin Vega <jvegaangelozzi@gmail.com>
+Date:   Mon Nov 1 19:25:53 2021 -0300
+
+    Lo que modificamos en el zoom
+
+[33mcommit 929bff3b05d06d7a523d5e9acf7da08e26088469[m
+Author: Guadalupe Alberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Mon Nov 1 02:12:22 2021 -0300
+
+    AlumnoServicio y ProfesorServicio heredan de UsuarioServicio. Lo mismo con AlumnoRepositorio, ProfesorRepositorio y UsuarioRepositorio. Se agrega foto. Validacion mail y dni repetido
+
+[33mcommit a80beddaf4a64f926878a8281379bb380cc09471[m
+Author: Guadalupe Alberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Sat Oct 30 20:58:03 2021 -0300
+
+    Remove Main class not used
+
+[33mcommit 36c76a8fc54520f31752f9839064558576d8f1e7[m
+Author: Guadalupe Alberto <guadalupe.soledad.alberto@gmail.com>
+Date:   Sat Oct 30 20:56:07 2021 -0300
+
+    Subida clase para testeo de ingreso de alumno
+
+[33mcommit 8687cbd7709f516a2155da280e4ba4daad67b70a[m
+Author: Joaquin Vega <jvegaangelozzi@gmail.com>
+Date:   Fri Oct 29 20:39:42 2021 -0300
+
+    aaa
+
+[33mcommit efa04dd035d1a64037540801d3657408e4533cb6[m
+Author: hansstohr <hans.stohr@gmail.com>
+Date:   Fri Oct 29 12:10:29 2021 -0300
+
+    Hans
+
+[33mcommit 1c99c10d63e3b6b134b7c28986c1e02d610ebf7e[m
+Author: vegjoaquin <jvegaangelozzi@gmail.com>
+Date:   Thu Oct 28 20:53:39 2021 -0300
+
+    commit mi rama
+
+[33mcommit 86b87c64af05880e31cc45bd65402daf7741b6ca[m
+Author: vegjoaquin <jvegaangelozzi@gmail.com>
+Date:   Thu Oct 28 19:20:02 2021 -0300
+
+    primer commit

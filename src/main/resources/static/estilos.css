@@ -1,0 +1,114 @@
+
+body{
+    font-family: 'Lato', sans-serif;
+}
+section{
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 5px 30px 30px 30px;
+    margin: 150px 450px 200px 450px;
+}
+.registro{
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 5px 30px 30px 30px;
+    margin: 150px 405px 200px 405px;
+}
+h1{
+    font-family: 'Bree Serif', serif;
+    font-weight: 300;
+}
+label{
+    margin-right: 101px;
+    margin-bottom: 8px
+    ;
+    font-size: small;
+    font-weight:300;
+}
+.dni{
+    margin-right: 142px;
+}
+input{
+    border-width: 1px;
+    border-color: #8190A5;
+    border-radius: 4px;
+    margin: 8px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+input:focus{
+  outline: 1.3px solid #aa81c9;
+}
+.botones{
+    margin-top: 8px;
+}
+.button{
+    font-size: small;
+    text-decoration: none;
+    background-color: #47525E;
+    color: white;
+    margin: 8px 2px;
+    padding: 5px 13px 8px 13px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+.button:hover {
+    background-color: #606e7d;
+    color: white;
+  }
+.button2{
+    font-size: small;
+    text-decoration: none;
+    background-color: #936DB0;
+    color: white;
+    margin-bottom: 20px;
+    padding: 10px 34px 13px 34px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+.button2:hover {
+    background-color: #aa81c9;
+    color: white;
+  }
+.link{
+    font-size: x-small;
+    color: #8190A5;
+    text-decoration: none;
+}
+.link:link{
+    font-size: x-small;
+    color: #8190A5;
+    text-decoration: none;
+}
+.link:visited{
+    font-size: x-small;
+    color: #8190A5;
+    text-decoration: none;
+}
+.link:hover{
+    font-size: x-small;
+    color: #8190A5;
+    text-decoration: none;
+}
+.link:active{
+    font-size: x-small;
+    color: #8190A5;
+    text-decoration: none;
+}
+.foto{
+    font-size: small;
+    text-decoration: none;
+    background-color: #47525E;
+    color: white;
+    margin: 8px 2px;
+    padding: 10px 43px 11px 43px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+.foto:hover{
+    background-color: #606e7d;
+    color: white;
+}
+.none{
+    display: none;
+}

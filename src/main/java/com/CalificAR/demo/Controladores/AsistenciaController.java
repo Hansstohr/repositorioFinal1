@@ -3,21 +3,23 @@ package com.CalificAR.demo.Controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.CalificAR.demo.Entidades.Asistencia;
-import com.CalificAR.demo.Entidades.Asistencias;
+import com.CalificAR.demo.Entidades.Materia;
+import com.CalificAR.demo.Entidades.Profesor;
+import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
 import com.CalificAR.demo.Servicios.AsistenciaServicio;
+import javax.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 
-@RestController
-@RequestMapping("/api/asistencia")
+@Controller
+@RequestMapping("/asistencia")
 public class AsistenciaController {
 
     @Autowired
@@ -26,16 +28,30 @@ public class AsistenciaController {
     private final AsistenciaServicio asistenciaServicio = new AsistenciaServicio();
 
     // path - , consumes = MediaType.APPLICATION_JSON_VALUE
-    @RequestMapping(value = "/crearAsistencia", method = RequestMethod.POST)
-    public ResponseEntity<Asistencias> crearAsistencia(@RequestBody Asistencias asistencias) {
-        asistencias = asistenciaServicio.crearAsistencia(asistenciaRepo, asistencias);
-        return new ResponseEntity(asistencias, HttpStatus.CREATED);
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+    @PostMapping("/crearAsistencia")
+    public String crearAsistencia(HttpSession session , ModelMap modelo , @RequestParam String idAlumno , @RequestParam Boolean estado , Materia materia ) {
+        Profesor login = (Profesor) session.getAttribute("usuariosession");
+        if (login == null) {
+            return "redirect:/login";
+        }
+        try {
+            asistenciaServicio.crearAsistencia(idAlumno, estado, materia);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            return "asistencia.html";
+        }
+        modelo.put("descripcion", "Asistencia creada!");
+        return "asistencia.html";
     }
 
     @GetMapping("/consultarAsistenciaAlumno")
-    public List<Asistencia> consultarAsistencia(@RequestParam String idAlumno) {
-        List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(asistenciaRepo, idAlumno);
-        return asistencias;
+    public String consultarAsistencia(ModelMap modelo , @RequestParam String idAlumno) {
+        
+        List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(idAlumno);
+        
+        modelo.put("asistencia", asistencias);
+        return "asistencia.html";
     }
 }
 
