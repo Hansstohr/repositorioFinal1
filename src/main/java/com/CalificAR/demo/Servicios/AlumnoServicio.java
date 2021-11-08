@@ -28,8 +28,8 @@ public class AlumnoServicio extends UsuarioServicio {
     private AlumnoRepositorio alumnoRepositorio;
 
     @Transactional
-    public Alumno registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave,
-            String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
+    public Alumno registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave, String clave2,
+             LocalDate fechaNacimiento) throws ErrorServicio {
         // Valida los datos del usuario y devuelve una instancia de Usuario.
         Usuario usuario = super.registrarUsuario(alumnoRepositorio, archivo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
         Alumno alumno = usuario.crearAlumno();
@@ -53,20 +53,20 @@ public class AlumnoServicio extends UsuarioServicio {
     }
 
     // Método para testeos con Postman
-    public Alumno registrar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String dni, String nombre,
-            String apellido, String mail, String clave, String clave2, LocalDate fechaNac) throws ErrorServicio {
-        this.alumnoRepositorio = alumnoRepositorio;
-        return registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
-
-    }
-
-    // Método para testeos con Postman
-    public void modificar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String id, String dni, String nombre,
-            String apellido, String mail, String clave, LocalDate fechaNac) throws ErrorServicio {
-        this.alumnoRepositorio = alumnoRepositorio;
-        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
-
-    }
+////    public Alumno registrar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String dni, String nombre,
+////            String apellido, String mail, String clave, String clave2, LocalDate fechaNac) throws ErrorServicio {
+////        this.alumnoRepositorio = alumnoRepositorio;
+////        return registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
+////
+////    }
+//
+//    // Método para testeos con Postman
+//    public void modificar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String id, String dni, String nombre,
+//            String apellido, String mail, String clave, LocalDate fechaNac) throws ErrorServicio {
+//        this.alumnoRepositorio = alumnoRepositorio;
+//        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
+//
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {

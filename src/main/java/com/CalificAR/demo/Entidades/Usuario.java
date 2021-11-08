@@ -37,18 +37,33 @@ public class Usuario {
 
     @OneToOne
     protected Foto foto;
+    
+    //Metodo anterior NO TENÍA CLAVE2
 
-    public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto,
-            List<Materia> materias) {
+//    public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto,
+//            List<Materia> materias) {
+//        this.dni = dni;
+//        this.nombre = nombre;
+//        this.apellido = apellido;
+//        this.mail = mail;
+//        this.clave = clave;
+//        this.fechaNac = fechaNac;
+//        this.foto = foto;
+//        this.materias = materias;
+//    }
+
+    public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, List<Materia> materias, Foto foto) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.clave = clave;
         this.fechaNac = fechaNac;
-        this.foto = foto;
         this.materias = materias;
+        this.foto = foto;
     }
+    
+    
 
     // Método para obtener un objeto Alumno a partir de un objeto Usuario
     public Alumno crearAlumno() {
@@ -112,7 +127,7 @@ public class Usuario {
     public void setClave(String clave) {
         this.clave = clave;
     }
-
+    
     public LocalDate getFechaNac() {
         return fechaNac;
     }

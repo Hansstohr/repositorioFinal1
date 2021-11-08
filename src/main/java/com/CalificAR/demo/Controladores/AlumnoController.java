@@ -17,9 +17,13 @@ import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
+import java.time.LocalDate;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/alumnos")
+@RequestMapping("/alumnos")
 public class AlumnoController {
 
     @Autowired
@@ -30,6 +34,11 @@ public class AlumnoController {
 
     AlumnoServicio alumnoServicio = new AlumnoServicio();
 
+    @GetMapping("/registro")
+    public String registro(ModelMap modelo) {
+        return "registro.html";
+    }
+
     @RequestMapping(value = "/getAlumnos", method = RequestMethod.GET)
     public List<Alumno> getAllAlumnos() {
         List<Alumno> alumnos = alumnoServicio.todos(alumnoRepositorio);
@@ -37,17 +46,34 @@ public class AlumnoController {
     }
 
     @RequestMapping(value = "/crearAlumno", method = RequestMethod.POST)
-    public ResponseEntity newAlumno(@RequestBody AlumnoExtendido alumno) throws ErrorServicio {
-        Alumno alumnoCreado = alumnoServicio.registrar(alumnoRepositorio, null, alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
-                alumno.getClave(), alumno.getClave2(), alumno.getFechaNac());
-        
-        return new ResponseEntity(alumnoCreado, HttpStatus.CREATED);
+    public String newAlumno(ModelMap modelo, @RequestBody AlumnoExtendido alumno) throws ErrorServicio {
+        try {
+            alumnoServicio.registrar((MultipartFile) alumno.getFoto(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getClave(), alumno.getClave2(), LocalDate.MIN);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", alumno.getNombre());
+            modelo.put("apellido", alumno.getApellido());
+            modelo.put("mail", alumno.getMail());
+            modelo.put("clave1", alumno.getClave());
+            modelo.put("clave2", alumno.getClave2());
+            modelo.put("fechaNac", alumno.getFechaNac());
+            return "registro.html";
+        }
+        modelo.put("titulo", "Bienvenido a CalificAR");
+        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+        return "inicio.html";
     }
 
     @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
-    public void modificarAlumno(@RequestBody Alumno alumno) throws ErrorServicio {
-        alumnoServicio.modificar(alumnoRepositorio, null, alumno.getId(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(),
-                alumno.getClave(), alumno.getFechaNac());
+    public String modificarAlumno(ModelMap modelo, @RequestBody Alumno alumno) throws ErrorServicio {
+        try {
+            alumnoServicio.modificar(alumno.getId(), (MultipartFile) alumno.getFoto(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getClave(), LocalDate.MIN);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            return "registro.html";
+        }
+        modelo.put("titulo", "Su usuario fue modificado correctamente");
+        return "perfil.html";
     }
 
 }

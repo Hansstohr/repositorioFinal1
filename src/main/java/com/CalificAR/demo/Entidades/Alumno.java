@@ -21,13 +21,13 @@ public class Alumno extends Usuario {
     @OneToOne
     private Certificado certificado;
 
-    public Alumno(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto, List<Materia> materias) {
-        super(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
-    }
-
     public Alumno() {
     }
-    
+
+    Alumno(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto, List<Materia> materias) {
+        super(dni, nombre, apellido, mail, clave, fechaNac, materias, foto);
+    }
+
     public Certificado getCertificado() {
         return certificado;
     }
