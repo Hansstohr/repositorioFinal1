@@ -48,7 +48,7 @@ public class AlumnoController {
     @RequestMapping(value = "/crearAlumno", method = RequestMethod.POST)
     public String newAlumno(ModelMap modelo, @RequestBody AlumnoExtendido alumno) throws ErrorServicio {
         try {
-            alumnoServicio.registrar((MultipartFile) alumno.getFoto(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getClave(), alumno.getClave2(), LocalDate.MIN);
+            alumnoServicio.registrar((MultipartFile) alumno.getFoto(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getClave(), alumno.getClave2(), alumno.getFechaNac());
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", alumno.getNombre());
@@ -67,7 +67,7 @@ public class AlumnoController {
     @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
     public String modificarAlumno(ModelMap modelo, @RequestBody Alumno alumno) throws ErrorServicio {
         try {
-            alumnoServicio.modificar(alumno.getId(), (MultipartFile) alumno.getFoto(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getClave(), LocalDate.MIN);
+            alumnoServicio.modificar(alumno.getId(), (MultipartFile) alumno.getFoto(), alumno.getDni(), alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getClave(), alumno.getFechaNac());
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
             return "registro.html";
