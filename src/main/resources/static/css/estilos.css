@@ -6,7 +6,7 @@ section{
     background: #FFFFFF;
     border-radius: 10px;
     padding: 5px 30px 30px 30px;
-    margin: 150px 450px 200px 450px;
+    margin: 145px 450px 200px 450px;
 }
 .registro{
     background: #FFFFFF;
@@ -27,6 +27,9 @@ label{
 }
 .dni{
     margin-right: 142px;
+}
+.fc{
+    margin-right: 242px;
 }
 input{
     border-width: 1px;
@@ -57,16 +60,31 @@ input:focus{
     color: white;
   }
 .button2{
-    font-size: small;
+    font-size: medium;
     text-decoration: none;
     background-color: #936DB0;
     color: white;
-    margin-bottom: 20px;
-    padding: 10px 34px 13px 34px;
+    padding: 7px 96px 10px 96px;
     border-radius: 4px;
     transition-duration: 0.4s;
 }
 .button2:hover {
+    background-color: #aa81c9;
+    color: white;
+  }
+.buttontop{
+    font-size:large;
+    text-decoration: none;
+    background-color: #936DB0;
+    color: white;
+    margin-top: 600px;
+    margin-right: 0px;
+    margin-left: 1055px;
+    padding: 10px 24px 13px 24px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+.buttontop:hover {
     background-color: #aa81c9;
     color: white;
   }
@@ -101,7 +119,7 @@ input:focus{
     background-color: #47525E;
     color: white;
     margin: 8px 2px;
-    padding: 10px 43px 11px 43px;
+    padding: 10px 41px 11px 41px;
     border-radius: 4px;
     transition-duration: 0.4s;
 }
