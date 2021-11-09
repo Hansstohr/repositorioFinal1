@@ -2,7 +2,6 @@ package com.CalificAR.demo.Servicios;
 
 import java.time.LocalDate;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,19 +16,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class AlumnoServicio extends UsuarioServicio {
+public class AlumnoServicio extends UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private AlumnoRepositorio alumnoRepositorio;
 
     @Transactional
     public Alumno registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave, String clave2,
-             LocalDate fechaNacimiento) throws ErrorServicio {
+            LocalDate fechaNacimiento) throws ErrorServicio {
         // Valida los datos del usuario y devuelve una instancia de Usuario.
         Usuario usuario = super.registrarUsuario(alumnoRepositorio, archivo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
         Alumno alumno = usuario.crearAlumno();
@@ -42,6 +43,7 @@ public class AlumnoServicio extends UsuarioServicio {
         super.modificar(alumnoRepositorio, Id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
     }
 
+    @Transactional(readOnly = true)
     public List<Alumno> todos() {
         return alumnoRepositorio.findAll();
     }
@@ -67,10 +69,9 @@ public class AlumnoServicio extends UsuarioServicio {
 //        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
 //
 //    }
-
     @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        Alumno alumno = alumnoRepositorio.buscarPorMail(mail);
+    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+        Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
         if (alumno != null) {
             List<GrantedAuthority> permisos = new ArrayList<>();
 
@@ -90,7 +91,7 @@ public class AlumnoServicio extends UsuarioServicio {
 //            permisos.add(p1);
 //            permisos.add(p2);
 //            permisos.add(p3);
-            User user = new User(alumno.getMail(), alumno.getClave(), permisos);
+            User user = new User(alumno.getDni(), alumno.getClave(), permisos);
             return user;
 
         } else {
@@ -98,7 +99,8 @@ public class AlumnoServicio extends UsuarioServicio {
         }
 
     }
-
+    
+    @Transactional(readOnly=true)
     public Alumno buscarPorId(String id) throws ErrorServicio {
 
         Optional<Alumno> respuesta = alumnoRepositorio.findById(id);

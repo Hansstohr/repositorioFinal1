@@ -30,7 +30,7 @@ public class AsistenciaController {
     // path - , consumes = MediaType.APPLICATION_JSON_VALUE
     @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @PostMapping("/crearAsistencia")
-    public String crearAsistencia(HttpSession session , ModelMap modelo , @RequestParam String idAlumno , @RequestParam Boolean estado , Materia materia ) {
+    public String crearAsistencia(HttpSession session, ModelMap modelo, @RequestParam String idAlumno, @RequestParam Boolean estado, Materia materia) {
         Profesor login = (Profesor) session.getAttribute("usuariosession");
         if (login == null) {
             return "redirect:/login";
@@ -45,11 +45,12 @@ public class AsistenciaController {
         return "asistencia.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')" + " || hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/consultarAsistenciaAlumno")
-    public String consultarAsistencia(ModelMap modelo , @RequestParam String idAlumno) {
-        
+    public String consultarAsistencia(ModelMap modelo, @RequestParam String idAlumno) {
+
         List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(idAlumno);
-        
+
         modelo.put("asistencia", asistencias);
         return "asistencia.html";
     }

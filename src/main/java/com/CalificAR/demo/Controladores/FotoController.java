@@ -25,6 +25,7 @@ import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
 import com.CalificAR.demo.Servicios.FotoServicio;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @Controller
 @RequestMapping("/foto")
@@ -44,12 +45,14 @@ public class FotoController {
     
     // Para testeo con Postman
     private AlumnoServicio alumnoServicio = new AlumnoServicio();
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/profesor/{id}")
     public ResponseEntity<byte[]> fotoProfesor(@PathVariable String id) throws ErrorServicio {
         return fotoUsuario(id, profRepo);
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @GetMapping("/alumno/{id}")
     public ResponseEntity<byte[]> fotoAlumno(@PathVariable String id) throws ErrorServicio {
         return fotoUsuario(id, alumnoRepo);

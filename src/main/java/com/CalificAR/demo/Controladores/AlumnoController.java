@@ -15,9 +15,8 @@ import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.AlumnoExtendido;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
-import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
-import java.time.LocalDate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,9 +28,6 @@ public class AlumnoController {
     @Autowired
     AlumnoRepositorio alumnoRepositorio;
 
-    @Autowired
-    ProfesorRepositorio profesorRepositorio;
-
     AlumnoServicio alumnoServicio = new AlumnoServicio();
 
     @GetMapping("/registro")
@@ -39,11 +35,11 @@ public class AlumnoController {
         return "registro.html";
     }
 
-    @RequestMapping(value = "/getAlumnos", method = RequestMethod.GET)
-    public List<Alumno> getAllAlumnos() {
-        List<Alumno> alumnos = alumnoServicio.todos(alumnoRepositorio);
-        return alumnos;
-    }
+//    @RequestMapping(value = "/getAlumnos", method = RequestMethod.GET)
+//    public List<Alumno> getAllAlumnos() {
+//        List<Alumno> alumnos = alumnoServicio.todos(alumnoRepositorio);
+//        return alumnos;
+//    }
 
     @RequestMapping(value = "/crearAlumno", method = RequestMethod.POST)
     public String newAlumno(ModelMap modelo, @RequestBody AlumnoExtendido alumno) throws ErrorServicio {
@@ -63,7 +59,7 @@ public class AlumnoController {
         modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
         return "inicio.html";
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
     public String modificarAlumno(ModelMap modelo, @RequestBody Alumno alumno) throws ErrorServicio {
         try {

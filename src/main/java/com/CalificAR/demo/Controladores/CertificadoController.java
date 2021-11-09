@@ -8,6 +8,7 @@ import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
 import com.CalificAR.demo.Repositorio.CertificadoRepositorio;
 import com.CalificAR.demo.Servicios.CertificadoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,17 +31,20 @@ public class CertificadoController {
     AlumnoRepositorio alumnoRepositorio;
 
     CertificadoServicio certificadoServicio = new CertificadoServicio();
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @RequestMapping(value = "/generarCertificado", method = RequestMethod.POST)
     public void newCertificado(@RequestBody Alumno alumno) throws ErrorServicio {
         certificadoServicio.solicitarCertificado(alumno.getId());
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')" + " || hasAnyRole('ROLE_PROFESOR_REGISTRADO')" )
     @GetMapping("/validacionCertificado")
     public String validarCertificado(ModelMap modelo) {
         return "validacionCertificado.html";
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @GetMapping("/consultarCertificado")
     public Alumno consultarCertificado(@RequestParam String certificado_codigo) throws ErrorServicio {
         Alumno alumno = certificadoServicio.consultarCertificados(certificado_codigo);

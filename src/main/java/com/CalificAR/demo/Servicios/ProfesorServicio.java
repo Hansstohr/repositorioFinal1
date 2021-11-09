@@ -7,7 +7,6 @@ package com.CalificAR.demo.Servicios;
 
 import com.CalificAR.demo.Entidades.Alumno;
 import java.time.LocalDate;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,12 +22,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class ProfesorServicio extends UsuarioServicio {
+public class ProfesorServicio extends UsuarioServicio implements UserDetailsService{
 
     @Autowired
     private ProfesorRepositorio profesorRepositorio;
@@ -82,9 +83,9 @@ public class ProfesorServicio extends UsuarioServicio {
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        Profesor profesor = profesorRepositorio.buscarPorMail(mail);
+   @Override
+    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+        Profesor profesor = profesorRepositorio.buscarPorDni(dni);
         if (profesor != null) {
             List<GrantedAuthority> permisos = new ArrayList<>();
 
@@ -104,7 +105,7 @@ public class ProfesorServicio extends UsuarioServicio {
 //            permisos.add(p1);
 //            permisos.add(p2);
 //            permisos.add(p3);
-            User user = new User(profesor.getMail(), profesor.getClave(), permisos);
+            User user = new User(profesor.getDni(), profesor.getClave(), permisos);
             return user;
 
         } else {
@@ -112,7 +113,8 @@ public class ProfesorServicio extends UsuarioServicio {
         }
 
     }
-
+    
+    @Transactional(readOnly=true)
     public Profesor buscarPorId(String id) throws ErrorServicio {
 
         Optional<Profesor> respuesta = profesorRepositorio.findById(id);

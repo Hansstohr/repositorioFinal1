@@ -1,18 +1,25 @@
 package com.CalificAR.demo.Servicios;
 
+import com.CalificAR.demo.Entidades.Alumno;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
+import java.util.ArrayList;
+import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MateriaServicio {
 
 	@Autowired
 	private MateriaRepositorio materiaRepositorio;
+        
+        @Autowired
+        private AlumnoRepositorio alumnoRepositorio;
 
 	@Transactional
 	public Materia crearMateria(String nombreMateria) throws ErrorServicio {
@@ -35,6 +42,21 @@ public class MateriaServicio {
 			throw new ErrorServicio("El nombre de la materia ingresada ya existe");
 		}
 	}
+        
+        public void inscribirMateria(Materia idMateria , String idAlumno) {
+            Optional<Alumno> respuesta = alumnoRepositorio.findById(idAlumno);
+            if (respuesta.isPresent()) {
+                
+                Alumno alumno = respuesta.get();
+                
+                List<Materia> materia = new ArrayList();
+                materia.add(idMateria);
+                
+                alumno.setMateria(materia);
+            }
+            
+            
+    }
 
 	public List<Materia> todos() {
 		return materiaRepositorio.findAll();

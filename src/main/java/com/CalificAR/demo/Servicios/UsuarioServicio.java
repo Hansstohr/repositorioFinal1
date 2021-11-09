@@ -5,19 +5,17 @@ import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
+import org.springframework.transaction.annotation.Transactional;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
-public abstract class UsuarioServicio implements UserDetailsService {
+public abstract class UsuarioServicio{
 
     private static final int MIN_EDAD = 18;
     private FotoServicio fotoServicio = new FotoServicio();
@@ -141,13 +139,9 @@ public abstract class UsuarioServicio implements UserDetailsService {
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-        // Tools | Templates.
-    }
 
     // Devuelve un Alumno o Profesor filtrando por Dni
+    @Transactional(readOnly = true)
     public <U extends Usuario> Optional<U> buscarPordDni(UsuarioRepositorio<U> repo, String dni) {
         U respuesta = repo.buscarPorDni(dni);
         if (respuesta != null) {
@@ -159,6 +153,7 @@ public abstract class UsuarioServicio implements UserDetailsService {
     }
 
     // Devuelve un Alumno o Profesor filtrando por Mail
+    @Transactional(readOnly = true)
     public <U extends Usuario> Optional<U> buscarPorMail(UsuarioRepositorio<U> repo, String mail) {
         U respuesta = repo.buscarPorMail(mail);
         if (respuesta != null) {

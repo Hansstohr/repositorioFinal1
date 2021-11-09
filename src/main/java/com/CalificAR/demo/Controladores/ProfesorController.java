@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class ProfesorController {
     public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String dni, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac) throws ErrorServicio {
 
         try {
-            profesorServicio.registrar(archivo, dni, nombre, apellido, mail, clave2, clave2, fechaNac);
+            profesorServicio.registrar(archivo, dni, nombre, apellido, mail, clave1, clave2, fechaNac);
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
@@ -62,13 +63,15 @@ public class ProfesorController {
         modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
         return "inicio.html";
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/modificarProfesor")
     public String modificarAlumno(@RequestBody Profesor profesor) throws ErrorServicio {
         profesorServicio.modificar(profesor.getId(), (MultipartFile) profesor.getFoto(), profesor.getDni(), profesor.getNombre(), profesor.getApellido(), profesor.getMail(), profesor.getClave(), profesor.getFechaNac());
         return "PerfilProfesor.html";
     }
 
+//    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/inicio")
     public String registroProfesor(ModelMap modelo) {
         return "materia/crearMateria.html";

@@ -2,7 +2,6 @@ package com.CalificAR.demo.Servicios;
 
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Asistencia;
-import com.CalificAR.demo.Entidades.Asistencias;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;

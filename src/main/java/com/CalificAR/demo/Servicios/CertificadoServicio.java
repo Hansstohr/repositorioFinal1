@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CertificadoServicio {
@@ -23,7 +24,8 @@ public class CertificadoServicio {
 
     @Autowired
     private CertificadoRepositorio certificadoRepositorio;
-
+    
+    @Transactional(readOnly=true)
     public void solicitarCertificado(String alumno_id) throws ErrorServicio {
         //Ver Query (supongamos que esto devuelve un arrayList con tas las asistencias de un alumno) 
         List<Asistencia> respuesta = asistenciaRepositorio.buscarAsistenciaPorAlumno(alumno_id);
@@ -52,7 +54,8 @@ public class CertificadoServicio {
             throw new ErrorServicio("Su asistencia es inferior al 70% -  Imposible Generar Certificado");
         }
     }
-
+    
+    @Transactional(readOnly=true)
     public Alumno consultarCertificados(String certificado_codigo) throws ErrorServicio {
 
         Alumno alumno = alumnoRepositorio.buscarPorCertificado(certificado_codigo);

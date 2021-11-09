@@ -12,6 +12,7 @@ import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
 import com.CalificAR.demo.Servicios.NotaServicio;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
@@ -21,17 +22,20 @@ public class NotaController {
     @Autowired
     NotaRepositorio notaRepositorio;
     NotaServicio notaServicio = new NotaServicio();
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/agregarNota")
     public String agregarNota() {
         return "agregarNota.html";
     }
 //OJO que hay otro GET linea 46, ALGO MALO VA A PASAR !!!!!
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')" + " || hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/obtenerNota")
     public String obtenerNota() {
         return "obtenerNota.html";
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @RequestMapping(value = "/agregarNota", method = RequestMethod.POST)
     public Notas agregarNotas(@RequestBody Notas notas) throws ErrorServicio {
         return notaServicio.crearNotas(notas);

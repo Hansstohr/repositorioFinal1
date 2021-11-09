@@ -2,13 +2,13 @@ package com.CalificAR.demo.Servicios;
 
 import java.io.IOException;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.FotoRepositorio;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FotoServicio {
