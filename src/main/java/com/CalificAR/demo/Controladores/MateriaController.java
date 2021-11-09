@@ -35,7 +35,7 @@ public class MateriaController {
     @RequestMapping(value = "/crearMateria", method = RequestMethod.POST)
     public String crearMateria(ModelMap modelo, @RequestBody String nombreMateria) throws ErrorServicio{
         try {
-            materiaServicio.validarMateria(nombreMateria);
+            materiaServicio.crearMateria(nombreMateria);
         } catch (Exception ex) {
            modelo.put("error",ex.getMessage());
            return "crearMateria.html";
