@@ -12,31 +12,41 @@ import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
 import com.CalificAR.demo.Servicios.NotaServicio;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/notas")
 public class NotaController {
 
-	@Autowired
-	NotaRepositorio notaRepositorio;
-	NotaServicio notaServicio = new NotaServicio();
+    @Autowired
+    NotaRepositorio notaRepositorio;
+    NotaServicio notaServicio = new NotaServicio();
 
-	@RequestMapping(value = "/agregarNota", method = RequestMethod.POST)
-	public Notas agregarNotas(@RequestBody Notas notas) throws ErrorServicio {
-		return notaServicio.crearNotas(notaRepositorio, notas);
-	}
+    @GetMapping("/agregarNota")
+    public String agregarNota() {
+        return "agregarNota.html";
+    }
+//OJO que hay otro GET linea 46, ALGO MALO VA A PASAR !!!!!
+    @GetMapping("/obtenerNota")
+    public String obtenerNota() {
+        return "obtenerNota.html";
+    }
 
-	@RequestMapping(value = "/obtenerTodasLasNotas", method = RequestMethod.GET)
-	public List<Nota> obtenerTodasNotas() {
-		List<Nota> notas = notaServicio.todos(notaRepositorio);
-		return notas;
-	}
-	
-	@RequestMapping(value = "/obtenerNotas", method = RequestMethod.GET)
-	public List<Nota> obtenerNotas(@RequestParam String idAlumno, @RequestParam String idMateria) {
-		List<Nota> notas = notaServicio.obtenerNotas(notaRepositorio, idAlumno, idMateria);
-		return notas;
-	}
+    @RequestMapping(value = "/agregarNota", method = RequestMethod.POST)
+    public Notas agregarNotas(@RequestBody Notas notas) throws ErrorServicio {
+        return notaServicio.crearNotas(notas);
+    }
+
+//	@RequestMapping(value = "/obtenerTodasLasNotas", method = RequestMethod.GET)
+//	public List<Nota> obtenerTodasNotas() {
+//		List<Nota> notas = notaServicio.todos();
+//		return notas;
+//	}
+    @RequestMapping(value = "/obtenerNotas", method = RequestMethod.GET)
+    public List<Nota> obtenerNotas(@RequestParam String idAlumno, @RequestParam String idMateria) {
+        List<Nota> notas = notaServicio.obtenerNotas(idAlumno, idMateria);
+        return notas;
+    }
 }
 /*
  * 1) Crear materia POST: http://localhost:8080/api/materias/crearMateria {
