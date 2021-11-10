@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
-import com.CalificAR.demo.Entidades.AlumnoExtendido;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
 
@@ -25,24 +24,24 @@ public class AlumnoController {
 
 	@GetMapping("/registroAlumno")
 	public String registro(ModelMap modelo) {
-		modelo.addAttribute("alumnoExtendido", new AlumnoExtendido());
+		modelo.addAttribute("alumno", new Alumno());
 		return "registroAlumno";
 	}
 
 	@PostMapping("/crearAlumno")
-	public String newAlumno(ModelMap modelo, @ModelAttribute AlumnoExtendido alumnoExtendido, MultipartFile archivo) throws ErrorServicio {
+	public String newAlumno(ModelMap modelo, @ModelAttribute Alumno alumno, String clave2, MultipartFile archivo)
+			throws ErrorServicio {
 		try {
-			alumnoServicio.registrar(archivo, alumnoExtendido.getDni(), alumnoExtendido.getNombre(),
-					alumnoExtendido.getApellido(), alumnoExtendido.getMail(), alumnoExtendido.getClave(), alumnoExtendido.getClave2(),
-					alumnoExtendido.getFechaNac());
+			alumnoServicio.registrar(archivo, alumno.getDni(), alumno.getNombre(), alumno.getApellido(),
+					alumno.getMail(), alumno.getClave(), clave2, alumno.getFechaNac());
 		} catch (ErrorServicio ex) {
 			modelo.put("error", ex.getMessage());
-			modelo.put("nombre", alumnoExtendido.getNombre());
-			modelo.put("apellido", alumnoExtendido.getApellido());
-			modelo.put("mail", alumnoExtendido.getMail());
-			modelo.put("clave1", alumnoExtendido.getClave());
-			modelo.put("clave2", alumnoExtendido.getClave2());
-			modelo.put("fechaNac", alumnoExtendido.getFechaNac());
+			modelo.put("nombre", alumno.getNombre());
+			modelo.put("apellido", alumno.getApellido());
+			modelo.put("mail", alumno.getMail());
+			modelo.put("clave1", alumno.getClave());
+			modelo.put("clave2", clave2);
+			modelo.put("fechaNac", alumno.getFechaNac());
 			return "registroAlumno.html";
 		}
 		modelo.put("titulo", "Bienvenido a CalificAR");

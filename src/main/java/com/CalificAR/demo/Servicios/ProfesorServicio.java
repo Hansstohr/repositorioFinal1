@@ -5,28 +5,27 @@
  */
 package com.CalificAR.demo.Servicios;
 
-import com.CalificAR.demo.Entidades.Alumno;
 import java.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import com.CalificAR.demo.Entidades.Profesor;
-import com.CalificAR.demo.Entidades.Usuario;
-import com.CalificAR.demo.Errores.ErrorServicio;
-import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import com.CalificAR.demo.Entidades.Profesor;
+import com.CalificAR.demo.Entidades.Usuario;
+import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
 public class ProfesorServicio extends UsuarioServicio implements UserDetailsService{
@@ -51,28 +50,6 @@ public class ProfesorServicio extends UsuarioServicio implements UserDetailsServ
 
     public List<Profesor> todos() {
         return profesorRepositorio.findAll();
-    }
-
-    // Método para testeos con Postman
-    public List<Profesor> todos(ProfesorRepositorio profesorRepositorio) {
-        this.profesorRepositorio = profesorRepositorio;
-        return todos();
-    }
-
-    // Método para testeos con Postman
-    public void registrar(ProfesorRepositorio profesorRepositorio, MultipartFile archivo, String dni, String nombre,
-            String apellido, String mail, String clave, String clave2, LocalDate fechaNac) throws ErrorServicio {
-        this.profesorRepositorio = profesorRepositorio;
-        registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
-
-    }
-
-    // Método para testeos con Postman
-    public void modificar(ProfesorRepositorio profesorRepositorio, MultipartFile archivo, String id, String dni, String nombre,
-            String apellido, String mail, String clave, LocalDate fechaNac) throws ErrorServicio {
-        this.profesorRepositorio = profesorRepositorio;
-        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
-
     }
 
     public void validarProfesor(String claveingresada) throws ErrorServicio {
