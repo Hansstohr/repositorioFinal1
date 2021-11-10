@@ -1,5 +1,8 @@
 spring:
- 
+  mvc:
+    format:
+      date: yyyy-MM-dd
+
   datasource: 
     url: jdbc:mysql://localhost:3306/calificar?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root

@@ -52,12 +52,6 @@ public class PortalControlador {
         return "login.html";
     }
 
-    //PANTALLA DE REGISTRO CON FORMULARIO. SE LLEGA ACÁ LUEGO DE PRESONAR "REGISTRARSE EN EL INDEX"
-    @GetMapping("/registroAlumno")
-    public String registroAlumno(ModelMap modelo) {
-        return "register.html";
-    }
-
     @GetMapping("/registroProfesor")
     public String registroProfesor(ModelMap modelo) {
         return "validarProfesor.html";

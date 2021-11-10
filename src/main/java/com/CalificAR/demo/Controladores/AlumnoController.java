@@ -17,11 +17,12 @@ import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
+@Controller
 @RequestMapping("/alumnos")
 public class AlumnoController {
 
@@ -30,9 +31,9 @@ public class AlumnoController {
 
     AlumnoServicio alumnoServicio = new AlumnoServicio();
 
-    @GetMapping("/registro")
+    @GetMapping("/registroAlumno")
     public String registro(ModelMap modelo) {
-        return "registro.html";
+        return "registroAlumno";
     }
 
 //    @RequestMapping(value = "/getAlumnos", method = RequestMethod.GET)
@@ -53,7 +54,7 @@ public class AlumnoController {
             modelo.put("clave1", alumno.getClave());
             modelo.put("clave2", alumno.getClave2());
             modelo.put("fechaNac", alumno.getFechaNac());
-            return "registro.html";
+            return "registroAlumno.html";
         }
         modelo.put("titulo", "Bienvenido a CalificAR");
         modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");

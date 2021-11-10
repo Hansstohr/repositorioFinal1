@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,15 +17,15 @@
 <body bgcolor="#E5E9F2" align="center">
     <section class="registro">
     <h1 style="color: #47525E;">Registro</h1>
-    <form action="/registrar" method="post" enctype="multipart/form-data">
-     <input type="text" name="nombre" placeholder="Nombre">
-     <input type="text" name="apellido" placeholder="Apellido"><br>
-     <input type="text" name="dni" placeholder="DNI" maxlength="8">
-     <input type="email" name="email" placeholder="Email"> <br>
-     <input type="password" name="contraseña" placeholder="Contraseña">
-     <input type="password" name="contraseña2" placeholder="Confirmar contraseña"> <br>
+    <form action="@{/alumnos/crearAlumno]" method="post" enctype="multipart/form-data">
+     <input type="text" name="nombre" placeholder="Nombre" th:value="${nombre}">
+     <input type="text" name="apellido" placeholder="Apellido" th:value="${apellido}"><br>
+     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:value="${dni}">
+     <input type="email" name="email" placeholder="Email" th:value="${mail}"> <br>
+     <input type="password" name="contraseña" placeholder="Contraseña" th:value="${clave}">
+     <input type="password" name="contraseña2" placeholder="Confirmar contraseña" th:value="${clave2}"> <br>
      <label class="fc" style="color: #8190A5;">Fecha de nacimiento</label><br>
-     <input type="date" name="fechanac">
+     <input type="date" name="fechanac" th:value="${fechaNac}">
      <label class="foto">Cargar foto
      <input class="none" type="file" name="archivo" >
     </label> <br>
