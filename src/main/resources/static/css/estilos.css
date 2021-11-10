@@ -130,3 +130,6 @@ input:focus{
 .none{
     display: none;
 }
+#clavecss{
+    font-size: large;
+}

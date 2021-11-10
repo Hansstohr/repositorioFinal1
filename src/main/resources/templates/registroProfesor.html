@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,26 +11,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href="/css/estilos.css">
         <link rel="icon" href="">
 </head>
 <body bgcolor="#E5E9F2" align="center">
     <section class="registro">
-    <h1 style="color: #47525E;">Registro</h1>
-    <form action="/registrar" method="post" enctype="multipart/form-data">
-     <input type="text" name="nombre" placeholder="Nombre">
-     <input type="text" name="apellido" placeholder="Apellido"><br>
-     <input type="text" name="dni" placeholder="DNI" maxlength="8">
-     <input type="email" name="email" placeholder="Email"> <br>
-     <input type="password" name="contraseña" placeholder="Contraseña">
-     <input type="password" name="contraseña2" placeholder="Confirmar contraseña"> <br>
+    <h1 style="color: #47525E;">Registro Profesor</h1>
+    <form th:action="@{/profesor/registrarProfesor}" method="POST" th:object="${profesorExtendido}" enctype="multipart/form-data">
+     <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
+     <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
+     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:field="*{dni}">
+     <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
+     <input type="password" name="contraseña" placeholder="Contraseña" th:field="*{clave}">
+     <input type="password" name="contraseña2" placeholder="Confirmar contraseña" th:field="*{clave2}"> <br>
      <label class="fc" style="color: #8190A5;">Fecha de nacimiento</label><br>
-     <input class="date" type="date" name="fechanac">
+     <input type="date" name="fechanac" th:field="*{fechaNac}">
      <label class="foto">Cargar foto
-     <input class="none" type="file" name="archivo" >
+     <input class="none" type="file" name="archivo">
     </label> <br>
     <br>
-     <a class="button2" href="/" role="button" type="submit">Registrarse</a>
+     <button type="submit" class="btn btn-outline-dark p-3">Crear Profesor</button>
     </form>
 </section>
 </body>

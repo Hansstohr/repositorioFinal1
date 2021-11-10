@@ -4,7 +4,7 @@ public class ProfesorExtendido extends Profesor {
 
     private String clave2;
 
-    private ProfesorExtendido() {
+    public ProfesorExtendido() {
         super();
     }
 

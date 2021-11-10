@@ -18,16 +18,23 @@ import com.CalificAR.demo.Entidades.ProfesorExtendido;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Servicios.ProfesorServicio;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-@RestController
+@Controller
 @RequestMapping("/profesor")
 public class ProfesorController {
 
 	@Autowired
 	ProfesorRepositorio profesorRepositorio;
 	ProfesorServicio profesorServicio = new ProfesorServicio();
+        
+        @GetMapping("/validarProfesor")
+        public String validarProfesor() {
+            return "validarProfesor";
+        }
 
-	@PostMapping("/validarProfesor")
+	@PostMapping("/validacionProfesor")
 	public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
 		try {
 			profesorServicio.validarProfesor(claveingresada);
@@ -35,35 +42,62 @@ public class ProfesorController {
 			modelo.put("error", ex.getMessage());
 			return "validarProfesor.html";
 		}
-		return "registrarProfesor.html";
+		return "registroProfesor.html";
 	}
-
-	// REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
-	@PostMapping("/registrarProfesor")
-	public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre,
-			@RequestParam String apellido, @RequestParam String dni, @RequestParam String mail,
-			@RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac)
-			throws ErrorServicio {
+        
+        @GetMapping("/registroProfesor")
+	public String registro(ModelMap modelo) {
+		modelo.addAttribute("profesorExtendido", new ProfesorExtendido());
+		return "registroProfesor";
+	}
+        
+        @PostMapping("/registrarProfesor")
+	public String newAlumno(ModelMap modelo, @ModelAttribute ProfesorExtendido profesorExtendido, MultipartFile archivo) throws ErrorServicio {
 		try {
-			profesorServicio.registrar(archivo, dni, nombre, apellido, mail, clave1, clave2, fechaNac);
+			profesorServicio.registrar(archivo, profesorExtendido.getDni(), profesorExtendido.getNombre(),
+					profesorExtendido.getApellido(), profesorExtendido.getMail(), profesorExtendido.getClave(), profesorExtendido.getClave2(),
+					profesorExtendido.getFechaNac());
 		} catch (ErrorServicio ex) {
 			modelo.put("error", ex.getMessage());
-			modelo.put("nombre", nombre);
-			modelo.put("apellido", apellido);
-			modelo.put("mail", mail);
-			modelo.put("clave1", clave1);
-			modelo.put("clave2", clave2);
-			modelo.put("fechaNac", fechaNac);
-			return "registrarProfesor.html";
+			modelo.put("nombre", profesorExtendido.getNombre());
+			modelo.put("apellido", profesorExtendido.getApellido());
+			modelo.put("mail", profesorExtendido.getMail());
+			modelo.put("clave1", profesorExtendido.getClave());
+			modelo.put("clave2", profesorExtendido.getClave2());
+			modelo.put("fechaNac", profesorExtendido.getFechaNac());
+			return "registroProfesor.html";
 		}
 		modelo.put("titulo", "Bienvenido a CalificAR");
 		modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
 		return "inicio.html";
 	}
 
+	// REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
+//	@PostMapping("/registrarProfesor")
+//	public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre,
+//			@RequestParam String apellido, @RequestParam String dni, @RequestParam String mail,
+//			@RequestParam String clave1, @RequestParam String clave2, @RequestParam LocalDate fechaNac)
+//			throws ErrorServicio {
+//		try {
+//			profesorServicio.registrar(archivo, dni, nombre, apellido, mail, clave1, clave2, fechaNac);
+//		} catch (ErrorServicio ex) {
+//			modelo.put("error", ex.getMessage());
+//			modelo.put("nombre", nombre);
+//			modelo.put("apellido", apellido);
+//			modelo.put("mail", mail);
+//			modelo.put("clave1", clave1);
+//			modelo.put("clave2", clave2);
+//			modelo.put("fechaNac", fechaNac);
+//			return "registrarProfesor.html";
+//		}
+//		modelo.put("titulo", "Bienvenido a CalificAR");
+//		modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+//		return "inicio.html";
+//	}
+
 	@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
 	@GetMapping("/modificarProfesor")
-	public String modificarAlumno(@RequestBody Profesor profesor) throws ErrorServicio {
+	public String modificarProfesor(@RequestBody Profesor profesor) throws ErrorServicio {
 		profesorServicio.modificar(profesor.getId(), (MultipartFile) profesor.getFoto(), profesor.getDni(),
 				profesor.getNombre(), profesor.getApellido(), profesor.getMail(), profesor.getClave(),
 				profesor.getFechaNac());
