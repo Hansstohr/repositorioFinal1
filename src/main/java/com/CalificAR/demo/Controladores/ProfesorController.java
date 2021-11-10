@@ -21,50 +21,50 @@ import com.CalificAR.demo.Servicios.ProfesorServicio;
 @RequestMapping("/profesor")
 public class ProfesorController {
 
-	@Autowired
-	ProfesorServicio profesorServicio;
+    @Autowired
+    ProfesorServicio profesorServicio;
 
-	@GetMapping("/validarProfesor")
-	public String validarProfesor() {
-		return "validarProfesor";
-	}
+    @GetMapping("/validarProfesor")
+    public String validarProfesor() {
+        return "validarProfesor";
+    }
 
-	@PostMapping("/validacionProfesor")
-	public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
-		try {
-			profesorServicio.validarProfesor(claveingresada);
-			modelo.addAttribute("profesor", new Profesor());
-		} catch (ErrorServicio ex) {
-			modelo.put("error", ex.getMessage());
-			return "validarProfesor.html";
-		}
-		return "redirect:/profesor/registroProfesor";
-	}
+    @PostMapping("/validacionProfesor")
+    public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
+        try {
+            profesorServicio.validarProfesor(claveingresada);
+            modelo.addAttribute("profesor", new Profesor());
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            return "validarProfesor.html";
+        }
+        return "redirect:/profesor/registroProfesor";
+    }
 
-	@GetMapping("/registroProfesor")
-	public String registro(ModelMap modelo) {
-		modelo.addAttribute("profesor", new Profesor());
-		return "registroProfesor";
-	}
+    @GetMapping("/registroProfesor")
+    public String registro(ModelMap modelo) {
+        modelo.addAttribute("profesor", new Profesor());
+        return "registroProfesor";
+    }
 
-	@PostMapping("/registrarProfesor")
-	public String newProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, String clave2, MultipartFile archivo) throws ErrorServicio {
-		try {
-			profesorServicio.registrar(archivo, profesor.getDni(), profesor.getNombre(), profesor.getApellido(),
-					profesor.getMail(), profesor.getClave(), clave2, profesor.getFechaNac());
-		} catch (ErrorServicio ex) {
-			modelo.put("error", ex.getMessage());
-			modelo.put("nombre", profesor.getNombre());
-			modelo.put("apellido", profesor.getApellido());
-			modelo.put("mail", profesor.getMail());
-			modelo.put("fechaNac", profesor.getFechaNac());
-			return "registroProfesor.html";
-		}
-		modelo.put("titulo", "Bienvenido a CalificAR");
-		modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
-		return "inicio.html";
-	}
-	// REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
+    @PostMapping("/registrarProfesor")
+    public String newProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, String clave2, MultipartFile archivo) throws ErrorServicio {
+        try {
+            profesorServicio.registrar(archivo, profesor.getDni(), profesor.getNombre(), profesor.getApellido(),
+                    profesor.getMail(), profesor.getClave(), clave2, profesor.getFechaNac());
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", profesor.getNombre());
+            modelo.put("apellido", profesor.getApellido());
+            modelo.put("mail", profesor.getMail());
+            modelo.put("fechaNac", profesor.getFechaNac());
+            return "registroProfesor.html";
+        }
+        modelo.put("titulo", "Bienvenido a CalificAR");
+        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+        return "inicio.html";
+    }
+    // REDIRECCIÓN DEL FORMULARIO DE REGISTRO PROFESOR
 //	@PostMapping("/registrarProfesor")
 //	public String registrarProfesor(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre,
 //			@RequestParam String apellido, @RequestParam String dni, @RequestParam String mail,
@@ -87,28 +87,45 @@ public class ProfesorController {
 //		return "inicio.html";
 //	}
 
-	@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-	@GetMapping("/modificarProfesor")
-	public String modificarProfesor(@RequestBody Profesor profesor) throws ErrorServicio {
-		profesorServicio.modificar(profesor.getId(), (MultipartFile) profesor.getFoto(), profesor.getDni(),
-				profesor.getNombre(), profesor.getApellido(), profesor.getMail(), profesor.getClave(),
-				profesor.getFechaNac());
-		return "PerfilProfesor.html";
-	}
+    @GetMapping("/modificarProfesor")
+    public String modificar(ModelMap modelo) {
+        modelo.addAttribute("profesor", new Profesor());
+        return "registroProfesor";
+    }
+
+    //@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+    @PostMapping("/modificarProfesor")
+    public String modificarProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, MultipartFile archivo) throws ErrorServicio {
+        
+        try {
+            profesorServicio.modificar(profesor.getId(), archivo, profesor.getDni(),
+                    profesor.getNombre(), profesor.getApellido(), profesor.getMail(), profesor.getClave(),
+                    profesor.getFechaNac());
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", profesor.getNombre());
+            modelo.put("apellido", profesor.getApellido());
+            modelo.put("mail", profesor.getMail());
+            modelo.put("fechaNac", profesor.getFechaNac());
+            return "modificarProfesor.html";
+        }
+        
+        return "Perfil.html";
+    }
 
 //    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-	@GetMapping("/inicio")
-	public String crearMateria(ModelMap modelo) {
-		return "materia/crearMateria.html";
-	}
+    @GetMapping("/inicio")
+    public String crearMateria(ModelMap modelo) {
+        return "materia/crearMateria.html";
+    }
 
-	@RequestMapping(value = "/getProfesores", method = RequestMethod.GET)
-	public List<Profesor> getAllProfesores() {
-		List<Profesor> profesores = profesorServicio.todos();
-		return profesores;
-	}
+    @RequestMapping(value = "/getProfesores", method = RequestMethod.GET)
+    public List<Profesor> getAllProfesores() {
+        List<Profesor> profesores = profesorServicio.todos();
+        return profesores;
+    }
 
-	// PARA TESTEAR REGISTRO EN POSTMAN
+    // PARA TESTEAR REGISTRO EN POSTMAN
 //    {
 //    "dni":"39504711",
 //    "nombre":"Chino",
