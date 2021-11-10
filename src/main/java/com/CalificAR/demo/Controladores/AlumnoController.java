@@ -39,8 +39,6 @@ public class AlumnoController {
 			modelo.put("nombre", alumno.getNombre());
 			modelo.put("apellido", alumno.getApellido());
 			modelo.put("mail", alumno.getMail());
-			modelo.put("clave1", alumno.getClave());
-			modelo.put("clave2", clave2);
 			modelo.put("fechaNac", alumno.getFechaNac());
 			return "registroAlumno.html";
 		}

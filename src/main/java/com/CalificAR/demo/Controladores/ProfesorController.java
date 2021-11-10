@@ -57,8 +57,6 @@ public class ProfesorController {
 			modelo.put("nombre", profesor.getNombre());
 			modelo.put("apellido", profesor.getApellido());
 			modelo.put("mail", profesor.getMail());
-			modelo.put("clave1", profesor.getClave());
-			modelo.put("clave2", clave2);
 			modelo.put("fechaNac", profesor.getFechaNac());
 			return "registroProfesor.html";
 		}
