@@ -35,11 +35,11 @@ public class ProfesorServicio extends UsuarioServicio implements UserDetailsServ
     private ProfesorRepositorio profesorRepositorio;
 
     @Transactional
-    public void registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave,
+    public Profesor registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave,
             String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
         Usuario usuario = super.registrarUsuario(profesorRepositorio, archivo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
         Profesor profesor = usuario.crearProfesor();
-        profesorRepositorio.save(profesor);
+        return profesorRepositorio.save(profesor);
 
     }
 
