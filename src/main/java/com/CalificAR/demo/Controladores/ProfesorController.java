@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.ProfesorExtendido;
@@ -42,7 +41,7 @@ public class ProfesorController {
 			modelo.put("error", ex.getMessage());
 			return "validarProfesor.html";
 		}
-		return "registroProfesor.html";
+		return "redirect:/profesor/registroProfesor";
 	}
         
         @GetMapping("/registroProfesor")
@@ -52,10 +51,11 @@ public class ProfesorController {
 	}
         
         @PostMapping("/registrarProfesor")
-	public String newAlumno(ModelMap modelo, @ModelAttribute ProfesorExtendido profesorExtendido, MultipartFile archivo) throws ErrorServicio {
+	public String newProfesor(ModelMap modelo, @ModelAttribute ProfesorExtendido profesorExtendido, MultipartFile archivo) throws ErrorServicio {
 		try {
 			profesorServicio.registrar(archivo, profesorExtendido.getDni(), profesorExtendido.getNombre(),
-					profesorExtendido.getApellido(), profesorExtendido.getMail(), profesorExtendido.getClave(), profesorExtendido.getClave2(),
+					profesorExtendido.getApellido(), profesorExtendido.getMail(), profesorExtendido.getClave(), 
+                                        profesorExtendido.getClave2(),
 					profesorExtendido.getFechaNac());
 		} catch (ErrorServicio ex) {
 			modelo.put("error", ex.getMessage());
