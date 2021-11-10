@@ -5,20 +5,21 @@ import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
-import org.springframework.transaction.annotation.Transactional;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
 public abstract class UsuarioServicio{
 
     private static final int MIN_EDAD = 18;
-    private FotoServicio fotoServicio = new FotoServicio();
+    @Autowired
+    private FotoServicio fotoServicio;
 
     @Transactional
     public <U extends Usuario> Usuario registrarUsuario(UsuarioRepositorio<U> repo, MultipartFile archivo, String dni, String nombre, String apellido, String mail,

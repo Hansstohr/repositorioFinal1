@@ -6,7 +6,7 @@ public class AlumnoExtendido extends Alumno {
 
 	private String clave2;
 
-	private AlumnoExtendido() {
+	public AlumnoExtendido() {
 		super();
 	}
 

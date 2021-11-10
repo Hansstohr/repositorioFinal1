@@ -17,20 +17,20 @@
 <body bgcolor="#E5E9F2" align="center">
     <section class="registro">
     <h1 style="color: #47525E;">Registro</h1>
-    <form action="@{/alumnos/crearAlumno]" method="post" enctype="multipart/form-data">
-     <input type="text" name="nombre" placeholder="Nombre" th:value="${nombre}">
-     <input type="text" name="apellido" placeholder="Apellido" th:value="${apellido}"><br>
-     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:value="${dni}">
-     <input type="email" name="email" placeholder="Email" th:value="${mail}"> <br>
-     <input type="password" name="contraseña" placeholder="Contraseña" th:value="${clave}">
-     <input type="password" name="contraseña2" placeholder="Confirmar contraseña" th:value="${clave2}"> <br>
+    <form th:action="@{/alumno/crearAlumno}" method="POST" th:object="${alumnoExtendido}" enctype="multipart/form-data">
+     <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
+     <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
+     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:field="*{dni}">
+     <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
+     <input type="password" name="contraseña" placeholder="Contraseña" th:field="*{clave}">
+     <input type="password" name="contraseña2" placeholder="Confirmar contraseña" th:field="*{clave2}"> <br>
      <label class="fc" style="color: #8190A5;">Fecha de nacimiento</label><br>
-     <input type="date" name="fechanac" th:value="${fechaNac}">
+     <input type="date" name="fechanac" th:field="*{fechaNac}">
      <label class="foto">Cargar foto
-     <input class="none" type="file" name="archivo" >
+     <input class="none" type="file" name="archivo">
     </label> <br>
     <br>
-     <a class="button2" href="/" role="button" type="submit">Registrarse</a>
+     <button type="submit" class="btn btn-outline-dark p-3">Crear alumno</button>
     </form>
 </section>
 </body>

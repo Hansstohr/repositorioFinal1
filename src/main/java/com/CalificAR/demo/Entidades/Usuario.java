@@ -1,17 +1,14 @@
 package com.CalificAR.demo.Entidades;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 //@Entity
 // Este inheritance no debe ir ya que no queremos que se cree la tabla usuario,
@@ -28,7 +25,7 @@ public class Usuario {
     protected String apellido;
     protected String mail;
     protected String clave;
-
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     protected LocalDate fechaNac;
 
     // Se movio la lista de materias de Alumno y Profesor a la entidad Usuario.
