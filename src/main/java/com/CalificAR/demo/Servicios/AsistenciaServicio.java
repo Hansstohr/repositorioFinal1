@@ -2,6 +2,7 @@ package com.CalificAR.demo.Servicios;
 
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Asistencia;
+import com.CalificAR.demo.Entidades.Asistencias;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
@@ -10,9 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AsistenciaServicio {
@@ -23,39 +24,21 @@ public class AsistenciaServicio {
     @Autowired
     private AlumnoRepositorio alumnoRepositorio;
 
-//    @Transactional
-//    public Asistencias crearAsistencia(Asistencias asistencias) {
-//        LocalDate fecha = LocalDate.now();
-//        for(Asistencia asistencia : asistencias.getAsistencias()) {
-//            asistencia.setFecha(fecha);
-//            asistencia.setMateria(asistencias.getMateria());
-//            asistenciaRepositorio.save(asistencia);
-//        }
-//        return asistencias;
-//    }
     @Transactional
-    public void crearAsistencia(String id, Boolean estado, Materia materia) throws ErrorServicio {
-
+    public Asistencias crearAsistencia(Asistencias asistencias) {
         LocalDate fecha = LocalDate.now();
-        Asistencia asistencia = new Asistencia();
-        Optional<Alumno> respuesta = alumnoRepositorio.findById(id);
-        if (respuesta.isPresent()) {
-            
-            Alumno alumno = respuesta.get();
-            
-            asistencia.setAlumno(alumno);
+        for(Asistencia asistencia : asistencias.getAsistencias()) {
             asistencia.setFecha(fecha);
-            asistencia.setEstado(estado);
-            asistencia.setMateria(materia);
+            asistencia.setMateria(asistencias.getMateria());
+            asistenciaRepositorio.save(asistencia);
         }
-
-        asistenciaRepositorio.save(asistencia);
-
+        return asistencias;
     }
+    
 
-    @Transactional
-    public List<Asistencia> consultarAsistencia(String idAlumno) {
-        List<Asistencia> asistencias = asistenciaRepositorio.buscarAsistenciaPorAlumno(idAlumno);
+    @Transactional(readOnly = true)
+    public List<Asistencia> consultarAsistencia(String idAlumno , String idMateria) {
+        List<Asistencia> asistencias = asistenciaRepositorio.buscarAsistenciaPorAlumnoYMateria(idAlumno , idMateria);
         return asistencias;
     }
 

@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Notas;
+import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
 import com.CalificAR.demo.Servicios.NotaServicio;
+import javax.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -22,23 +24,39 @@ public class NotaController {
     @Autowired
     NotaRepositorio notaRepositorio;
     NotaServicio notaServicio = new NotaServicio();
-    
+
     @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/agregarNota")
-    public String agregarNota() {
+    public String agregarNota(HttpSession session) {
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
         return "agregarNota.html";
     }
-//OJO que hay otro GET linea 46, ALGO MALO VA A PASAR !!!!!
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')" + " || hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @GetMapping("/obtenerNota")
-    public String obtenerNota() {
+    public String obtenerNota(HttpSession session) {
+
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
         return "obtenerNota.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @RequestMapping(value = "/agregarNota", method = RequestMethod.POST)
-    public Notas agregarNotas(@RequestBody Notas notas) throws ErrorServicio {
-        return notaServicio.crearNotas(notas);
+    public String agregarNotas(HttpSession session, @RequestBody Notas notas) throws ErrorServicio {
+
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+
+        notaServicio.crearNotas(notas);
+        return "perfil.html";
     }
 
 //	@RequestMapping(value = "/obtenerTodasLasNotas", method = RequestMethod.GET)

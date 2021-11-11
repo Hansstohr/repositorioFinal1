@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.ProfesorServicio;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/profesor")
@@ -93,10 +93,15 @@ public class ProfesorController {
         return "registroProfesor";
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @PostMapping("/modificarProfesor")
-    public String modificarProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, MultipartFile archivo) throws ErrorServicio {
-        
+    public String modificarProfesor(HttpSession session, ModelMap modelo, @ModelAttribute Profesor profesor, MultipartFile archivo) throws ErrorServicio {
+
+        Profesor loginUsuario = (Profesor) session.getAttribute("alumnosession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+
         try {
             profesorServicio.modificar(profesor.getId(), archivo, profesor.getDni(),
                     profesor.getNombre(), profesor.getApellido(), profesor.getMail(), profesor.getClave(),
@@ -109,13 +114,19 @@ public class ProfesorController {
             modelo.put("fechaNac", profesor.getFechaNac());
             return "modificarProfesor.html";
         }
-        
+
         return "Perfil.html";
     }
 
 //    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @GetMapping("/inicio")
-    public String crearMateria(ModelMap modelo) {
+    public String crearMateria(HttpSession session, ModelMap modelo) {
+
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+
+            return "redirect:/index";
+        }
         return "materia/crearMateria.html";
     }
 

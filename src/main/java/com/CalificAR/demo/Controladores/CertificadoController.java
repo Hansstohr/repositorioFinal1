@@ -7,6 +7,7 @@ import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
 import com.CalificAR.demo.Repositorio.CertificadoRepositorio;
 import com.CalificAR.demo.Servicios.CertificadoServicio;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,25 +34,46 @@ public class CertificadoController {
     AlumnoRepositorio alumnoRepositorio;
 
     CertificadoServicio certificadoServicio = new CertificadoServicio();
-    
+
     @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @RequestMapping(value = "/generarCertificado", method = RequestMethod.POST)
-    public void newCertificado(@RequestBody Alumno alumno) throws ErrorServicio {
-        certificadoServicio.solicitarCertificado(alumno.getId());
+    public String newCertificado(HttpSession session, ModelMap modelo) throws ErrorServicio {
+
+        Alumno alumno = (Alumno) session.getAttribute("alumnosession");
+
+        if (alumno == null || !alumno.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+        try {
+
+            certificadoServicio.solicitarCertificado(alumno.getId());
+
+        } catch (ErrorServicio e) {
+            modelo.put("error", e.getMessage());
+            return "perfil.html";
+        }
+        return "certificado.html";
     }
-    
-    //@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')" + " || hasAnyRole('ROLE_PROFESOR_REGISTRADO')" )
+
     @GetMapping("/validarCertificado")
     public String validarCertificado(ModelMap modelo) {
         return "validarCertificado.html";
     }
-    
+
     //AQUÍ TIENE QUE RETORNAR UN HTML CON LOS DATOS DE UN ALUMNO
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @PostMapping("/consultarCertificado")
-    public Alumno consultarCertificado(@RequestParam String certificado_codigo) throws ErrorServicio {
+    public String consultarCertificado(HttpSession session, @RequestParam String certificado_codigo) throws ErrorServicio {
+
+        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
+
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+
+            return "redirect:/index";
+        }
         Alumno alumno = certificadoServicio.consultarCertificados(certificado_codigo);
-        return alumno;
+
+        return "certificado.html";
+
     }
 
 }

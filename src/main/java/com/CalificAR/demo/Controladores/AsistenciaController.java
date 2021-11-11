@@ -1,5 +1,6 @@
 package com.CalificAR.demo.Controladores;
 
+import com.CalificAR.demo.Entidades.Alumno;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.CalificAR.demo.Entidades.Asistencia;
-import com.CalificAR.demo.Entidades.Materia;
+import com.CalificAR.demo.Entidades.Asistencias;
 import com.CalificAR.demo.Entidades.Profesor;
-import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
 import com.CalificAR.demo.Servicios.AsistenciaServicio;
 import javax.servlet.http.HttpSession;
@@ -17,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/asistencia")
@@ -30,26 +31,42 @@ public class AsistenciaController {
     // path - , consumes = MediaType.APPLICATION_JSON_VALUE
     @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
     @PostMapping("/crearAsistencia")
-    public String crearAsistencia(HttpSession session, ModelMap modelo, @RequestParam String idAlumno, @RequestParam Boolean estado, Materia materia) {
-        Profesor login = (Profesor) session.getAttribute("usuariosession");
-        if (login == null) {
-            return "redirect:/login";
+    public String crearAsistencia(HttpSession session, ModelMap modelo, @RequestBody Asistencias asistencias) {
+        
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesoression");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
         }
-        try {
-            asistenciaServicio.crearAsistencia(idAlumno, estado, materia);
-        } catch (ErrorServicio ex) {
-            modelo.put("error", ex.getMessage());
-            return "asistencia.html";
-        }
+        asistenciaServicio.crearAsistencia(asistencias);
         modelo.put("descripcion", "Asistencia creada!");
-        return "asistencia.html";
+        return "perfil.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')" + " || hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-    @GetMapping("/consultarAsistenciaAlumno")
-    public String consultarAsistencia(ModelMap modelo, @RequestParam String idAlumno) {
+    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+    @GetMapping("/consultarAsistenciaProfesor")
+    public String consultarAsistenciaProfesor(HttpSession session , ModelMap modelo, @RequestParam String idAlumno,@RequestParam String idMateria) {
+        
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesoression");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
 
-        List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(idAlumno);
+        List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(idAlumno , idMateria);
+
+        modelo.put("asistencia", asistencias);
+        return "asistencia.html";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @GetMapping("/consultarAsistenciaAlumno")
+    public String consultarAsistenciaAlumno(HttpSession session , ModelMap modelo, @RequestParam String idAlumno,@RequestParam String idMateria) {
+        
+        Alumno loginUsuario = (Alumno) session.getAttribute("alumnoression");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+
+        List<Asistencia> asistencias = asistenciaServicio.consultarAsistencia(idAlumno , idMateria);
 
         modelo.put("asistencia", asistencias);
         return "asistencia.html";

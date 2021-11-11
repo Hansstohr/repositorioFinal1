@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Foto;
+import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
@@ -25,6 +26,7 @@ import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
 import com.CalificAR.demo.Servicios.FotoServicio;
+import javax.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @Controller
@@ -36,25 +38,25 @@ public class FotoController {
 
     @Autowired
     private AlumnoRepositorio alumnoRepo;
-    
+
     // Para testeo con Postman
     @Autowired
     private FotoRepositorio fotoRepo;
 
     private FotoServicio fotoServicio = new FotoServicio();
-    
+
     // Para testeo con Postman
     private AlumnoServicio alumnoServicio = new AlumnoServicio();
-    
-    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+
     @GetMapping("/profesor/{id}")
     public ResponseEntity<byte[]> fotoProfesor(@PathVariable String id) throws ErrorServicio {
+
         return fotoUsuario(id, profRepo);
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+
     @GetMapping("/alumno/{id}")
     public ResponseEntity<byte[]> fotoAlumno(@PathVariable String id) throws ErrorServicio {
+
         return fotoUsuario(id, alumnoRepo);
     }
 
@@ -78,12 +80,12 @@ public class FotoController {
     @PostMapping("/agregar")
     public String agregarFoto(@RequestPart("dniAlumno") String dniAlumno, @RequestPart("archivo") MultipartFile archivo)
             throws ErrorServicio {
-    	Optional<Alumno> alumno = alumnoServicio.buscarPordDni(alumnoRepo, dniAlumno);
-    	Foto fotoAnterior = alumno.get().getFoto();
-    	String idFoto = null;
-    	if(fotoAnterior != null) {
-    		idFoto = fotoAnterior.getIdFoto();
-    	}
+        Optional<Alumno> alumno = alumnoServicio.buscarPordDni(alumnoRepo, dniAlumno);
+        Foto fotoAnterior = alumno.get().getFoto();
+        String idFoto = null;
+        if (fotoAnterior != null) {
+            idFoto = fotoAnterior.getIdFoto();
+        }
         Foto foto = fotoServicio.guardar(fotoRepo, idFoto, archivo);
         alumno.get().setFoto(foto);
         alumnoRepo.save(alumno.get());
