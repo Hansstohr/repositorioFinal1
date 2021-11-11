@@ -1,5 +1,6 @@
 package com.CalificAR.demo.Servicios;
 
+import com.CalificAR.demo.Entidades.Alumno;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
@@ -12,7 +13,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpSession;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
 public abstract class UsuarioServicio{
@@ -21,6 +33,9 @@ public abstract class UsuarioServicio{
     @Autowired
     private FotoServicio fotoServicio;
 
+//    @Autowired
+//    private AlumnoRepositorio alumnoRepositorio;
+    
     @Transactional
     public <U extends Usuario> Usuario registrarUsuario(UsuarioRepositorio<U> repo, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
@@ -164,4 +179,36 @@ public abstract class UsuarioServicio{
         }
 
     }
+    
+//    @Override
+//    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+//        Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
+//        System.out.println(alumno);
+//        if (alumno != null) {
+//            List<GrantedAuthority> permisos = new ArrayList<>();
+//
+//            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_ALUMNO_REGISTRADO");
+//            permisos.add(p1);
+//            System.out.println("Llegó hasta acá");
+//            //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
+//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+//            HttpSession session = attr.getRequest().getSession(true);
+//            session.setAttribute("alumnosession", alumno);
+//            System.out.println("Llegó hasta acá2");
+////
+////            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
+////            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTAS");
+////            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTOS");
+////
+////            permisos.add(p1);
+////            permisos.add(p2);
+////            permisos.add(p3);
+//            User user = new User(alumno.getDni(), alumno.getClave(), permisos);
+//            return user;
+//
+//        } else {
+//            return null;
+//        }
+//
+//    }
 }
