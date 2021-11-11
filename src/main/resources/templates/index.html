@@ -19,17 +19,15 @@
     <section>
     <h1 align="center" style="color: #47525E;">CalificAR</h1>
     <p align="left" style="color: #8190A5;">Iniciar sesión</p>
-    <form action="ruta del metodo que va a manejar la información" method="POST"
-    enctype="multipart/form-data"></form>
-    <div align="center">
-        <form action="/login">
+    <form th:action="@{/logincheck}" method="POST"></form>
+       <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+       <p th:if="${logout != null}" th:text="${logout}" style="color:greenyellow"></p>
+        
      <label class="dni" style="color: #8190A5;">DNI</label> <br>
-     <input type="text" name="DNI" maxlength=8> <br>
+     <input type="text" class="form-control" name="username" maxlength=8> <br>
      <label style="color: #8190A5;">Contraseña</label> <br>
-     <input type="password" name="contraseña"> <br>
-     <br>
-    <div class="botones">
-     <a class="button2" href="/inicio" role="button" type="submit">Ingresar</a>
+     <input type="password" class="form-control" name="password"> <br>
+     <button type="submit" class="btn btn-primary">Ingresar</button>
     </form><br>
     <br>
      <a class="button" th:href="@{/alumno/registroAlumno}" role="button">Registro alumno</a>

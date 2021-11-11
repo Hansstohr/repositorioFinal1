@@ -12,7 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PortalControlador {
 
     @GetMapping("/")
-    public String index() {
+    public String index(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
+        if (error != null) {
+
+            model.put("error", "Usuario o clave incorrectos");
+        }
+        if (logout != null) {
+            model.put("logout", "Ha salido correctamente.");
+        }
         return "index.html";
     }
 
@@ -25,6 +32,13 @@ public class PortalControlador {
         }
         return "/certificado/validarCertificado";
     }
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @GetMapping("/inicio")
+    public String inicio() {
+        return "inicio.html";
+    }
+    
 
     // PANTALLA DE INICIO, CUANDO EL USUARIO SE LOGUEA EXITOSAMENTE.
     @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
@@ -53,15 +67,15 @@ public class PortalControlador {
     }
 
     // RECUADRO DE LOGIN, ESTÁ EN EL INDEX(VER COMO LO PONEMOS EN EL INDEX)
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout,
-            ModelMap model) {
-        if (error != null) {
-            model.put("error", "Usuario o clave incorrectos");
-        }
-        if (logout != null) {
-            model.put("logout", "Ha salido correctamente de la plataforma.");
-        }
-        return "login.html";
-    }
+    //@GetMapping("/login")
+//    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout,
+//            ModelMap model) {
+//        if (error != null) {
+//            model.put("error", "Usuario o clave incorrectos");
+//        }
+//        if (logout != null) {
+//            model.put("logout", "Ha salido correctamente de la plataforma.");
+//        }
+//        return "login.html";
+//    }
 }
