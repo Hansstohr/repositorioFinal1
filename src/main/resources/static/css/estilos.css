@@ -133,3 +133,44 @@ input:focus{
 #clavecss{
     font-size: large;
 }
+.header {
+  padding: 20px;
+  text-align: left;
+  background: #936DB0;
+}
+
+.header h1 {
+  font-size: 30px;
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 25%;
+  background-color: #E5E9F2;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+li a {
+  display: block;
+  color: #47525E;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a.active {
+  background-color: #936DB0;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #47525E;
+  color: white;
+}
