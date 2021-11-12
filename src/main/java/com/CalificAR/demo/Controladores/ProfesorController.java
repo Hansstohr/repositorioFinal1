@@ -98,7 +98,8 @@ public class ProfesorController {
 
 	@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
 	@PostMapping("/modificarProfesor")
-	public String modificarProfesor(HttpSession session, ModelMap modelo, @ModelAttribute Profesor profesor, @ModelAttribute Login loginNew, MultipartFile archivo) throws ErrorServicio {
+	public String modificarProfesor(HttpSession session, ModelMap modelo, @ModelAttribute Profesor profesor,
+			@ModelAttribute Login loginNew, MultipartFile archivo) throws ErrorServicio {
 		Login login = (Login) session.getAttribute("profesorsession");
 		if (login == null || !login.getId().equals(loginNew.getId())) {
 			return "redirect:/index";

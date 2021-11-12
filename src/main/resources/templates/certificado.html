@@ -1,49 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalificAR - Registro</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
-</head>
-<body bgcolor="#E5E9F2">
-    <section class="registro">
-    <h1 style="color: #47525E;">Certificado</h1>
-    <form th:action="@{/certificado/getCertificado}" method="GET">
-    	<label><b>Nombre</b></label>
-    	<td name="nombre" placeholder="Nombre" th:text="${alumno.nombre}"></td>
-    	<br>
-    	<label><b>Apellido</b></label>
-		<td name="apellido" th:text="${alumno.apellido}"></td>
-		<br>
-		<label><b>Dni</b></label>
-		<td name="dni" th:text="${alumno.dni}"></td>
-		<br>
-		<label><b>Fecha de nacimiento</b></label>
-		<td type="date" name="fechanac" th:text="${alumno.fechaNac}">
-		<br>
-		<label><b>Foto</b></label>
-		<td type="date" name="multiPartFileFoto" th:text="${multiPartFileFoto}">
-		<!--
-		<td>
-			<img th:if="${alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" style="max-height: 60px; border-radius: 100%;">
-			<img th:if="${alumno.foto == null}" src="/img/none.jpeg" style="max-height: 60px; border-radius: 100%;">
-		</td>
-		<br>
-		-->
-    </form>
-    <p align="right">
-    	<button type="submit" class="btn btn-outline-dark p-3">Volver</button>
-	</p>
-</section>
-	
-</body>
-</html>
+    <head>
+        <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>CalificAR - Registro</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                            <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+                                <link rel="preconnect" href="https://fonts.googleapis.com">
+                                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                                        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
+                                            <link rel="stylesheet" href="/css/estilos.css">
+                                                <link rel="icon" href="">
+                                                    </head>
+                                                    <body bgcolor="#E5E9F2">
+                                                        <section class="registro">
+                                                            <h2 align="center" style="color: #47525E;">Certificado de alumno regular</h2>
+                                                            
+                                                                <form th:action="@{/certificado/getCertificado}" method="GET">
+
+
+                                                                    <p>Esta institución certifica que el/la alumno/a
+                                                                        <b><td name="nombre" placeholder="Nombre" th:text="${alumno.nombre}"></td></b>
+                                                                        <b><td name="apellido" th:text="${alumno.apellido}"></td></b>
+                                                                        con DNI
+                                                                        <b><td name="dni" th:text="${alumno.login.dni}"></td></b>
+                                                                        y fecha de nacimiento
+                                                                        <b><td type="date" name="fechanac" th:text="${alumno.fechaNac}"></td></b>
+                                                                        se encuentra actualmente regular en la carrera.
+                                                                        <br>
+                                                                            <br>
+                                                                                A su pedido y para ser presentado ante quien corresponda se extiende el presente certificado.
+                                                                                <br>
+                                                                                    <br>
+                                                                                        Este certificado tiene una vigencia de 90 días a partir de la fecha de emisión.</p>
+
+                                                                                        <br>
+                                                                                            <br>
+
+
+                                                                                                <!--<label><b>Foto</b></label>
+                                                                                               <td type="date" name="multiPartFileFoto" th:text="${multiPartFileFoto}">
+                                                                                                  
+                                                                                                   <td>
+                                                                                                           <img th:if="${alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" style="max-height: 60px; border-radius: 100%;">
+                                                                                                           <img th:if="${alumno.foto == null}" src="/img/none.jpeg" style="max-height: 60px; border-radius: 100%;">
+                                                                                                   </td>
+                                                                                                   <br>
+                                                                                                -->
+                                                                                                </form>
+                                                                                                <p align="right">
+                                                                                                    <a class="button2" href="/inicioAlumno" role="button" type="submit">Volver</a>
+                                                                                                    
+                                                                                                </p>
+                                                                                                </section>
+
+                                                                                                </body>
+                                                                                                </html>

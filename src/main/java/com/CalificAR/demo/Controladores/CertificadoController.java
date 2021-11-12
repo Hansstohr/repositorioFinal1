@@ -80,7 +80,7 @@ public class CertificadoController {
     
     @GetMapping("/getCertificado")
     public String getCertificado(ModelMap modelo) throws ErrorServicio {
-    	Alumno alumno = alumnoServicio.buscarPordDni(alumnoRepositorio, "12.345.679").get();
+    	Alumno alumno = alumnoServicio.buscarPordDni(alumnoRepositorio, "12312312").get();
         modelo.put("alumno", alumno);
         return "certificado.html";
     }

@@ -20,11 +20,21 @@ public class Security extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/css/*", "/js/*", "/img/*", "/**").permitAll().and().formLogin()
-				.loginPage("/login").loginProcessingUrl("/logincheck").usernameParameter("username")
-				.passwordParameter("password").defaultSuccessUrl("/inicio").permitAll().and().logout()
-				.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll().and().csrf().disable();
-	}
+		http.authorizeRequests()
+				.antMatchers("/css/*", "/js/*", "/img/*","/**").permitAll()
+        .and().formLogin()
+        		.loginPage("/login")
+        		.loginProcessingUrl("/logincheck")
+        		.usernameParameter("username")
+        		.passwordParameter("password")
+        		.defaultSuccessUrl("/inicio")
+        		.permitAll()
+        .and().logout()
+        	.logoutUrl("/logout")
+        	.logoutSuccessUrl("/login?logout")
+        	.permitAll()
+        .and().csrf().disable();
+}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
