@@ -1,11 +1,11 @@
 package com.CalificAR.demo;
 
-import com.CalificAR.demo.Servicios.AlumnoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.CalificAR.demo.Servicios.LoginServicio;
 
 @SpringBootApplication
 public class CalificArApplication {
@@ -15,12 +15,12 @@ public class CalificArApplication {
     }
 
     @Autowired
-    private AlumnoServicio alumnoServicio;
+    private LoginServicio loginServicio;
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(alumnoServicio)
+                .userDetailsService(loginServicio)
                 .passwordEncoder(new BCryptPasswordEncoder());
 
     }
