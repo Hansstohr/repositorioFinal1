@@ -11,14 +11,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="/css/estilos.css">
     <link rel="icon" href="">
 </head>
-<body bgcolor="#E5E9F2"> 
-    <a class="buttontop" th:href="@{/inicio}" role="button">Volver a Inicio</a>
-    <section>
+<body> 
+    <div class="header">
+        <div class="container">
+          <h1>CalificAR</h1>
+          <div class="conjunto"align="right">
+            <img src="default.png" alt="Foto de perfil" class="molde image">
+            <a href="/" class="molde overlay">
+              <div class="text">Mi perfil</div>
+            </a>
+            <p class="name">Nombre</p>
+            <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li><a class="active" href="/">Inicio</a></li>
+        <li><a href="/">Mis materias</a></li>
+        <li><a href="/">Inscribirme a materias</a></li>
+        <li><a href="/">Generar certificado</a></li>
+        <li><a href="/">Crear materia</a></li>
+      </ul>
+    <section class="centrar">
     <h1 align="center" th:FALTA MÉTODO VER MATERIA EN MATERIACONTROLLER style="color: #47525E;">ACA VANOMBRE DE MATERIA CON ETIQUETA TH</h1>
-    <p align="left" th:EL METODO DE LA LINEA ANTERIOR DEBE TRAER AL PROFESOR style="color: #8190A5;">ACA VA NOMBRE PROFESOR CON ETIQUETA TH</p>
+    <p align="center" th:EL METODO DE LA LINEA ANTERIOR DEBE TRAER AL PROFESOR style="color: #8190A5;">ACA VA NOMBRE PROFESOR CON ETIQUETA TH</p>
     <form action="ruta del metodo que va a manejar la información" method="POST"
     enctype="multipart/form-data"></form>
     <div align="center">

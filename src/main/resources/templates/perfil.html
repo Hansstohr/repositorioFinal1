@@ -15,14 +15,26 @@
         <link rel="icon" href="">
 </head>
     <body>
-        <div class="header">
-  <h1>CalificAR</h1>
-</div>
-<ul>
-  <li><a class="active" href="/">Mis materias</a></li>
-  <li><a href="/">Inscribirme a materias</a></li>
-  <li><a href="/">Generar certificado</a></li>
-  <li><a href="/">Crear materia</a></li>
-</ul>
+      <div class="header">
+        <div class="container">
+          <h1>CalificAR</h1>
+          <div class="conjunto"align="right">
+            <img src="default.png" alt="Foto de perfil" class="molde image">
+            <a href="/" class="molde overlay">
+              <div class="text">Mi perfil</div>
+            </a>
+            <p class="name">Nombre</p>
+            <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/">Mis materias</a></li>
+        <li><a href="/">Inscribirme a materias</a></li>
+        <li><a href="/">Generar certificado</a></li>
+        <li><a href="/">Crear materia</a></li>
+      </ul>
     </body>
 </html>
+

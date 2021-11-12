@@ -143,9 +143,17 @@ input:focus{
 .header h1 {
   color:white;
   font-size: 30px;
+  width: fit-content;
+  margin: 0;
 }
 .container {
   position: relative;
+  height:100px;
+}
+.conjunto{
+  position: inherit;
+  top: -40;
+  bottom: 40px;
 }
 .molde{
 width: 60px;
@@ -154,7 +162,6 @@ height: 60px;
 
 .image {
   border-radius:50%;
-  display: block;
 }
 
 .overlay {
@@ -163,13 +170,12 @@ height: 60px;
   top:0;
   right:0;
   bottom:0;
-  left: 0;
   opacity: 0;
   transition: .5s ease;
   background-color: #aa81c9;
 }
 
-.container:hover .overlay {
+.overlay:hover  {
   opacity: 1;
 }
 
@@ -181,6 +187,11 @@ height: 60px;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+}
+.name{
+  color: white;
+  font-size:small;
+  margin-right: 6px;
 }
 
 body {
@@ -206,11 +217,15 @@ li a {
 }
 
 li a.active {
-  background-color: #936DB0;
+  background-color: #aa81c9;
   color: white;
 }
 
 li a:hover:not(.active) {
   background-color: #47525E;
   color: white;
+}
+.centrar{
+  margin-top:13%;
+  width:45%;
 }
