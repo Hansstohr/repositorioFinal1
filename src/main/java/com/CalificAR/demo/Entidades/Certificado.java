@@ -1,6 +1,7 @@
 package com.CalificAR.demo.Entidades;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Id;
