@@ -133,6 +133,7 @@ input:focus{
 #clavecss{
     font-size: large;
 }
+
 .header {
   padding: 20px;
   text-align: left;
@@ -140,7 +141,46 @@ input:focus{
 }
 
 .header h1 {
+  color:white;
   font-size: 30px;
+}
+.container {
+  position: relative;
+}
+.molde{
+width: 60px;
+height: 60px;
+}
+
+.image {
+  border-radius:50%;
+  display: block;
+}
+
+.overlay {
+  border-radius: 50%;
+  position: absolute; 
+  top:0;
+  right:0;
+  bottom:0;
+  left: 0;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #aa81c9;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 8px;
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 body {
