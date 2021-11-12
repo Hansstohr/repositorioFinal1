@@ -20,11 +20,9 @@ public class Usuario {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     protected String id;
-    protected String dni;
     protected String nombre;
     protected String apellido;
     protected String mail;
-    protected String clave;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     protected LocalDate fechaNac;
 
@@ -34,7 +32,9 @@ public class Usuario {
 
     @OneToOne
     protected Foto foto;
-    
+ 
+    @OneToOne
+    protected Login login;
     //Metodo anterior NO TENÍA CLAVE2
 
 //    public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto,
@@ -50,11 +50,11 @@ public class Usuario {
 //    }
 
     public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, List<Materia> materias, Foto foto) {
-        this.dni = dni;
+        this.login.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
-        this.clave = clave;
+        this.login.clave = clave;
         this.fechaNac = fechaNac;
         this.materias = materias;
         this.foto = foto;
@@ -64,12 +64,12 @@ public class Usuario {
 
     // Método para obtener un objeto Alumno a partir de un objeto Usuario
     public Alumno crearAlumno() {
-        return new Alumno(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
+        return new Alumno(login.dni, nombre, apellido, mail, login.clave, fechaNac, foto, materias);
     }
 
     // Método para obtener un objeto Profesor a partir de un objeto Usuario
     public Profesor crearProfesor() {
-        return new Profesor(dni, nombre, apellido, mail, clave, fechaNac, foto, materias);
+        return new Profesor(login.dni, nombre, apellido, mail, login.clave, fechaNac, foto, materias);
     }
 
     public Usuario() {
@@ -86,11 +86,11 @@ public class Usuario {
     
 
     public String getDni() {
-        return dni;
+        return login.dni;
     }
 
     public void setDni(String dni) {
-        this.dni = dni;
+        this.login.dni = dni;
     }
 
     public String getNombre() {
@@ -118,11 +118,11 @@ public class Usuario {
     }
 
     public String getClave() {
-        return clave;
+        return login.clave;
     }
 
     public void setClave(String clave) {
-        this.clave = clave;
+        this.login.clave = clave;
     }
     
     public LocalDate getFechaNac() {
@@ -151,8 +151,8 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return ", id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
-                + ", clave=" + clave + ", fechaNac=" + fechaNac + ", materias=" + materias + ", foto=" + foto + "]";
+        return ", id=" + id + ", dni=" + login.dni + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
+                + ", clave=" + login.clave + ", fechaNac=" + fechaNac + ", materias=" + materias + ", foto=" + foto + "]";
     }
 
 }

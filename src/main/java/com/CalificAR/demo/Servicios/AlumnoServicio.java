@@ -23,7 +23,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class AlumnoServicio extends UsuarioServicio implements UserDetailsService {
+public class AlumnoServicio extends UsuarioServicio {
 
     @Autowired
     private AlumnoRepositorio alumnoRepositorio;
@@ -69,37 +69,6 @@ public class AlumnoServicio extends UsuarioServicio implements UserDetailsServic
 //        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
 //
 //    }
-    @Override
-    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
-        //System.out.println(alumno);
-        if (alumno != null) {
-            List<GrantedAuthority> permisos = new ArrayList<>();
-
-            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_ALUMNO_REGISTRADO");
-            permisos.add(p1);
-            //System.out.println("Llegó hasta acá");
-            //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("alumnosession", alumno);
-            //System.out.println("Llegó hasta acá2");
-//
-//            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
-//            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTAS");
-//            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTOS");
-//
-//            permisos.add(p1);
-//            permisos.add(p2);
-//            permisos.add(p3);
-            User user = new User(alumno.getDni(), alumno.getClave(), permisos);
-            return user;
-
-        } else {
-            return null;
-        }
-
-    }
     
     @Transactional(readOnly=true)
     public Alumno buscarPorId(String id) throws ErrorServicio {

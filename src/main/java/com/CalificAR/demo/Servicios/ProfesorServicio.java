@@ -28,7 +28,7 @@ import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
-public class ProfesorServicio extends UsuarioServicio implements UserDetailsService{
+public class ProfesorServicio extends UsuarioServicio {
 
     @Autowired
     private ProfesorRepositorio profesorRepositorio;
@@ -58,37 +58,6 @@ public class ProfesorServicio extends UsuarioServicio implements UserDetailsServ
             throw new ErrorServicio("Clave incorrecta");
 
         }
-    }
-
-   @Override
-    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        Profesor profesor = profesorRepositorio.buscarPorDni(dni);
-        if (profesor != null) {
-            List<GrantedAuthority> permisos = new ArrayList<>();
-
-            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_PROFESOR_REGISTRADO");
-            permisos.add(p1);
-
-            //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("profesorsession", profesor);
-
-//
-//            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
-//            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTAS");
-//            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTOS");
-//
-//            permisos.add(p1);
-//            permisos.add(p2);
-//            permisos.add(p3);
-            User user = new User(profesor.getDni(), profesor.getClave(), permisos);
-            return user;
-
-        } else {
-            return null;
-        }
-
     }
     
     @Transactional(readOnly=true)
