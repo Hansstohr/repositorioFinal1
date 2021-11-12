@@ -15,8 +15,7 @@ public class Login {
     protected String dni;
     protected String clave;
 
-    public Login(String id, String dni, String clave) {
-        this.id = id;
+    public Login(String dni, String clave) {
         this.dni = dni;
         this.clave = clave;
     }

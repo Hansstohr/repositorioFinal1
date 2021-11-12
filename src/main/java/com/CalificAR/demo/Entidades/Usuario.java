@@ -45,13 +45,11 @@ public class Usuario {
 //        this.materias = materias;
 //    }
 
-	public Usuario(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac,
-			List<Materia> materias, Foto foto) {
-		this.login.dni = dni;
+	public Usuario(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, List<Materia> materias, Foto foto) {
+		this.login = login;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.mail = mail;
-		this.login.clave = clave;
 		this.fechaNac = fechaNac;
 		this.materias = materias;
 		this.foto = foto;
@@ -59,12 +57,12 @@ public class Usuario {
 
 	// Método para obtener un objeto Alumno a partir de un objeto Usuario
 	public Alumno crearAlumno() {
-		return new Alumno(login.dni, nombre, apellido, mail, login.clave, fechaNac, foto, materias);
+		return new Alumno(login, nombre, apellido, mail, fechaNac, foto, materias);
 	}
 
 	// Método para obtener un objeto Profesor a partir de un objeto Usuario
 	public Profesor crearProfesor() {
-		return new Profesor(login.dni, nombre, apellido, mail, login.clave, fechaNac, foto, materias);
+		return new Profesor(login, nombre, apellido, mail, fechaNac, foto, materias);
 	}
 
 	public Usuario() {
@@ -76,17 +74,6 @@ public class Usuario {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getDni() {
-		if(login != null) {
-			return login.dni;
-		}
-		return null;
-	}
-
-	public void setDni(String dni) {
-		this.login.dni = dni;
 	}
 
 	public String getNombre() {
@@ -113,17 +100,6 @@ public class Usuario {
 		this.mail = mail;
 	}
 
-	public String getClave() {
-		if(login != null) {
-			return login.clave;
-		}
-		return null;
-	}
-
-	public void setClave(String clave) {
-		this.login.clave = clave;
-	}
-
 	public LocalDate getFechaNac() {
 		return fechaNac;
 	}
@@ -146,6 +122,14 @@ public class Usuario {
 
 	public void setMateria(List<Materia> materias) {
 		this.materias = materias;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	@Override

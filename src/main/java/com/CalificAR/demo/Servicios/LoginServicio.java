@@ -1,8 +1,5 @@
 package com.CalificAR.demo.Servicios;
 
-import com.CalificAR.demo.Entidades.Alumno;
-import com.CalificAR.demo.Entidades.Login;
-import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -16,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import com.CalificAR.demo.Entidades.Login;
+import com.CalificAR.demo.Repositorio.LoginRepositorio;
 
 @Service
 public class LoginServicio implements UserDetailsService {

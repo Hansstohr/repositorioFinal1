@@ -19,8 +19,8 @@ public class Alumno extends Usuario {
     public Alumno() {
     }
 
-    Alumno(String dni, String nombre, String apellido, String mail, String clave, LocalDate fechaNac, Foto foto, List<Materia> materias) {
-        super(dni, nombre, apellido, mail, clave, fechaNac, materias, foto);
+    Alumno(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto, List<Materia> materias) {
+        super(login, nombre, apellido, mail, fechaNac, materias, foto);
     }
 
     public Certificado getCertificado() {

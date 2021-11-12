@@ -1,11 +1,7 @@
 package com.CalificAR.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.CalificAR.demo.Servicios.LoginServicio;
 
 @SpringBootApplication
 public class CalificArApplication {
@@ -14,6 +10,7 @@ public class CalificArApplication {
         SpringApplication.run(CalificArApplication.class, args);
     }
 
+    /*
     @Autowired
     private LoginServicio loginServicio;
     
@@ -24,5 +21,5 @@ public class CalificArApplication {
                 .passwordEncoder(new BCryptPasswordEncoder());
 
     }
-
+    */
 }
