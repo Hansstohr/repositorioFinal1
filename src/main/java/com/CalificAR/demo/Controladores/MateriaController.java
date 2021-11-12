@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,12 +53,72 @@ public class MateriaController {
             modelo.put("error", ex.getMessage());
             return "crearMateria.html";
         }
-        //donde va??
-        return "index.html";
+        return "Materia";
+    }
+
+    //ESTE MÉTODO TENDRÍA QUE VERIFICAR PRIMERO SI ES ALUMNO O PROFESOR, PARA NO TENER QUE HACER DOS MÉTODOS
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @GetMapping("/Materia")
+    public String materia(HttpSession session, ModelMap modelo, String id_materia) throws ErrorServicio {
+        
+        
+        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+        Materia materia = materiaServicio.buscarPorId(id_materia);
+        
+        modelo.put("materia" , materia.getNombre());
+        
+        return "Materia";
+    }
+//ESTE MÉTODO TENDRÍA QUE VERIFICAR PRIMERO SI ES ALUMNO O PROFESOR, PARA NO TENER QUE HACER DOS MÉTODOS
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @GetMapping("MisMaterias")
+    public String listarMateriasAlumno(HttpSession session, ModelMap modelo) {
+
+        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+        List<Materia> todas = materiaServicio.materiasAlumno(loginUsuario.getId());
+
+        modelo.put("materias", todas);
+        return "MisMaterias";
+
+    }
+//ESTE MÉTODO TENDRÍA QUE VERIFICAR PRIMERO SI ES ALUMNO O PROFESOR, PARA NO TENER QUE HACER DOS MÉTODOS
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @GetMapping("/MisMaterias")
+    public String listarMateriasProfesor(HttpSession session, ModelMap modelo) {
+
+        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+        List<Materia> todas = materiaServicio.materiasProfesor(loginUsuario.getId());
+
+        modelo.put("materias", todas);
+        return "MisMaterias";
+
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @GetMapping("/inscribirMateria")
+    public String incribirseMaterias(HttpSession session, ModelMap modelo) {
+
+        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
+        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+            return "redirect:/index";
+        }
+        List<Materia> todas = materiaServicio.todos();
+        modelo.put("materias", todas);
+        return "InscribirseMaterias";
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @PostMapping("/inscribirMateria")
     public String inscribirMateria(HttpSession session, ModelMap modelo, @RequestParam Materia idMateria, @RequestParam String idAlumno) throws ErrorServicio {
 
         Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
@@ -73,20 +134,6 @@ public class MateriaController {
         }
         modelo.put("mensaje", "Inscripto correctamente!");
         return "inicio.html";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
-    @RequestMapping(value = "/todasLasMateriasAlumno", method = RequestMethod.GET)
-    public String enlistarMateriasAlumno(HttpSession session , ModelMap modelo) {
-
-        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
-        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-            return "redirect:/index";
-        }
-        List<Materia> todas = materiaServicio.todos();
-        modelo.put("materias" , todas);
-        return "inscribirse";
-
     }
 
 }

@@ -2,6 +2,8 @@ package com.CalificAR.demo.Repositorio;
 
 
 import com.CalificAR.demo.Entidades.Alumno;
+import com.CalificAR.demo.Entidades.Materia;
+import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,5 +22,5 @@ public interface AlumnoRepositorio extends UsuarioRepositorio<Alumno> {
 
     @Query("SELECT c FROM Alumno c WHERE c.certificado.codigo = :certificado_codigo")
     public Alumno buscarPorCertificado(@Param("certificado_codigo") String certificado_codigo);
-
+   
 }
