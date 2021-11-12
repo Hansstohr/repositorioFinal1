@@ -21,17 +21,17 @@
     <form th:action="@{/profesor/registrarProfesor}" method="POST" th:object="${profesor}" enctype="multipart/form-data">
      <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
      <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
-     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:field="*{dni}">
+     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:value="${dni}">
      <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
-     <input type="password" name="contraseña" placeholder="Contraseña" th:field="*{clave}">
-     <input type="password" name="clave2" placeholder="Confirmar contraseña"> <br>
+     <input type="password" name="clave" placeholder="Contraseña" th:value="${clave}">
+     <input type="password" name="clave2" placeholder="Confirmar contraseña" th:value="${clave2}"> <br>
      <label class="fc" style="color: #8190A5;">Fecha de nacimiento</label><br>
      <input type="date" name="fechanac" th:field="*{fechaNac}">
      <label class="foto">Cargar foto
      <input class="none" type="file" name="archivo">
     </label> <br>
     <br>
-     <a class="button2"  role="button" type="submit">Crear Profesor</a>
+     <button class="button2" type="submit">Crear Profesor</button>
     </form>
 </section>
 </body>

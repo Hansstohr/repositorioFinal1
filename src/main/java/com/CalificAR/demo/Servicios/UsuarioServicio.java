@@ -1,6 +1,5 @@
 package com.CalificAR.demo.Servicios;
 
-import com.CalificAR.demo.Entidades.Alumno;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
@@ -11,20 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Foto;
+import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
-import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
+import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpSession;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
 public abstract class UsuarioServicio{
@@ -33,23 +23,29 @@ public abstract class UsuarioServicio{
     @Autowired
     private FotoServicio fotoServicio;
 
-//    @Autowired
-//    private AlumnoRepositorio alumnoRepositorio;
+    @Autowired
+	private LoginRepositorio loginRepositorio;
     
     @Transactional
     public <U extends Usuario> Usuario registrarUsuario(UsuarioRepositorio<U> repo, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
         validar(repo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento, null, null);
         Usuario usuario = new Usuario();
-        usuario.setDni(dni);
+        if(usuario.getLogin() != null) {
+        	usuario.getLogin().setDni(dni);
+        }
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
         usuario.setFechaNac(fechaNacimiento);
-        String encriptada = new BCryptPasswordEncoder().encode(clave);
-        usuario.setClave(encriptada);
+        // Guardamos el id de foto en usuario
         Foto foto = fotoServicio.guardar(null, archivo);
         usuario.setFoto(foto);
+        // Guardamos el id de login en usuario
+        String encriptada = new BCryptPasswordEncoder().encode(clave);
+        Login login = new Login(dni, encriptada);
+		login = loginRepositorio.save(login);
+		usuario.setLogin(login);
         // notificacionServicio.enviar("Bienvenidos a Calific-AR", " ",
         // usuario.getMail());
         return usuario;
@@ -59,7 +55,7 @@ public abstract class UsuarioServicio{
         Optional<U> usuario = repo.findById(id);
         if (usuario.isPresent()) {
 
-            String dniAnterior = usuario.get().getDni();
+            String dniAnterior = usuario.get().getLogin().getDni();
             String mailAnterior = usuario.get().getMail();
             validar(repo, dni, nombre, apellido, mail, clave, clave, fechaNacimiento, dniAnterior, mailAnterior);
         } else {
@@ -139,10 +135,10 @@ public abstract class UsuarioServicio{
             usuarioModificado.setApellido(apellido);
             usuarioModificado.setNombre(nombre);
             usuarioModificado.setMail(mail);
-            usuarioModificado.setDni(dni);
+            usuarioModificado.getLogin().setDni(dni);
             usuarioModificado.setFechaNac(fechaNacimiento);
             String encriptada = new BCryptPasswordEncoder().encode(clave);
-            usuarioModificado.setClave(encriptada);
+            usuarioModificado.getLogin().setClave(encriptada);
             String idFoto = null;
             if (usuarioModificado.getFoto() != null) {
                 idFoto = usuarioModificado.getFoto().getIdFoto();

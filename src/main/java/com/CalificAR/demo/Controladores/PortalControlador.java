@@ -45,8 +45,7 @@ public class PortalControlador {
         return "/certificado/validarCertificado";
     }
     
-    
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/inicio")
     public String inicio() {
         return "inicio.html";

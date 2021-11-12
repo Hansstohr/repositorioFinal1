@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.CalificAR.demo.Repositorio;
 
 
@@ -19,7 +14,7 @@ public interface AlumnoRepositorio extends UsuarioRepositorio<Alumno> {
     public Alumno buscarPorMail(@Param("mail") String mail);
     
     
-    @Query("SELECT c FROM Alumno c WHERE c.dni = :dni")
+    @Query("SELECT c FROM Alumno c WHERE c.login.dni = :dni")
     @Override
     public Alumno buscarPorDni(@Param("dni") String dni);
 

@@ -17,7 +17,7 @@ public interface ProfesorRepositorio extends UsuarioRepositorio<Profesor>{
     @Override
     public Profesor buscarPorMail(@Param("mail") String mail);
     
-    @Query("SELECT c FROM Profesor c WHERE c.dni = :dni")
+    @Query("SELECT c FROM Profesor c WHERE c.login.dni = :dni")
     @Override
     public Profesor buscarPorDni(@Param("dni") String dni);
 }
