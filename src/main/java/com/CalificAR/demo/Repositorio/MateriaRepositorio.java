@@ -1,12 +1,11 @@
 package com.CalificAR.demo.Repositorio;
 
-import com.CalificAR.demo.Entidades.Materia;
-import com.CalificAR.demo.Entidades.Profesor;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import com.CalificAR.demo.Entidades.Materia;
 
 @Repository
 public interface MateriaRepositorio extends JpaRepository<Materia, String> {
@@ -16,11 +15,11 @@ public interface MateriaRepositorio extends JpaRepository<Materia, String> {
     public Materia buscarPorNombre(@Param("nombre") String nombre);
     
     //BUSCAR MATERIAS POR ALUMNO
-     @Query("SELECT c FROM Materia c WHERE c.alumno_id = :alumno_id")
+     @Query("SELECT c FROM Materia c WHERE c.alumno.id = :alumno_id")
      public List<Materia> buscarMateriasporAlumno(@Param("alumno_id") String alumno_id);
     
     //BUSCAR MATERIAS POR PROFESOR
-     @Query("SELECT c FROM Materia c WHERE c.profesor_id = :profesor_id")
+     @Query("SELECT c FROM Materia c WHERE c.profesor.id = :profesor_id")
      public List<Materia> buscarMateriasporProfesor(@Param("profesor_id") String profesor_id);
     
 }

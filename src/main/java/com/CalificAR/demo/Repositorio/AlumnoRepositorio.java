@@ -1,12 +1,10 @@
 package com.CalificAR.demo.Repositorio;
 
 
-import com.CalificAR.demo.Entidades.Alumno;
-import com.CalificAR.demo.Entidades.Materia;
-import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import com.CalificAR.demo.Entidades.Alumno;
 
 @Repository
 public interface AlumnoRepositorio extends UsuarioRepositorio<Alumno> {
