@@ -22,7 +22,9 @@
     <div class="container">
       <h1>CalificAR</h1>
       <div class="conjunto"align="right">
-        <img src="default.png" alt="Foto de perfil" class="molde image">
+        <img  th:if="${alumno != null and alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
+        <img  th:if="${profesor != null and profesor.foto != null}" th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
+        <img  th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
         <a href="/" class="molde overlay">
           <div class="text">Mi perfil</div>
         </a>

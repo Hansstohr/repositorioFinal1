@@ -9,10 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Login;
+import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 @Service
 public class AlumnoServicio extends UsuarioServicio {
@@ -30,8 +33,6 @@ public class AlumnoServicio extends UsuarioServicio {
         // Valida los datos del usuario y devuelve una instancia de Usuario.
         Usuario usuario = super.registrarUsuario(alumnoRepositorio, archivo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
         Alumno alumno = usuario.crearAlumno();
-        Login login = new Login(dni, clave);
-        loginRepositorio.save(login);
         return alumnoRepositorio.save(alumno);
     }
 
@@ -46,27 +47,20 @@ public class AlumnoServicio extends UsuarioServicio {
         return alumnoRepositorio.findAll();
     }
 
-    // Método para testeos con Postman
-    public List<Alumno> todos(AlumnoRepositorio alumnoRepositorio) {
-        this.alumnoRepositorio = alumnoRepositorio;
-        return todos();
+    @Transactional(readOnly = true)
+    public List<Alumno> alumnnosPorMateria(String idMateria) {
+        List<Alumno> alumnos = alumnoRepositorio.findAll();
+        
+        Iterator<Alumno> it = alumnos.iterator();
+        while (it.hasNext()) {
+            Alumno alumno = it.next();
+            if (alumno.getMaterias().stream().anyMatch(m->!m.getIdMateria().equals(idMateria))) {
+                it.remove();
+            }
+        }
+        return alumnos;
     }
 
-    // Método para testeos con Postman
-////    public Alumno registrar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String dni, String nombre,
-////            String apellido, String mail, String clave, String clave2, LocalDate fechaNac) throws ErrorServicio {
-////        this.alumnoRepositorio = alumnoRepositorio;
-////        return registrar(archivo, dni, nombre, apellido, mail, clave, clave2, fechaNac);
-////
-////    }
-//
-//    // Método para testeos con Postman
-//    public void modificar(AlumnoRepositorio alumnoRepositorio, MultipartFile archivo, String id, String dni, String nombre,
-//            String apellido, String mail, String clave, LocalDate fechaNac) throws ErrorServicio {
-//        this.alumnoRepositorio = alumnoRepositorio;
-//        modificar(id, archivo, dni, nombre, apellido, mail, clave, fechaNac);
-//
-//    }
     
     @Transactional(readOnly=true)
     public Alumno buscarPorId(String id) throws ErrorServicio {

@@ -57,7 +57,7 @@ public class CertificadoServicio {
 	@Transactional(readOnly = true)
 	public Alumno consultarCertificados(String certificado_codigo) throws ErrorServicio {
 		Optional<Certificado> certificado = certificadoRepositorio.findById(certificado_codigo);
-		if (certificado.isEmpty()) {
+		if (!certificado.isPresent()) {
 			throw new ErrorServicio("No existe un certificado para el código ingresado");
 		}
 		if (certificado.get().getVencimiento().isBefore(LocalDate.now().plus(3L, ChronoUnit.MONTHS))) {

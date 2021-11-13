@@ -1,5 +1,7 @@
 package com.CalificAR.demo.Entidades;
 
+import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,18 +19,20 @@ public class Nota {
     @ManyToOne
     private Alumno alumno;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Materia materia;
+    
+    private LocalDate fecha;
     
     private Double nota;
 
-    public Nota(String idNota, Alumno alumno, Materia materia, Double nota) {
+    public Nota(String idNota, Alumno alumno, Materia materia, LocalDate fecha, Double nota) {
         this.idNota = idNota;
         this.alumno = alumno;
         this.materia = materia;
+        this.fecha = fecha;
         this.nota = nota;
     }
-
 
     public Nota() {
     }
@@ -65,10 +69,17 @@ public class Nota {
         this.materia = materia;
     }
 
-    @Override
-    public String toString() {
-        return "Nota{" + "idNota=" + idNota + ", nota=" + nota + '}';
+    public LocalDate getFecha() {
+        return fecha;
     }
 
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+    
+    @Override
+    public String toString() {
+        return "Nota{" + "idNota=" + idNota + ", alumno=" + alumno + ", materia=" + materia + ", fecha=" + fecha + ", nota=" + nota + '}';
+    }
     
 }

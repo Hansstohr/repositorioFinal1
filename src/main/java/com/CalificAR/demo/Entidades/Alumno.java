@@ -2,9 +2,11 @@ package com.CalificAR.demo.Entidades;
 
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,13 +18,26 @@ public class Alumno extends Usuario {
     @OneToOne
     private Certificado certificado;
 
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Materia> materias;
+    
     public Alumno() {
     }
 
-    Alumno(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto, List<Materia> materias) {
-        super(login, nombre, apellido, mail, fechaNac, materias, foto);
+    Alumno(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto) {
+        super(login, nombre, apellido, mail, fechaNac, foto);
     }
 
+    public List<Materia> getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(List<Materia> materias) {
+        this.materias = materias;
+    }
+
+    
     public Certificado getCertificado() {
         return certificado;
     }

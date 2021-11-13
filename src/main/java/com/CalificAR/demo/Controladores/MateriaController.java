@@ -62,21 +62,21 @@ public class MateriaController {
 		return "Materia";
 	}
 
-	// ESTE MÉTODO TENDRÍA QUE VERIFICAR PRIMERO SI ES ALUMNO O PROFESOR, PARA NO
-	// TENER QUE HACER DOS MÉTODOS
-	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO') || hasRole('ROLE_PROFESOR_REGISTRADO')")
 	@GetMapping("/Materia")
 	public String materia(HttpSession session, ModelMap modelo, String id_materia) throws ErrorServicio {
-		Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
-		if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-			return "redirect:/index";
+                Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
+		Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
+		boolean alumnoNoLogueado = loginAlumno == null || !loginAlumno.getId().equals(session.getId());
+		boolean profesorNoLogueado = loginProfesor == null || !loginProfesor.getId().equals(session.getId());
+		if (alumnoNoLogueado && profesorNoLogueado) {
+			return "redirect:/inicio";
 		}
-		Materia materia = materiaServicio.buscarPorId(id_materia);
+                Materia materia = materiaServicio.buscarPorId(id_materia);
 		modelo.put("materia", materia.getNombre());
 		return "Materia";
 	}
 
-//ESTE MÉTODO TENDRÍA QUE VERIFICAR PRIMERO SI ES ALUMNO O PROFESOR, PARA NO TENER QUE HACER DOS MÉTODOS
 	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO') || hasRole('ROLE_PROFESOR_REGISTRADO')")
 	@GetMapping("/MisMaterias")
 	public String listarMateriasAlumno(HttpSession session, ModelMap modelo) {
@@ -85,7 +85,7 @@ public class MateriaController {
 		boolean alumnoNoLogueado = loginAlumno == null || !loginAlumno.getId().equals(session.getId());
 		boolean profesorNoLogueado = loginProfesor == null || !loginProfesor.getId().equals(session.getId());
 		if (alumnoNoLogueado && profesorNoLogueado) {
-			return "redirect:/index";
+			return "redirect:/inicio";
 		}
 		List<Materia> materias = new ArrayList<>();
 		// Es un alumno

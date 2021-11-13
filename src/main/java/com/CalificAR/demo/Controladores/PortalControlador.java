@@ -1,6 +1,7 @@
 package com.CalificAR.demo.Controladores;
 
 import com.CalificAR.demo.Entidades.Alumno;
+import com.CalificAR.demo.Entidades.Profesor;
 import javax.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class PortalControlador {
         return "login.html";
     }
 
+    //ESTO NO VA ACA
     @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
     @GetMapping("validarCertificado")
     public String validarCertificado(HttpSession session) {
@@ -40,7 +42,19 @@ public class PortalControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/inicio")
-    public String inicio() {
+    public String inicio(HttpSession session, ModelMap modelo) {
+        Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
+        Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
+        // Es un alumno
+        if (loginAlumno != null) {
+            modelo.put("alumno", loginAlumno);
+        }
+        // Es un profesor
+        if (loginProfesor != null) {
+            modelo.put("profesor", loginProfesor);
+        }
+        
+
         return "inicio.html";
     }
 }

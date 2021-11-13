@@ -12,6 +12,7 @@ import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
+import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
 public class MateriaServicio {
@@ -20,7 +21,9 @@ public class MateriaServicio {
 	private MateriaRepositorio materiaRepositorio;
 	@Autowired
 	private AlumnoRepositorio alumnoRepositorio;
-
+        @Autowired
+        private ProfesorRepositorio profesorRepositorio;
+        
 	@Transactional
 	public Materia crearMateria(String nombreMateria) throws ErrorServicio {
 		// validar
@@ -47,9 +50,9 @@ public class MateriaServicio {
 		Optional<Alumno> respuesta = alumnoRepositorio.findById(idAlumno);
 		if (respuesta.isPresent()) {
 			Alumno alumno = respuesta.get();
-			List<Materia> materia = new ArrayList<Materia>();
+			List<Materia> materia = alumno.getMaterias();
 			materia.add(idMateria);
-			alumno.setMateria(materia);
+			alumno.setMaterias(materia);
 		}
 	}
 
@@ -71,9 +74,9 @@ public class MateriaServicio {
 	public List<Materia> materias(Usuario usuario) {
 		List<Materia> materias;
 		if(usuario instanceof Alumno) {
-			materias = materiaRepositorio.buscarMateriasporAlumno(usuario.getId());
+			materias = alumnoRepositorio.findById(usuario.getId()).get().getMaterias();
 		} else {
-			materias = materiaRepositorio.buscarMateriasporProfesor(usuario.getId());
+			materias = profesorRepositorio.findById(usuario.getId()).get().getMaterias();
 		}
 		return materias;
 	}

@@ -26,8 +26,6 @@ public class Usuario {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	protected LocalDate fechaNac;
 	// Se movio la lista de materias de Alumno y Profesor a la entidad Usuario.
-	@ManyToMany
-	private List<Materia> materias;
 	@OneToOne
 	protected Foto foto;
 	@OneToOne
@@ -45,24 +43,23 @@ public class Usuario {
 //        this.materias = materias;
 //    }
 
-	public Usuario(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, List<Materia> materias, Foto foto) {
+	public Usuario(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto) {
 		this.login = login;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.mail = mail;
 		this.fechaNac = fechaNac;
-		this.materias = materias;
 		this.foto = foto;
 	}
 
 	// Método para obtener un objeto Alumno a partir de un objeto Usuario
 	public Alumno crearAlumno() {
-		return new Alumno(login, nombre, apellido, mail, fechaNac, foto, materias);
+		return new Alumno(login, nombre, apellido, mail, fechaNac, foto);
 	}
 
 	// Método para obtener un objeto Profesor a partir de un objeto Usuario
 	public Profesor crearProfesor() {
-		return new Profesor(login, nombre, apellido, mail, fechaNac, foto, materias);
+		return new Profesor(login, nombre, apellido, mail, fechaNac, foto);
 	}
 
 	public Usuario() {
@@ -116,14 +113,6 @@ public class Usuario {
 		this.foto = foto;
 	}
 
-	public List<Materia> getMaterias() {
-		return materias;
-	}
-
-	public void setMateria(List<Materia> materias) {
-		this.materias = materias;
-	}
-
 	public Login getLogin() {
 		return login;
 	}
@@ -135,7 +124,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return ", id=" + id + ", dni=" + login.dni + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail
-				+ ", clave=" + login.clave + ", fechaNac=" + fechaNac + ", materias=" + materias + ", foto=" + foto
+				+ ", clave=" + login.clave + ", fechaNac=" + fechaNac + ", foto=" + foto
 				+ "]";
 	}
 }

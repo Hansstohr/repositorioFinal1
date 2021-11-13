@@ -1,5 +1,7 @@
 package com.CalificAR.demo.Controladores;
 
+import com.CalificAR.demo.Entidades.Alumno;
+import com.CalificAR.demo.Entidades.Materia;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,92 +14,80 @@ import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
+import com.CalificAR.demo.Servicios.AlumnoServicio;
 import com.CalificAR.demo.Servicios.NotaServicio;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("/notas")
 public class NotaController {
 
     @Autowired
-    NotaRepositorio notaRepositorio;
-    NotaServicio notaServicio = new NotaServicio();
+    NotaServicio notaServicio;
+    
+    @Autowired
+    AlumnoServicio alumnoServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-    @GetMapping("/agregarNota")
-    public String agregarNota(HttpSession session) {
+    @GetMapping("/agregarNotas")
+    public String agregarNotas(ModelMap modelo, HttpSession session, @ModelAttribute Materia materia) {
         Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
         if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
             return "redirect:/index";
         }
+        List<Alumno> alumnos = alumnoServicio.alumnnosPorMateria(materia.getIdMateria());
+        
+        modelo.put("alumnos", alumnos);
+        modelo.put("materia", materia);
+        
         return "agregarNota.html";
     }
-
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
-    @GetMapping("/obtenerNota")
-    public String obtenerNota(HttpSession session) {
-
-        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-            return "redirect:/index";
-        }
-        return "obtenerNota.html";
-    }
-
+    
     @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-    @RequestMapping(value = "/agregarNota", method = RequestMethod.POST)
-    public String agregarNotas(HttpSession session, @RequestBody Notas notas) throws ErrorServicio {
+    @RequestMapping(value = "/guardarNotas", method = RequestMethod.POST)
+    public String guardarNotas(ModelMap modelo, HttpSession session, @ModelAttribute Notas notas) throws ErrorServicio {
 
         Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
         if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
             return "redirect:/index";
         }
-
-        notaServicio.crearNotas(notas);
-        return "perfil.html";
+        List<Nota> listaNotas = notaServicio.crearNotas(notas);
+        modelo.put("notas", listaNotas);
+        modelo.put("materia", listaNotas.get(0).getMateria());
+        
+        return "VerNotas.html";
     }
+    
+    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')|| hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+    @PostMapping("/obtenerNota")
+    public String obtenerNota(ModelMap modelo, HttpSession session, @RequestParam String idMateria) {
 
-//	@RequestMapping(value = "/obtenerTodasLasNotas", method = RequestMethod.GET)
-//	public List<Nota> obtenerTodasNotas() {
-//		List<Nota> notas = notaServicio.todos();
-//		return notas;
-//	}
-    @RequestMapping(value = "/obtenerNotas", method = RequestMethod.GET)
-    public List<Nota> obtenerNotas(@RequestParam String idAlumno, @RequestParam String idMateria) {
-        List<Nota> notas = notaServicio.obtenerNotas(idAlumno, idMateria);
-        return notas;
-    }
-}
-/*
- * 1) Crear materia POST: http://localhost:8080/api/materias/crearMateria {
- * "nombre":"Fisica" }
- * 
- * 2) Crear alumno POST: http://localhost:8080/api/alumnos/crearAlumno { "dni":
- * "39504712", "nombre": "Chino", "apellido": "Vega", "mail":
- * "chinofirmat@gmail.com", "clave": "12345678", "clave2": "12345678",
- * "fechaNac": "1996-04-10" }
- * 
- * 3) Crear nota POST: http://localhost:8080/notas/agregarNota
-{
-    "materia":
-        {
-            "idMateria":"e6a2de25-237a-4970-b233-33edf3235be1"
-        },
-    "notas": [
-        {
-            "alumno": {
-                "id":"21f52625-0c8a-4edb-9385-b1ddb1c46953"
-            },
-            "nota": "8.0"
-        },
-        {
-            "alumno": {
-                "id":"188bd81b-421d-41a1-a644-0d054ff9ce37"
-            },
-            "nota": "6.0"
+        Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
+        Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
+        boolean alumnoNoLogueado = loginAlumno == null || !loginAlumno.getId().equals(session.getId());
+        boolean profesorNoLogueado = loginProfesor == null || !loginProfesor.getId().equals(session.getId());
+        if (alumnoNoLogueado && profesorNoLogueado) {
+            return "redirect:/inicio";
         }
-    ]
+        List<Nota> notas = new ArrayList<>();
+        // Es un alumno
+        if (!alumnoNoLogueado) {
+            notas = notaServicio.obtenerNotasAlumno(loginAlumno.getId(), idMateria);
+        }
+        // Es un profesor
+        if (!profesorNoLogueado) {
+            notas = notaServicio.obtenerNotas(idMateria);
+        }
+
+        modelo.put("notas", notas);
+        
+        return "VerNotas.html";
+    }
+
 }
- */

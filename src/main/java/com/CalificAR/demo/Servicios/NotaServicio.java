@@ -1,11 +1,13 @@
 package com.CalificAR.demo.Servicios;
 
+import com.CalificAR.demo.Entidades.Alumno;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
+import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -15,32 +17,31 @@ public class NotaServicio {
     private NotaRepositorio notaRepositorio;
 
     @Transactional
-    public Notas crearNotas(Notas notas) {
+    public List<Nota> crearNotas(Notas notas) {
         for (Nota nota : notas.getNotas()) {
             // Se guarda el valor de materia adentro de cada nota. Se hizo así para poder pasar una sola vez la materia en el mensaje que llega desde UI
             nota.setMateria(notas.getMateria());
+            nota.setFecha(notas.getFecha());
             notaRepositorio.save(nota);
         }
-        return notas;
-    }
-
-    @Transactional
-    public List<Nota> crearNotas(List<Nota> notas) {
-        for (Nota nota : notas) {
-            notaRepositorio.save(nota);
-        }
-        return notas;
+        return notas.getNotas();
     }
 
     @Transactional(readOnly = true)
-    public List<Nota> obtenerNotas(String idAlumno, String idMateria) {
-        return notaRepositorio.obtenerNotas(idAlumno, idMateria);
+    public List<Nota> obtenerNotasAlumno(String idAlumno, String idMateria) {
+        return notaRepositorio.obtenerNotasAlumno(idAlumno, idMateria);
     }
-
+    
     @Transactional(readOnly = true)
-    public List<Nota> todos() {
-        return notaRepositorio.findAll();
+    public List<Nota> obtenerNotas(String idMateria) {
+        return notaRepositorio.obtenerNotas(idMateria);
     }
+    
+    
+//    @Transactional(readOnly = true)
+//    public List<Nota> todos() {
+//        return notaRepositorio.findAll();
+//    }
 
 //    public void modificarNota() {
 //        

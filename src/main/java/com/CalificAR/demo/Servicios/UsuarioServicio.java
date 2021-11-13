@@ -17,22 +17,22 @@ import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
-public abstract class UsuarioServicio{
+public abstract class UsuarioServicio {
 
     private static final int MIN_EDAD = 18;
     @Autowired
     private FotoServicio fotoServicio;
 
     @Autowired
-	private LoginRepositorio loginRepositorio;
-    
+    private LoginRepositorio loginRepositorio;
+
     @Transactional
     public <U extends Usuario> Usuario registrarUsuario(UsuarioRepositorio<U> repo, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
         validar(repo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento, null, null);
         Usuario usuario = new Usuario();
-        if(usuario.getLogin() != null) {
-        	usuario.getLogin().setDni(dni);
+        if (usuario.getLogin() != null) {
+            usuario.getLogin().setDni(dni);
         }
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
@@ -44,8 +44,8 @@ public abstract class UsuarioServicio{
         // Guardamos el id de login en usuario
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         Login login = new Login(dni, encriptada);
-		login = loginRepositorio.save(login);
-		usuario.setLogin(login);
+        login = loginRepositorio.save(login);
+        usuario.setLogin(login);
         // notificacionServicio.enviar("Bienvenidos a Calific-AR", " ",
         // usuario.getMail());
         return usuario;
@@ -97,6 +97,16 @@ public abstract class UsuarioServicio{
                 }
             }
 
+        } else {
+
+            U nuevoDni = repo.buscarPorDni(dni);
+            if (nuevoDni != null) {
+                throw new ErrorServicio("El DNI ingresado ya está siendo usado por otro Usuario");
+            }
+            U nuevoMail = repo.buscarPorMail(mail);
+            if (nuevoMail != null) {
+                throw new ErrorServicio("El mail ingresado ya está siendo usado por otro Usuario");
+            }
         }
 
         if (clave == null || clave.isEmpty() || clave.length() <= 6) {
@@ -151,7 +161,6 @@ public abstract class UsuarioServicio{
         }
     }
 
-
     // Devuelve un Alumno o Profesor filtrando por Dni
     @Transactional(readOnly = true)
     public <U extends Usuario> Optional<U> buscarPordDni(UsuarioRepositorio<U> repo, String dni) {
@@ -175,7 +184,7 @@ public abstract class UsuarioServicio{
         }
 
     }
-    
+
 //    @Override
 //    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
 //        Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
