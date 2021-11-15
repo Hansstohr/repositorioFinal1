@@ -25,20 +25,19 @@ public class LoginServicio implements UserDetailsService {
 
     @Autowired
     private LoginRepositorio loginRepositorio;
-    
+
     @Autowired
     private ProfesorRepositorio profesorRepositorio;
-    
+
     @Autowired
     private AlumnoRepositorio alumnoRepositorio;
-    
+
     @Override
     public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
         Login login = loginRepositorio.buscarPorDni(dni);
         //System.out.println(alumno);
         if (login != null) {
-        	
-        	
+
             List<GrantedAuthority> permisos = new ArrayList<>();
 
             GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
@@ -48,23 +47,21 @@ public class LoginServicio implements UserDetailsService {
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", login);
-            
+
             // Chequear si es un alumno o un profesor
-        	Profesor profesor = profesorRepositorio.buscarPorDni(dni);
-        	if(profesor != null) {
-        		session.setAttribute("profesorsession", profesor);        		
-        	} else {
-        		Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
-        		if(alumno != null) {
-        			session.setAttribute("alumnosession", alumno);
-        		} else {
-        			// Esto no debería pasar
-        			return null;
-        		}
-        	}
-            
-            
-            
+            Profesor profesor = profesorRepositorio.buscarPorDni(dni);
+            if (profesor != null) {
+                session.setAttribute("profesorsession", profesor);
+            } else {
+                Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
+                if (alumno != null) {
+                    session.setAttribute("alumnosession", alumno);
+                } else {
+                    // Esto no debería pasar
+                    return null;
+                }
+            }
+
             //System.out.println("Llegó hasta acá2");
 //
 //            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
@@ -82,5 +79,5 @@ public class LoginServicio implements UserDetailsService {
         }
 
     }
-    
+
 }

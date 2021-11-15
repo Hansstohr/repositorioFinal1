@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalificAR - Registro</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
-</head>
-<body bgcolor="#E5E9F2" align="center">
-    <section class="registro">
-    <h1 style="color: #47525E;">Modificar Profesor</h1>
-    <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
-    <form th:action="@{/profesor/modificarProfesor}" method="POST" th:object="${profesor}" enctype="multipart/form-data">
-     <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
-     <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
-     <input type="text" name="dni" placeholder="DNI" maxlength="8" th:value="${dni}">
-     <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
-     <input type="password" name="contraseña" placeholder="Contraseña" th:value="${clave}">
-     <label class="fc" style="color: #8190A5;">Fecha de nacimiento</label><br>
-     <input type="date" name="fechanac" th:field="*{fechaNac}">
-     <label class="foto">Cargar foto
-     <input class="none" type="file" name="archivo">
-    </label> <br>
-    <br>
-     <button type="submit" class="btn btn-outline-dark p-3">Modificar</button>
-    </form>
-</section>
-</body>
-</html>
+    <head>
+        <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>CalificAR - Registro</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                            <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+                                <link rel="preconnect" href="https://fonts.googleapis.com">
+                                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                                        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
+                                            <link rel="stylesheet" href="/css/estilos.css">
+                                                <link rel="icon" href="">
+                                                    </head>
+                                                    <body bgcolor="#E5E9F2" align="center">
+                                                        <section class="registro">
+                                                            <h1 style="color: #47525E;">Modificar Profesor</h1>
+                                                            <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+                                                            <form th:action="@{/profesor/modificarProfesor}" method="POST" th:object="${profesor}" enctype="multipart/form-data">
+                                                                <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
+                                                                    <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
+                                                                            <input type="text" name="dni" placeholder="DNI" maxlength="8" th:value="${dni}">
+                                                                                <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
+                                                                                        <input type="password" name="contraseña" placeholder="Contraseña" th:value="${clave}">
+                                                                                            <label class="fc" style="color: #8190A5;">Fecha de nacimiento</label><br>
+                                                                                                <input type="date" name="fechanac" th:field="*{fechaNac}">
+                                                                                                    <label class="foto">Cargar foto
+                                                                                                        <input class="none" type="file" name="archivo">
+                                                                                                    </label> <br>
+                                                                                                        <br>
+                                                                                                            <button type="submit" class="btn btn-outline-dark p-3">Modificar</button>
+                                                                                                            </form>
+                                                                                                            </section>
+                                                                                                            </body>
+                                                                                                            </html>

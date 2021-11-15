@@ -1,13 +1,11 @@
 package com.CalificAR.demo.Servicios;
 
-import com.CalificAR.demo.Entidades.Alumno;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
-import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -31,18 +29,16 @@ public class NotaServicio {
     public List<Nota> obtenerNotasAlumno(String idAlumno, String idMateria) {
         return notaRepositorio.obtenerNotasAlumno(idAlumno, idMateria);
     }
-    
+
     @Transactional(readOnly = true)
     public List<Nota> obtenerNotas(String idMateria) {
         return notaRepositorio.obtenerNotas(idMateria);
     }
-    
-    
+
 //    @Transactional(readOnly = true)
 //    public List<Nota> todos() {
 //        return notaRepositorio.findAll();
 //    }
-
 //    public void modificarNota() {
 //        
 //    }

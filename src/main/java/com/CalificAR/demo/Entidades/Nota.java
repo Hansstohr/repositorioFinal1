@@ -15,15 +15,15 @@ public class Nota {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idNota;
-    
+
     @ManyToOne
     private Alumno alumno;
-    
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Materia materia;
-    
+
     private LocalDate fecha;
-    
+
     private Double nota;
 
     public Nota(String idNota, Alumno alumno, Materia materia, LocalDate fecha, Double nota) {
@@ -76,10 +76,10 @@ public class Nota {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
-    
+
     @Override
     public String toString() {
         return "Nota{" + "idNota=" + idNota + ", alumno=" + alumno + ", materia=" + materia + ", fecha=" + fecha + ", nota=" + nota + '}';
     }
-    
+
 }

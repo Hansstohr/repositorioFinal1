@@ -38,7 +38,7 @@ public class CertificadoController {
     AlumnoServicio alumnoServicio;
     
     @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
-    @RequestMapping(value = "/generarCertificado", method = RequestMethod.POST)
+    @RequestMapping(value = "/generarCertificado", method = RequestMethod.GET)
     public String newCertificado(HttpSession session, ModelMap modelo) throws ErrorServicio {
 
         Alumno alumno = (Alumno) session.getAttribute("alumnosession");
@@ -47,7 +47,6 @@ public class CertificadoController {
             return "redirect:/index";
         }
         try {
-
             certificadoServicio.solicitarCertificado(alumno.getId());
 
         } catch (ErrorServicio e) {
@@ -61,7 +60,7 @@ public class CertificadoController {
     public String validarCertificado(ModelMap modelo) {
         return "validarCertificado.html";
     }
-
+    
     //AQUÍ TIENE QUE RETORNAR UN HTML CON LOS DATOS DE UN ALUMNO
     @PostMapping("/consultarCertificado")
     public String consultarCertificado(HttpSession session, @RequestParam String certificado_codigo) throws ErrorServicio {

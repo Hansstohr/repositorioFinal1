@@ -10,7 +10,6 @@ import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,18 +26,17 @@ public class AsistenciaServicio {
     @Transactional
     public Asistencias crearAsistencia(Asistencias asistencias) {
         LocalDate fecha = LocalDate.now();
-        for(Asistencia asistencia : asistencias.getAsistencias()) {
+        for (Asistencia asistencia : asistencias.getAsistencias()) {
             asistencia.setFecha(fecha);
             asistencia.setMateria(asistencias.getMateria());
             asistenciaRepositorio.save(asistencia);
         }
         return asistencias;
     }
-    
 
     @Transactional(readOnly = true)
-    public List<Asistencia> consultarAsistencia(String idAlumno , String idMateria) {
-        List<Asistencia> asistencias = asistenciaRepositorio.buscarAsistenciaPorAlumnoYMateria(idAlumno , idMateria);
+    public List<Asistencia> consultarAsistencia(String idAlumno, String idMateria) {
+        List<Asistencia> asistencias = asistenciaRepositorio.buscarAsistenciaPorAlumnoYMateria(idAlumno, idMateria);
         return asistencias;
     }
 

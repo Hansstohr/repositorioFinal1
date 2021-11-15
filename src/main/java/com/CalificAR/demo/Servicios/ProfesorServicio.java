@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
-import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
@@ -60,5 +58,10 @@ public class ProfesorServicio extends UsuarioServicio {
         } else {
             throw new ErrorServicio("No se encontró el profesor solicitado");
         }
+    }
+    
+    @Transactional(readOnly = true)
+    public Optional<Profesor> buscarPorMail(String mail) {
+        return super.buscarPorMail(profesorRepositorio, mail);
     }
 }

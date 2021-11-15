@@ -23,31 +23,31 @@
   	    <p align="left" style="color: #8190A5;">Iniciar sesión</p>
 
             <form action="logincheck" method="POST">
-               <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                 <p th:if="${logout != null}" th:text="${logout}" style="color:green"></p>  
 
-              <label class="dni" style="color: #8190A5;">DNI</label> <br>
-              <input type="text" class="form-control" name="username" maxlength=8/>
-              <br>
-              
-              <label style="color: #8190A5;">Contraseña</label> <br>
-              <input type="password" class="form-control" name="password"/>
-              <br>
-              <br/>
-              <button type="submit" class="button2">Ingresar</button>
+                <label class="dni" style="color: #8190A5;">DNI</label> <br>
+                <input type="text" class="form-control" name="username" maxlength=8/>
+                <br>
+
+                <label style="color: #8190A5;">Contraseña</label> <br>
+                <input type="password" class="form-control" name="password"/>
+                <br>
+                <br/>
+                <button type="submit" class="button2">Ingresar</button>
             </form>
-            
-            
-               <br>
-     <a class="button" th:href="@{/alumno/registroAlumno}" role="button">Registro alumno</a>
-     <a class="button" th:href="@{/profesor/validarProfesor}" role="button">Registro profesor</a>
-     <br>
-     <br>
-     <br>
-     <a class="link" href="/restabecerContraseña" role="link">¿Olvidaste tu contraseña?</a> 
+
+
+            <br>
+            <a class="button" th:href="@{/alumno/registroAlumno}" role="button">Registro alumno</a>
+            <a class="button" th:href="@{/profesor/validarProfesor}" role="button">Registro profesor</a>
+            <br>
+            <br>
+            <br>
+            <a class="link" href="/recuperarContraseña" role="link">¿Olvidaste tu contraseña?</a> 
+        </div>
     </div>
-    </div>
-  </section>
+</section>
 </body>
 
 </html>

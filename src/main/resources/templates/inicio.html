@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CalificAR - Registro</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="/css/estilos.css">
-  <link rel="icon" href="">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CalificAR - Registro</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="/css/estilos.css">
+        <link rel="icon" href="">
+    </head>
 
-<body>
-  <div class="header">
-    <div class="container">
-      <h1>CalificAR</h1>
-      <div class="conjunto"align="right">
-        <img  th:if="${alumno != null and alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
-        <img  th:if="${profesor != null and profesor.foto != null}" th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
-        <img  th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
-        <a href="/" class="molde overlay">
-          <div class="text">Mi perfil</div>
-        </a>
-        <p class="name">Nombre</p>
+    <body>
+        <div class="header">
+            <div class="container">
+                <h1>CalificAR</h1>
+                <div class="conjunto"align="right">
+                    <img  th:if="${alumno != null and alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
+                    <img  th:if="${profesor != null and profesor.foto != null}" th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
+                    <img  th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
+                    <a href="/" class="molde overlay">
+                        <div class="text">Mi perfil</div>
+                    </a>
+                    <p class="name">Nombre</p>
         <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
-      </div>
-    </div>
-  </div>
-  <ul>
-    <li><a class="active" href="/">Inicio</a></li>
+                </div>
+            </div>
+        </div>
+        <ul>
+            <li><a class="active" href="/">Inicio</a></li>
         <li class="dropdown">
       <a class="dropbtn" href="javascript:void(0)">Mis materias</a>
       <div class="dropdown-content">
@@ -43,10 +43,10 @@
         <a href="#">Link 3</a>
       </div>
     </li>
-    <li><a href="/">Inscribirme a materias</a></li>
+            <li><a href="/">Inscribirme a materias</a></li>
     <li><a href="/">Generar certificado</a></li>
-    <li><a href="/">Crear materia</a></li>
-  </ul>
+            <li><a href="/">Crear materia</a></li>
+        </ul>
 </body>
-
+         
 </html>

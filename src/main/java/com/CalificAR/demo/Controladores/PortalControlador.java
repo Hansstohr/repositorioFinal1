@@ -2,15 +2,25 @@ package com.CalificAR.demo.Controladores;
 
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Profesor;
+import com.CalificAR.demo.Servicios.AlumnoServicio;
+import com.CalificAR.demo.Servicios.ProfesorServicio;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PortalControlador {
+    
+    @Autowired
+    AlumnoServicio alumnoServicio;
+    @Autowired
+    ProfesorServicio profesorServicio;
 
     @GetMapping("/")
     public String index() {
@@ -56,5 +66,22 @@ public class PortalControlador {
         
 
         return "inicio.html";
+    }
+
+    @GetMapping("/recuperarContraseña")
+    public String recuperarContraseña() {
+        return "recuperarContraseña.html";
+    }
+    
+    @PostMapping("/validarMail")
+    public String validarMail(String mail, ModelMap model) {
+        Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
+        Optional<Profesor> profesor = profesorServicio.buscarPorMail(mail);
+        if(alumno.isPresent() || profesor.isPresent()) {
+            // Enviarm mail
+        } else {
+             model.put("error", "El mail ingresado es inexistente");
+        }
+        return "recuperarContraseña.html";
     }
 }

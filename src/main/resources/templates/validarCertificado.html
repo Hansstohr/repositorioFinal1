@@ -3,37 +3,38 @@
 
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CalificAR - Validar Certificado</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
-              rel="stylesheet">
-        <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
-    </head>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>CalificAR - Validar Certificado</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                            <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+                                <link rel="preconnect" href="https://fonts.googleapis.com">
+                                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                                        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+                                              rel="stylesheet">
+                                            <link rel="stylesheet" href="/css/estilos.css">
+                                                <link rel="icon" href="">
+                                                    </head>
 
-    <body bgcolor="#E5E9F2" align="center">
-        <section>
-            <h1 align="center" style="color: #47525E;">Validar Certificado de Alumno Regular</h1>
-            <p align="left" style="color: #8190A5;">Ingrese el código que figura en el certificado</p>
-            <form th:action="@{/certificado/consultarCertificado}" method="POST">
-                <div class="row m-5">
-                    <div class="col-lg-6">
-                        <div class="form-label">
-                            <label id="clavecss">Código</label>
-                            <input type="number" name="certificado_codigo" class="form-control" placeholder="Código" th:value="${certificado_codigo}">
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-outline-dark p-3">Validar</button>
-                        </div>
-                    </div>
-            </form>
+                                                    <body bgcolor="#E5E9F2" align="center">
+                                                        <section>
+                                                            <h1 align="center" style="color: #47525E;">Validar Certificado de Alumno Regular</h1>
+                                                            <p align="center" style="color: #8190A5;">Ingrese el código que figura en el certificado</p>
+                                                            <form th:action="@{/certificado/consultarCertificado}" method="POST">
+                                                                <div class="row m-5">
+                                                                    <div class="col-lg-6">
+                                                                        <div class="form-label">
+                                                                            <label id="clavecss">Código</label>
+                                                                            <input type="number" name="certificado_codigo" class="form-control" placeholder="Código" th:value="${certificado_codigo}">
+                                                                        </div>
+                                                                        <div class="d-flex justify-content-center">
 
-    </body>
+                                                                        </div>
+                                                                        <button type="submit" class="button2">Validar</button>
+                                                                    </div>
+                                                            </form>
 
-</html>
+                                                    </body>
+
+                                                    </html>

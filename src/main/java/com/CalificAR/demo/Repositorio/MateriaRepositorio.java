@@ -1,6 +1,5 @@
 package com.CalificAR.demo.Repositorio;
 
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +12,7 @@ public interface MateriaRepositorio extends JpaRepository<Materia, String> {
     //buscar materia por nombre
     @Query("SELECT c FROM Materia c WHERE c.nombre = :nombre")
     public Materia buscarPorNombre(@Param("nombre") String nombre);
-    
+
 //    //BUSCAR MATERIAS POR ALUMNO
 //     @Query("SELECT c FROM Materia c WHERE c.alumno_materias.alumno_id = :alumno_id")
 //     public List<Materia> buscarMateriasporAlumno(@Param("alumno_id") String alumno_id);
@@ -21,5 +20,4 @@ public interface MateriaRepositorio extends JpaRepository<Materia, String> {
 //    //BUSCAR MATERIAS POR PROFESOR
 //       @Query("SELECT c FROM Materia c WHERE c.nombre = :nombre")
 //     public List<Materia> buscarMateriasporProfesor(@Param("profesor_id") String profesor_id);
-    
 }

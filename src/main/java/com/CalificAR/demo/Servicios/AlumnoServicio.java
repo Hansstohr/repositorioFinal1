@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
-import com.CalificAR.demo.Entidades.Login;
-import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
-import java.util.ArrayList;
+import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 import java.util.Iterator;
 
 @Service
@@ -26,7 +24,6 @@ public class AlumnoServicio extends UsuarioServicio {
     @Autowired
     private LoginRepositorio loginRepositorio;
 
-    
     @Transactional
     public Alumno registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave, String clave2,
             LocalDate fechaNacimiento) throws ErrorServicio {
@@ -50,19 +47,18 @@ public class AlumnoServicio extends UsuarioServicio {
     @Transactional(readOnly = true)
     public List<Alumno> alumnnosPorMateria(String idMateria) {
         List<Alumno> alumnos = alumnoRepositorio.findAll();
-        
+
         Iterator<Alumno> it = alumnos.iterator();
         while (it.hasNext()) {
             Alumno alumno = it.next();
-            if (alumno.getMaterias().stream().anyMatch(m->!m.getIdMateria().equals(idMateria))) {
+            if (alumno.getMaterias().stream().anyMatch(m -> !m.getIdMateria().equals(idMateria))) {
                 it.remove();
             }
         }
         return alumnos;
     }
 
-    
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public Alumno buscarPorId(String id) throws ErrorServicio {
 
         Optional<Alumno> respuesta = alumnoRepositorio.findById(id);
@@ -75,6 +71,11 @@ public class AlumnoServicio extends UsuarioServicio {
             throw new ErrorServicio("No se encontró el alumno solicitado");
         }
 
+    }
+    
+    @Transactional(readOnly = true)
+    public Optional<Alumno> buscarPorMail(String mail) {
+        return super.buscarPorMail(alumnoRepositorio, mail);
     }
 
 }

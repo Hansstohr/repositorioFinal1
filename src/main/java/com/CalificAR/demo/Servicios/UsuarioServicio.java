@@ -22,6 +22,9 @@ public abstract class UsuarioServicio {
     private static final int MIN_EDAD = 18;
     @Autowired
     private FotoServicio fotoServicio;
+    
+    //@Autowired
+    //private NotificacionServicio notificacionServicio;
 
     @Autowired
     private LoginRepositorio loginRepositorio;
@@ -46,8 +49,7 @@ public abstract class UsuarioServicio {
         Login login = new Login(dni, encriptada);
         login = loginRepositorio.save(login);
         usuario.setLogin(login);
-        // notificacionServicio.enviar("Bienvenidos a Calific-AR", " ",
-        // usuario.getMail());
+        //notificacionServicio.enviar("Bienvenidos a Calific-AR", " ",usuario.getMail());
         return usuario;
     }
 
@@ -184,36 +186,5 @@ public abstract class UsuarioServicio {
         }
 
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-//        Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
-//        System.out.println(alumno);
-//        if (alumno != null) {
-//            List<GrantedAuthority> permisos = new ArrayList<>();
-//
-//            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_ALUMNO_REGISTRADO");
-//            permisos.add(p1);
-//            System.out.println("Llegó hasta acá");
-//            //Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
-//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//            HttpSession session = attr.getRequest().getSession(true);
-//            session.setAttribute("alumnosession", alumno);
-//            System.out.println("Llegó hasta acá2");
-////
-////            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
-////            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTAS");
-////            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTOS");
-////
-////            permisos.add(p1);
-////            permisos.add(p2);
-////            permisos.add(p3);
-//            User user = new User(alumno.getDni(), alumno.getClave(), permisos);
-//            return user;
-//
-//        } else {
-//            return null;
-//        }
-//
-//    }
+    
 }

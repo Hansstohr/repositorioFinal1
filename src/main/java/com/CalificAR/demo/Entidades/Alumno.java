@@ -18,10 +18,9 @@ public class Alumno extends Usuario {
     @OneToOne
     private Certificado certificado;
 
-    
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Materia> materias;
-    
+
     public Alumno() {
     }
 
@@ -37,7 +36,6 @@ public class Alumno extends Usuario {
         this.materias = materias;
     }
 
-    
     public Certificado getCertificado() {
         return certificado;
     }

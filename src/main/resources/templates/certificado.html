@@ -17,44 +17,33 @@
                                                     <body bgcolor="#E5E9F2">
                                                         <section class="registro">
                                                             <h2 align="center" style="color: #47525E;">Certificado de alumno regular</h2>
-                                                            
-                                                                <form th:action="@{/certificado/getCertificado}" method="GET">
+
+                                                            <form th:action="@{/certificado/getCertificado}" method="GET">
 
 
-                                                                    <p>Esta institución certifica que el/la alumno/a
-                                                                        <b><td name="nombre" placeholder="Nombre" th:text="${alumno.nombre}"></td></b>
-                                                                        <b><td name="apellido" th:text="${alumno.apellido}"></td></b>
-                                                                        con DNI
-                                                                        <b><td name="dni" th:text="${alumno.login.dni}"></td></b>
-                                                                        y fecha de nacimiento
-                                                                        <b><td type="date" name="fechanac" th:text="${alumno.fechaNac}"></td></b>
-                                                                        se encuentra actualmente regular en la carrera.
+                                                                <p>Esta institución certifica que el/la alumno/a
+                                                                    <b><td name="nombre" placeholder="Nombre" th:text="${alumno.nombre}"></td></b>
+                                                                    <b><td name="apellido" th:text="${alumno.apellido}"></td></b>
+                                                                    con DNI
+                                                                    <b><td name="dni" th:text="${alumno.login.dni}"></td></b>
+                                                                    y fecha de nacimiento
+                                                                    <b><td type="date" name="fechanac" th:text="${alumno.fechaNac}"></td></b>
+                                                                    se encuentra actualmente regular en la carrera.
+                                                                    <br>
                                                                         <br>
+                                                                            A su pedido y para ser presentado ante quien corresponda se extiende el presente certificado.
                                                                             <br>
-                                                                                A su pedido y para ser presentado ante quien corresponda se extiende el presente certificado.
                                                                                 <br>
+                                                                                    Este certificado tiene una vigencia de 90 días a partir de la fecha de emisión.</p>
+
                                                                                     <br>
-                                                                                        Este certificado tiene una vigencia de 90 días a partir de la fecha de emisión.</p>
-
                                                                                         <br>
-                                                                                            <br>
+                                                                                            </form>
+                                                                                            <p align="right">
+                                                                                                <a class="button2" href="/inicioAlumno" role="button" type="submit">Volver</a>
 
+                                                                                            </p>
+                                                                                            </section>
 
-                                                                                                <!--<label><b>Foto</b></label>
-                                                                                               <td type="date" name="multiPartFileFoto" th:text="${multiPartFileFoto}">
-                                                                                                  
-                                                                                                   <td>
-                                                                                                           <img th:if="${alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" style="max-height: 60px; border-radius: 100%;">
-                                                                                                           <img th:if="${alumno.foto == null}" src="/img/none.jpeg" style="max-height: 60px; border-radius: 100%;">
-                                                                                                   </td>
-                                                                                                   <br>
-                                                                                                -->
-                                                                                                </form>
-                                                                                                <p align="right">
-                                                                                                    <a class="button2" href="/inicioAlumno" role="button" type="submit">Volver</a>
-                                                                                                    
-                                                                                                </p>
-                                                                                                </section>
-
-                                                                                                </body>
-                                                                                                </html>
+                                                                                            </body>
+                                                                                            </html>

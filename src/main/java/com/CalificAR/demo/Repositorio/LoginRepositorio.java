@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoginRepositorio extends JpaRepository<Login, String> {
 
-       
     @Query("SELECT c FROM Login c WHERE c.dni = :dni")
     public Login buscarPorDni(@Param("dni") String dni);
-    
+
 }

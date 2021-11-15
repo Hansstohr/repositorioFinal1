@@ -12,6 +12,7 @@ public class Login {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+
     protected String dni;
     protected String clave;
 
@@ -47,6 +48,4 @@ public class Login {
         this.clave = clave;
     }
 
-    
-    
 }

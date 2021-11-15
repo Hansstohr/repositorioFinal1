@@ -17,20 +17,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Profesor extends Usuario {
 
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	protected String id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    protected String id;
 
-        @OneToMany(cascade = CascadeType.ALL)
-        private List<Materia> materias;
-        
-	public Profesor() {
-	}
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Materia> materias;
 
-	public Profesor(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto) {
-		super(login, nombre, apellido, mail, fechaNac, foto);
-	}
+    public Profesor() {
+    }
+
+    public Profesor(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto) {
+        super(login, nombre, apellido, mail, fechaNac, foto);
+    }
 
     public List<Materia> getMaterias() {
         return materias;
@@ -39,6 +39,5 @@ public class Profesor extends Usuario {
     public void setMaterias(List<Materia> materias) {
         this.materias = materias;
     }
-        
-        
+
 }

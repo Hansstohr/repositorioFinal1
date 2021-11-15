@@ -5,7 +5,6 @@ import java.util.List;
 public class Asistencias {
 
     private Materia materia;
-
     private List<Asistencia> asistencias;
 
     public Asistencias(Materia materia, List<Asistencia> asistencias) {

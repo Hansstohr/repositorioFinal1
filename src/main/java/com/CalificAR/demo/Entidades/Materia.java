@@ -12,6 +12,7 @@ public class Materia {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idMateria;
+
     private String nombre;
 
     public Materia(String idMateria, String nombre) {
@@ -43,5 +44,5 @@ public class Materia {
     public String toString() {
         return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + '}';
     }
-    
+
 }
