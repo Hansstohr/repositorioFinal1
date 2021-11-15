@@ -133,11 +133,12 @@ input:focus{
 #clavecss{
     font-size: large;
 }
-
 .header {
+  position: relative;
   padding: 20px;
   text-align: left;
   background: #936DB0;
+
 }
 
 .header h1 {
@@ -148,7 +149,7 @@ input:focus{
 }
 .container {
   position: relative;
-  height:100px;
+  height: 100px;
 }
 .conjunto{
   position: inherit;
@@ -207,9 +208,11 @@ ul {
   position: fixed;
   height: 100%;
   overflow: auto;
+  float: left;
 }
 
 li a {
+  border-bottom: 1px solid #cfd8e8;
   display: block;
   color: #47525E;
   padding: 8px 16px;
@@ -225,6 +228,64 @@ li a:hover:not(.active) {
   background-color: #47525E;
   color: white;
 }
+
+li.dropdown {
+  width: 100%;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #E5E9F2;
+  min-width:100%;
+  z-index: 1;
+}
+.dropdown-content a {
+  color: #47525E;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.column {
+  float: left;
+  width: 40%;
+  padding-right: 5%;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-right: 10%;
+  position: relative;
+}
+
+.row {
+  padding-left: 27%;
+  color: #47525E;
+  padding-bottom: 4%;
+}
+
+.row h1 {
+  font-size: 50px;
+  margin-top: 1%;
+  margin-bottom: 5%;
+}
+
+.columnSecond {
+  position: relative;
+  padding-top: 100px;
+  padding-left: 40px;
+}
+
+#profilePic {
+  border-radius: 50%;
+  height: 200px;
+  padding-top: 25px;
+  padding-left: 27%;
+}
+
 .centrar{
   margin-top:13%;
   width:45%;

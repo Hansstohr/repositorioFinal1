@@ -19,7 +19,7 @@
         <div class="container">
           <h1>CalificAR</h1>
           <div class="conjunto"align="right">
-            <img src="default.png" alt="Foto de perfil" class="molde image">
+            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
             <a href="/" class="molde overlay">
               <div class="text">Mi perfil</div>
             </a>
@@ -30,11 +30,36 @@
       </div>
       <ul>
         <li><a href="/">Inicio</a></li>
-        <li><a href="/">Mis materias</a></li>
+        <li class="dropdown">
+          <a class="dropbtn" href="javascript:void(0)">Mis materias</a>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </li>
         <li><a href="/">Inscribirme a materias</a></li>
         <li><a href="/">Generar certificado</a></li>
         <li><a href="/">Crear materia</a></li>
       </ul>
+
+        <div class="row">
+
+          <div class="column">
+            <h1>Mi Perfil</h1>
+            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" id="profilePic"/>
+          </div>
+
+          <div class="columnSecond">
+            <h3>Nombre:</h3>
+            <h3>Apellido:</h3>
+            <h3>Edad:</h3>
+            <h3>Email:</h3>
+            <h3>DNI:</h3>
+          </div>
+          
+        </div>
+        <a class="buttontop"href="/">Editar Perfil</a>
     </body>
 </html>
 
