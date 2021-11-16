@@ -41,7 +41,7 @@ public class NotaController {
         if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
             return "redirect:/index";
         }
-        List<Alumno> alumnos = alumnoServicio.alumnnosPorMateria(materia.getIdMateria());
+        List<Alumno> alumnos = alumnoServicio.alumnosPorMateria(materia.getIdMateria());
         
         modelo.put("alumnos", alumnos);
         modelo.put("materia", materia);

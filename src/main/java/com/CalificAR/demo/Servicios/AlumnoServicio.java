@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
+import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
-import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
+import com.CalificAR.demo.Repositorio.MateriaRepositorio;
 import java.util.Iterator;
 
 @Service
@@ -20,6 +21,9 @@ public class AlumnoServicio extends UsuarioServicio {
 
     @Autowired
     private AlumnoRepositorio alumnoRepositorio;
+    
+    @Autowired
+    private MateriaRepositorio materiaRepositorio;
 
     @Autowired
     private LoginRepositorio loginRepositorio;
@@ -45,7 +49,7 @@ public class AlumnoServicio extends UsuarioServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<Alumno> alumnnosPorMateria(String idMateria) {
+    public List<Alumno> alumnosPorMateria(String idMateria) {
         List<Alumno> alumnos = alumnoRepositorio.findAll();
 
         Iterator<Alumno> it = alumnos.iterator();
@@ -59,20 +63,19 @@ public class AlumnoServicio extends UsuarioServicio {
     }
 
     @Transactional(readOnly = true)
-    public Alumno buscarPorId(String id) throws ErrorServicio {
+    public Materia buscarMateriasporAlumno(String idAlumno) throws ErrorServicio {
 
-        Optional<Alumno> respuesta = alumnoRepositorio.findById(id);
+        Optional<Materia> respuesta = materiaRepositorio.findById(idAlumno);
         if (respuesta.isPresent()) {
 
-            Alumno alumno = respuesta.get();
-            return alumno;
+            Materia materia = respuesta.get();
+            return materia;
         } else {
-
-            throw new ErrorServicio("No se encontró el alumno solicitado");
+            throw new ErrorServicio("El alumno no está inscripto a ninguna materia este año");
         }
 
     }
-    
+
     @Transactional(readOnly = true)
     public Optional<Alumno> buscarPorMail(String mail) {
         return super.buscarPorMail(alumnoRepositorio, mail);

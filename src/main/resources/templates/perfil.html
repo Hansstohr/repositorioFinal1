@@ -1,65 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalificAR - Registro</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalificAR - Registro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/estilos.css">
+<link rel="icon" href="">
 </head>
-    <body>
-      <div class="header">
-        <div class="container">
-          <h1>CalificAR</h1>
-          <div class="conjunto"align="right">
-            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
-            <a href="/" class="molde overlay">
-              <div class="text">Mi perfil</div>
-            </a>
-            <p class="name">Nombre</p>
-            <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
-          </div>
-        </div>
-      </div>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li class="dropdown">
-          <a class="dropbtn" href="javascript:void(0)">Mis materias</a>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </li>
-        <li><a href="/">Inscribirme a materias</a></li>
-        <li><a href="/">Generar certificado</a></li>
-        <li><a href="/">Crear materia</a></li>
-      </ul>
+<body>
+	<div class="header">
+		<div class="container">
+			<h1>CalificAR</h1>
+			<div class="conjunto" align="right">
+				<img
+					th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
+					src="/img/default.png" alt="Foto de perfil" class="molde image">
+				<a href="/" class="molde overlay">
+					<div class="text">Mi perfil</div>
+				</a>
+				<p class="name">Nombre</p>
+				<!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
+			</div>
+		</div>
+	</div>
+	<ul>
+		<li><a href="/">Inicio</a></li>
+		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis
+				materias</a>
+			<div class="dropdown-content">
+				<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link 3</a>
+			</div></li>
+		<li><a href="/">Inscribirme a materias</a></li>
+		<li><a href="/">Generar certificado</a></li>
+		<li><a href="/">Crear materia</a></li>
+	</ul>
 
-        <div class="row">
+	<div class="row">
 
-          <div class="column">
-            <h1>Mi Perfil</h1>
-            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" id="profilePic"/>
-          </div>
+		<div class="column">
+			<h1>Mi Perfil</h1>
+			<img
+				th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
+				src="/img/default.png" alt="Foto de perfil" id="profilePic" />
+		</div>
 
-          <div class="columnSecond">
-            <h3>Nombre:</h3>
-            <h3>Apellido:</h3>
-            <h3>Edad:</h3>
-            <h3>Email:</h3>
-            <h3>DNI:</h3>
-          </div>
-          
-        </div>
-        <a class="buttontop"href="/">Editar Perfil</a>
-    </body>
+		<div class="columnSecond">
+			<h3>Nombre:</h3>
+			<h3>Apellido:</h3>
+			<h3>Edad:</h3>
+			<h3>Email:</h3>
+			<h3>DNI:</h3>
+		</div>
+
+	</div>
+	<a class="buttontop" href="/">Editar Perfil</a>
+</body>
 </html>
 

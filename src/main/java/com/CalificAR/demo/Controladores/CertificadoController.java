@@ -46,13 +46,7 @@ public class CertificadoController {
         if (alumno == null || !alumno.getId().equals(session.getId())) {
             return "redirect:/index";
         }
-        try {
-            certificadoServicio.solicitarCertificado(alumno.getId());
-
-        } catch (ErrorServicio e) {
-            modelo.put("error", e.getMessage());
-            return "perfil.html";
-        }
+        certificadoServicio.solicitarCertificado(alumno.getId());
         return "certificado.html";
     }
 
