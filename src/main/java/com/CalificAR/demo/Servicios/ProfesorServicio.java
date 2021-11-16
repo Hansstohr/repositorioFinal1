@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Repositorio.CodigoProfesorRepositorio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
@@ -22,10 +23,11 @@ public class ProfesorServicio extends UsuarioServicio {
 
     @Autowired
     private ProfesorRepositorio profesorRepositorio;
-
+    
     @Transactional
     public Profesor registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
+        
         Usuario usuario = super.registrarUsuario(profesorRepositorio, archivo, dni, nombre, apellido, mail, clave,
                 clave2, fechaNacimiento);
         Profesor profesor = usuario.crearProfesor();
@@ -40,13 +42,6 @@ public class ProfesorServicio extends UsuarioServicio {
 
     public List<Profesor> todos() {
         return profesorRepositorio.findAll();
-    }
-
-    public void validarProfesor(String claveingresada) throws ErrorServicio {
-        String claveacomparar = "soyprofesor";
-        if (!claveacomparar.equals(claveingresada)) {
-            throw new ErrorServicio("Clave incorrecta");
-        }
     }
 
     @Transactional(readOnly = true)

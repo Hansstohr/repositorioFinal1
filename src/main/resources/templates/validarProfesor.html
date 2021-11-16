@@ -21,7 +21,8 @@
                                                         <section>
                                                             <h1 align="center" style="color: #47525E;">Validar Profesor</h1>
                                                             <p align="center" style="color: #8190A5;">Ingrese la contraseña que le fue dada por la institución</p>
-                                                            <form th:action="@{/profesor/validacionProfesor}" method="POST">
+                                                             <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+                                                            <form th:action="@{/codigo/validacionProfesor}" method="POST">
                                                                 <div class="row m-5">
                                                                     <div class="col-lg-6">
                                                                         <div class="form-label">

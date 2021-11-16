@@ -23,7 +23,7 @@ public class AlumnoServicio extends UsuarioServicio {
 
     @Autowired
     private LoginRepositorio loginRepositorio;
-
+    
     @Transactional
     public Alumno registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail, String clave, String clave2,
             LocalDate fechaNacimiento) throws ErrorServicio {

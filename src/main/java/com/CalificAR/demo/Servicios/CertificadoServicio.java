@@ -69,16 +69,4 @@ public class CertificadoServicio {
         }
         return alumno;
     }
-    // TEST POSTMAN
-//    public void solicitarCertificado(AsistenciaRepositorio asistenciarepositorio, CertificadoRepositorio certificadoRepositorio, AlumnoRepositorio alumnoRepositorio, String alumno_id) throws ErrorServicio {
-//        this.asistenciaRepositorio = asistenciarepositorio;
-//        this.certificadoRepositorio = certificadoRepositorio;
-//        this.alumnoRepositorio = alumnoRepositorio;
-//        this.solicitarCertificado(alumno_id);
-//    }
-    // TESTPOSTMAN
-//    public Alumno consultarCertificados(AlumnoRepositorio alumnoRepositorio, String certificado_codigo) throws ErrorServicio {
-//        this.alumnoRepositorio = alumnoRepositorio;
-//        return this.consultarCertificados(certificado_codigo);
-//    }
 }

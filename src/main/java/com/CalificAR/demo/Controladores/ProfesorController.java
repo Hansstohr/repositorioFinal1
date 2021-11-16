@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Servicios.CodigoProfesorServicio;
 import com.CalificAR.demo.Servicios.ProfesorServicio;
 
 @Controller
@@ -24,22 +25,10 @@ public class ProfesorController {
 
     @Autowired
     ProfesorServicio profesorServicio;
-
+    
     @GetMapping("/validarProfesor")
     public String validarProfesor() {
         return "validarProfesor";
-    }
-
-    @PostMapping("/validacionProfesor")
-    public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
-        try {
-            profesorServicio.validarProfesor(claveingresada);
-            modelo.addAttribute("profesor", new Profesor());
-        } catch (ErrorServicio ex) {
-            modelo.put("error", ex.getMessage());
-            return "validarProfesor.html";
-        }
-        return "redirect:/profesor/registroProfesor";
     }
 
     @GetMapping("/registroProfesor")
