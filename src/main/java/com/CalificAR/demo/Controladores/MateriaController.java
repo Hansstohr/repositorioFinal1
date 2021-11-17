@@ -114,8 +114,8 @@ public class MateriaController {
         return "InscribirseMaterias";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
-    @PostMapping("/inscribirMateria")
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/inscribirMateria")
     public String inscribirMateria(HttpSession session, ModelMap modelo, @RequestParam String idMateria) throws ErrorServicio {
         Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
         if (loginUsuario == null) {
@@ -125,9 +125,11 @@ public class MateriaController {
             materiaServicio.inscribirMateria(idMateria, loginUsuario.getLogin().getDni());
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
-            return "inicio.html";
+            return "inicio";
         }
         modelo.put("mensaje", "Inscripto correctamente!");
-        return "inicio.html";
+        Materia materia = materiaServicio.buscarPorId(idMateria);
+        modelo.put("materia", materia);
+        return "Materia";
     }
 }

@@ -9,8 +9,8 @@ spring:
                 starttls:
                     required: true
                     enable: true    
-    username: calificar.egg@gmail.com
-    password: kxqfshktmeumpwqp                
+    username: grupo2egg@gmail.com
+    password: bheqdtwkwmlanxzw               
   mvc:
     format:
       date: yyyy-MM-dd

@@ -103,7 +103,7 @@ public class LoginServicio implements UserDetailsService {
             String cuerpo = "¡Hola "+ profesor.getNombre()+"!¡¿De nuevo aquí?! Su contraseña nueva es: "+ claveNuevaDefault+".";
             notificacionServicio.enviar(cuerpo, "Se restablecio la contraseña", profesor.getMail());
         } catch (Exception e) {
-            throw new ErrorServicio("Ocurrio un error al reestablecer la contraseña. Intente de nuevamente.");
+            throw new ErrorServicio("Ocurrio un error al reestablecer la contraseña. Intente de nuevamente." + e.getMessage());
         }
     }
      public String generarContraseña(){
