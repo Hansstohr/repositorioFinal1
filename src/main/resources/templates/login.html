@@ -1,54 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CalificAR</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalificAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
-	rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet" href="/css/estilos.css">
-<link rel="icon" href="">
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="icon" href="/img/favicon.ico">
 </head>
 
 <body bgcolor="#E5E9F2">
-	<a class="buttontop" th:href="@{/certificado/validarCertificado}"
-		role="button">Validar certificado</a>
+	<a class="buttontop" th:href="@{/certificado/validarCertificado}" role="button">Validar certificado</a>
+	
+  <section align="center">
+  	    <h1 align="center" style="color: #47525E;">CalificAR</h1>
+  	    <p align="left" style="color: #8190A5;">Iniciar sesión</p>
 
-	<section align="center">
-		<h1 align="center" style="color: #47525E;">CalificAR</h1>
-		<p align="left" style="color: #8190A5;">Iniciar sesión</p>
+            <form action="logincheck" method="POST">
+                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                <p th:if="${logout != null}" th:text="${logout}" style="color:green"></p>  
 
-		<form action="logincheck" method="POST">
-			<p th:if="${error != null}" th:text="${error}" style="color: red"></p>
-			<p th:if="${logout != null}" th:text="${logout}" style="color: green"></p>
+                <label class="dni" style="color: #8190A5;">DNI</label> <br>
+                <input type="text" class="form-control" name="username" maxlength=8/>
+                <br>
 
-			<label class="dni" style="color: #8190A5;">DNI</label> <br> <input
-				type="text" class="form-control" name="username" maxlength=8 /> <br>
+                <label style="color: #8190A5;">Contraseña</label> <br>
+                <input type="password" class="form-control" name="password"/>
+                <br>
+                <br/>
+                <button type="submit" class="button2">Ingresar</button>
+            </form>
 
-			<label style="color: #8190A5;">Contraseña</label> <br> <input
-				type="password" class="form-control" name="password" /> <br> <br />
-			<button type="submit" class="button2">Ingresar</button>
-		</form>
 
-
-		<br> <a class="button" th:href="@{/alumno/registroAlumno}"
-			role="button">Registro alumno</a> <a class="button"
-			th:href="@{/codigo/validarProfesor}" role="button">Registro
-			profesor</a> <br> <br> <br> <a class="link"
-			href="/recuperarContraseña" role="link">¿Olvidaste tu contraseña?</a>
-		</div>
-		</div>
-	</section>
+            <br>
+            <a class="button" th:href="@{/alumno/registroAlumno}" role="button">Registro alumno</a>
+            <a class="button" th:href="@{/profesor/validarProfesor}" role="button">Registro profesor</a>
+            <br>
+            <br>
+            <br>
+            <a class="link" href="/recuperarContraseña" role="link">¿Olvidaste tu contraseña?</a> 
+        </div>
+    </div>
+</section>
 </body>
 
 </html>

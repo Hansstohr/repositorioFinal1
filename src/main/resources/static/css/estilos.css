@@ -31,6 +31,9 @@ label{
 .fc{
     margin-right: 242px;
 }
+.fc2{
+  margin-right: 195px;
+}
 input{
     border-width: 1px;
     border-color: #8190A5;
@@ -132,6 +135,7 @@ input:focus{
 }
 #clavecss{
     font-size: large;
+    color: #47525E;
 }
 .header {
   position: relative;
@@ -140,6 +144,13 @@ input:focus{
   background: #936DB0;
 
 }
+.headersecond{
+  position: relative;
+  padding-top: 20px;
+  padding-left:  20px;
+  text-align: left;
+  background: #936DB0;
+}
 
 .header h1 {
   color:white;
@@ -147,14 +158,37 @@ input:focus{
   width: fit-content;
   margin: 0;
 }
+
+.logo{
+  width: 135.7px;
+  height: 106.6px;
+  margin: 0;
+  float: left;
+}
+.logosecond{
+  width: 111.09px;
+  height: 87.36px;
+  margin: 0;
+  float: left;
+}
+.homebtn{
+  width: 135.7px;
+  height: 106.6px;
+  margin: 0;
+  float: left;
+}
+.ingresar{
+  color: white;
+}
+.ingresar:hover{
+  color:white;
+}
 .container {
   position: relative;
   height: 100px;
 }
 .conjunto{
   position: inherit;
-  top: -40;
-  bottom: 40px;
 }
 .molde{
 width: 60px;
@@ -202,12 +236,14 @@ body {
 ul {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding:0;
   width: 25%;
   background-color: #E5E9F2;
-  position: fixed;
+  position: absolute;
   height: 100%;
-  overflow: auto;
+  top: 140;
+  left: 0;
+  overflow-x: hidden;
   float: left;
 }
 
@@ -222,11 +258,13 @@ li a {
 li a.active {
   background-color: #aa81c9;
   color: white;
+  text-decoration: none;
 }
 
 li a:hover:not(.active) {
   background-color: #47525E;
   color: white;
+  text-decoration: none;
 }
 
 li.dropdown {
@@ -289,4 +327,18 @@ li.dropdown {
 .centrar{
   margin-top:13%;
   width:45%;
+}
+.t1{
+  color: black;
+}
+.t2{
+  color: black;
+}
+.card{
+  padding: 2px;
+  margin-right: 0px;
+  margin-left: 80px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+
 }

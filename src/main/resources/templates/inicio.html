@@ -11,16 +11,18 @@
         <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
-        rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
+        <link rel="icon" href="/img/favicon.ico">
     </head>
 
     <body>
         <div class="header">
             <div class="container">
-                <h1>CalificAR</h1>
+                <a class="homebtn" href="/">
+                    <img class="logo" src="/img/Logo.png">
+                </a>
                 <div class="conjunto"align="right">
                     <img  th:if="${alumno != null and alumno.foto != null}" th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
                     <img  th:if="${profesor != null and profesor.foto != null}" th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
@@ -47,6 +49,36 @@
     <li><a href="/">Generar certificado</a></li>
             <li><a href="/">Crear materia</a></li>
         </ul>
+<div class="row">
+        <div class="card text-center text-white bg-dark mb-3" style="width: 18rem;">
+            <img class="card-img-top" src="/img/img2.jpg" alt="">
+            <div class="card-body">
+              <a href="#" class="btn btn-secondary">Mis materias</a>
+            </div>
+          </div>
+          <div class="card text-center text-white bg-dark mb-3" style="width: 18rem;">
+            <img class="card-img-top" src="/img/img4.jpg" alt="">
+            <div class="card-body">
+              <a href="#" class="btn btn-secondary">Inscribirme a materias</a>
+            </div>
+          </div>
+          <div class="card text-center text-white bg-dark mb-3" style="width: 18rem;">
+            <img class="card-img-top" src="/img/img1.jpg" alt="">
+            <div class="card-body">
+              <a href="#" class="btn btn-secondary">Generar certificado</a>
+            </div>
+          </div>
+          <div class="card text-center text-white bg-dark mb-3" style="width: 18rem;">
+            <img class="card-img-top" src="/img/img3.jpg" alt="">
+            <div class="card-body">
+              <a href="#" class="btn btn-secondary">Crear materia</a>
+            </div>
+          </div>
+        </div>
+    </div>
+          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
          
 </html>
