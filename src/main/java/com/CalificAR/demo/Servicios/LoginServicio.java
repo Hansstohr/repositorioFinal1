@@ -61,16 +61,6 @@ public class LoginServicio implements UserDetailsService {
                     return null;
                 }
             }
-
-            //System.out.println("Llegó hasta acá2");
-//
-//            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
-//            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULO_MASCOTAS");
-//            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULO_VOTOS");
-//
-//            permisos.add(p1);
-//            permisos.add(p2);
-//            permisos.add(p3);
             User user = new User(login.getDni(), login.getClave(), permisos);
             return user;
 

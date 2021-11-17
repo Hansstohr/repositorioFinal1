@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
-import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
@@ -52,13 +51,17 @@ public class MateriaServicio {
         }
     }
 
-    public void inscribirMateria(Materia idMateria, String idAlumno) {
-        Optional<Alumno> respuesta = alumnoRepositorio.findById(idAlumno);
-        if (respuesta.isPresent()) {
-            Alumno alumno = respuesta.get();
-            List<Materia> materia = alumno.getMaterias();
-            materia.add(idMateria);
-            alumno.setMaterias(materia);
+    public void inscribirMateria(String idMateria, String dni) throws ErrorServicio {
+        Alumno alumno = alumnoRepositorio.buscarPorDni(dni);
+        List<Materia> materias = alumno.getMaterias();
+        Optional<Materia> respuesta2 = materiaRepositorio.findById(idMateria);
+        if (respuesta2.isPresent()) {
+            Materia materia = respuesta2.get();
+            materias.add(materia);
+            alumno.setMaterias(materias);
+            alumnoRepositorio.save(alumno);
+        } else {
+            throw new ErrorServicio("No se encontró la materia");
         }
     }
 
@@ -77,19 +80,24 @@ public class MateriaServicio {
         }
     }
 
-    public List<Materia> materias(Usuario usuario) {
+//    public List<Materia> materias(Usuario usuario) {
+//        List<Materia> materias;
+//        if (usuario instanceof Alumno) {
+//            materias = alumnoRepositorio.findById(usuario.getId()).get().getMaterias();
+//        } else {
+//            materias = profesorRepositorio.findById(usuario.getId()).get().getMaterias();
+//        }
+//        return materias;
+//    }
+    public List<Materia> materiasPorProfesor(String dni) {
         List<Materia> materias;
-        if (usuario instanceof Alumno) {
-            materias = alumnoRepositorio.findById(usuario.getId()).get().getMaterias();
-        } else {
-            materias = profesorRepositorio.findById(usuario.getId()).get().getMaterias();
-        }
+        materias = profesorRepositorio.buscarPorDni(dni).getMaterias();
         return materias;
     }
-    
-    public List<Materia> materiasProbar(String dni) {
+
+    public List<Materia> materiasPorAlumno(String dni) {
         List<Materia> materias;
-            materias = profesorRepositorio.buscarPorDni(dni).getMaterias();
+        materias = alumnoRepositorio.buscarPorDni(dni).getMaterias();
         return materias;
     }
 }

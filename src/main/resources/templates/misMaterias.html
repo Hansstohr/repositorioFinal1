@@ -48,9 +48,11 @@
 						<tbody>
 							<tr th:each="materia : ${materias}">
 								<td th:text="${materia.nombre}"
-									style="background-color: whitesmoke"></td>
-								<td style="background-color: whitesmoke"><a
-                                                                        <!--th:href="@{/materia/inscribirMateria(idMateria=__${materia.id}__, idAlumno=__${user.id}__)}">Inscribirse</a></td>-->
+                                                                    th:value="${materia.idMateria}"
+                                                                    name="idMateria"
+                                                                    style="background-color: whitesmoke"></td>
+                                                <td style="background-color: whitesmoke"><a class="button2" th:href="@{/materia/Materia(idMateria=__${materia.idMateria}__)}">Ir a materia</a></td>
+
 							</tr>
 
 						</tbody>
