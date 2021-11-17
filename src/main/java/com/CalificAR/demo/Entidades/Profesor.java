@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -31,7 +32,7 @@ public class Profesor extends Usuario {
     public Profesor(Login login, String nombre, String apellido, String mail, LocalDate fechaNac, Foto foto) {
         super(login, nombre, apellido, mail, fechaNac, foto);
     }
-
+    
     public List<Materia> getMaterias() {
         return materias;
     }

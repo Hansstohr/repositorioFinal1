@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
+import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
@@ -25,11 +26,16 @@ public class MateriaServicio {
     private ProfesorRepositorio profesorRepositorio;
 
     @Transactional
-    public Materia crearMateria(String nombreMateria) throws ErrorServicio {
+    public Materia crearMateria(String nombreMateria, String dniProfesor) throws ErrorServicio {
         // validar
         validarMateria(nombreMateria);
         Materia materia = new Materia();
         materia.setNombre(nombreMateria);
+        Profesor profesor = profesorRepositorio.buscarPorDni(dniProfesor);
+        List<Materia> materias = profesor.getMaterias();
+        materias.add(materia);
+        profesor.setMaterias(materias);
+        profesorRepositorio.save(profesor);
         return materiaRepositorio.save(materia);
     }
 
@@ -78,6 +84,12 @@ public class MateriaServicio {
         } else {
             materias = profesorRepositorio.findById(usuario.getId()).get().getMaterias();
         }
+        return materias;
+    }
+    
+    public List<Materia> materiasProbar(String dni) {
+        List<Materia> materias;
+            materias = profesorRepositorio.buscarPorDni(dni).getMaterias();
         return materias;
     }
 }

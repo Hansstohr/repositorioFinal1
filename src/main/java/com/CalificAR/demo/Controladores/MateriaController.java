@@ -8,11 +8,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
@@ -21,8 +18,9 @@ import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
 import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Servicios.MateriaServicio;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 @RequestMapping("/materia")
 public class MateriaController {
 
@@ -35,26 +33,28 @@ public class MateriaController {
 	@Autowired
 	MateriaServicio materiaServicio;
 
-	@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
+	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 	@GetMapping("/crearMateria")
 	public String crearMateria(HttpSession session) {
 		Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-		if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+                System.out.println(loginUsuario);
+		if (loginUsuario == null) {
 			return "redirect:/index";
 		}
-		return "crearMateria.html";
+		return "crearMateria";
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-	@RequestMapping(value = "/crearMateria", method = RequestMethod.POST)
-	public String crearMateria(HttpSession session, ModelMap modelo, @RequestBody String nombreMateria)
+	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+	@PostMapping("/guardarMateria")
+	public String crearMateria(HttpSession session, ModelMap modelo, @RequestParam String nombreMateria)
 			throws ErrorServicio {
 		Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-		if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+		if (loginUsuario == null) {
 			return "redirect:/index";
 		}
 		try {
-			materiaServicio.crearMateria(nombreMateria);
+			materiaServicio.crearMateria(nombreMateria, loginUsuario.getLogin().getDni());
+                        
 		} catch (Exception ex) {
 			modelo.put("error", ex.getMessage());
 			return "crearMateria.html";
@@ -62,7 +62,7 @@ public class MateriaController {
 		return "Materia";
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO') || hasRole('ROLE_PROFESOR_REGISTRADO')")
+	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 	@GetMapping("/Materia")
 	public String materia(HttpSession session, ModelMap modelo, String id_materia) throws ErrorServicio {
                 Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
@@ -77,13 +77,13 @@ public class MateriaController {
 		return "Materia";
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO') || hasRole('ROLE_PROFESOR_REGISTRADO')")
-	@GetMapping("/MisMaterias")
-	public String listarMateriasAlumno(HttpSession session, ModelMap modelo) {
+	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+	@GetMapping("/misMaterias")
+	public String listarMaterias(HttpSession session, ModelMap modelo) {
 		Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
 		Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
 		boolean alumnoNoLogueado = loginAlumno == null || !loginAlumno.getId().equals(session.getId());
-		boolean profesorNoLogueado = loginProfesor == null || !loginProfesor.getId().equals(session.getId());
+		boolean profesorNoLogueado = loginProfesor == null;
 		if (alumnoNoLogueado && profesorNoLogueado) {
 			return "redirect:/inicio";
 		}
@@ -94,11 +94,11 @@ public class MateriaController {
 		}
 		// Es un profesor
 		if (!profesorNoLogueado) {
-			materias = materiaServicio.materias(loginProfesor);
+			materias = materiaServicio.materiasProbar(loginProfesor.getLogin().getDni());//ACA TOQUÉ
 		}
 		
 		modelo.put("materias", materias);
-		return "MisMaterias";
+		return "misMaterias";
 	}
 
 

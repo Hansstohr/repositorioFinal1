@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalificAR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/estilos.css">
+<link rel="icon" href="">
+</head>
+<body>
+	<header class="masthead text-center text-white">
+		<div class="masthead-content">
+			<div class="container">
+				<h1 class="masthead-heading mb-0">Materias</h1>
+			</div>
+		</div>
+		<div class="bg-circle-1 bg-circle"></div>
+		<div class="bg-circle-2 bg-circle"></div>
+		<div class="bg-circle-3 bg-circle"></div>
+		<div class="bg-circle-4 bg-circle"></div>
+	</header>
+
+	<section>
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6 order-lg-2">
+					<br> </br>
+
+					<table class="table table-primary">
+						<thead>
+							<th style="background-color: greenyellow">Nombre</th>
+							<th style="background-color: greenyellow" colspan="2">Acciones</th>
+
+						</thead>
+
+						<tbody>
+							<tr th:each="materia : ${materias}">
+								<td th:text="${materia.nombre}"
+									style="background-color: whitesmoke"></td>
+								<td style="background-color: whitesmoke"><a
+                                                                        <!--th:href="@{/materia/inscribirMateria(idMateria=__${materia.id}__, idAlumno=__${user.id}__)}">Inscribirse</a></td>-->
+							</tr>
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Footer -->
+	<footer class="py-5 bg-black">
+		<div class="container">
+			<p class="m-0 text-center text-white small">Copyright &copy; Your
+				Website 2019</p>
+		</div>
+		<!-- /.container -->
+	</footer>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
