@@ -2,7 +2,10 @@ package com.CalificAR.demo.Controladores;
 
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Profesor;
+import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
+import com.CalificAR.demo.Servicios.LoginServicio;
+
 import com.CalificAR.demo.Servicios.ProfesorServicio;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,8 @@ public class PortalControlador {
     AlumnoServicio alumnoServicio;
     @Autowired
     ProfesorServicio profesorServicio;
+    @Autowired
+    LoginServicio loginServicio;
 
     @GetMapping("/")
     public String index() {
@@ -74,14 +79,24 @@ public class PortalControlador {
     }
     
     @PostMapping("/validarMail")
-    public String validarMail(String mail, ModelMap model) {
+    public String validarMail(String mail, ModelMap model) throws ErrorServicio {
         Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
         Optional<Profesor> profesor = profesorServicio.buscarPorMail(mail);
         if(alumno.isPresent() || profesor.isPresent()) {
-            // Enviarm mail
+            
+            // Envia Mail
+            if(alumno.isPresent()){
+                loginServicio.enviarContraseñaAlumno(alumno.get());
+                
+                return "exitoContraseña.html";
+            }else{
+                loginServicio.enviarContraseñaProfesor(profesor.get());
+                return "exitoContraseña.html";
+            }
+            
         } else {
              model.put("error", "El mail ingresado es inexistente");
         }
-        return "recuperarContraseña.html";
+        return "validarContraseña.html";
     }
 }
