@@ -57,6 +57,9 @@ public class MateriaServicio {
         Optional<Materia> respuesta2 = materiaRepositorio.findById(idMateria);
         if (respuesta2.isPresent()) {
             Materia materia = respuesta2.get();
+            if (materias.contains(materia)) {
+                throw new ErrorServicio("Ya está incripto en la materia");
+            }
             materias.add(materia);
             alumno.setMaterias(materias);
             alumnoRepositorio.save(alumno);

@@ -49,6 +49,7 @@
     <section class="centrar">
         <h1 align="center" th:text="${materia.nombre}"
             style="color: #47525E;"></h1>
+            <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
         <div align="center">
             <div class="botones">
                 <a class="button" th:href="@{/notas/obtenerNotas}" role="button">Ver Notas</a> 

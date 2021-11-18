@@ -124,7 +124,7 @@ public class MateriaController {
         try {
             materiaServicio.inscribirMateria(idMateria, loginUsuario.getLogin().getDni());
         } catch (ErrorServicio e) {
-            modelo.put("error", e.getMessage());
+            modelo.put("error", e.getMessage()); //<p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
             return "inicio";
         }
         modelo.put("mensaje", "Inscripto correctamente!");
