@@ -15,59 +15,80 @@ import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/alumno")
 public class AlumnoController {
 
-	@Autowired
-	AlumnoServicio alumnoServicio;
+    @Autowired
+    AlumnoServicio alumnoServicio;
 
-	@GetMapping("/registroAlumno")
-	public String registro(ModelMap modelo) {
-		modelo.addAttribute("alumno", new Alumno());
-		return "registroAlumno";
-	}
+    @GetMapping("/registroAlumno")
+    public String registro(ModelMap modelo) {
+        modelo.addAttribute("alumno", new Alumno());
+        return "registroAlumno";
+    }
 
-	@PostMapping("/crearAlumno")
-	public String newAlumno(ModelMap modelo, @ModelAttribute Alumno alumno, String dni, String clave, String clave2,
-			MultipartFile archivo) throws ErrorServicio {
-		try {
-			alumnoServicio.registrar(archivo, dni, alumno.getNombre(), alumno.getApellido(), alumno.getMail(), clave,
-					clave2, alumno.getFechaNac());
-		} catch (ErrorServicio ex) {
-			modelo.put("error", ex.getMessage());
-			modelo.put("nombre", alumno.getNombre());
-			modelo.put("apellido", alumno.getApellido());
-			modelo.put("dni", dni);
-			modelo.put("mail", alumno.getMail());
-			modelo.put("fechaNac", alumno.getFechaNac());
-			return "registroAlumno.html";
-		}
-		modelo.put("titulo", "Bienvenido a CalificAR");
-		modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
-		return "inicio.html";
-	}
+    @PostMapping("/crearAlumno")
+    public String newAlumno(ModelMap modelo, @ModelAttribute Alumno alumno, String dni, String clave, String clave2,
+            MultipartFile archivo) throws ErrorServicio {
+        try {
+            alumnoServicio.registrar(archivo, dni, alumno.getNombre(), alumno.getApellido(), alumno.getMail(), clave,
+                    clave2, alumno.getFechaNac());
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", alumno.getNombre());
+            modelo.put("apellido", alumno.getApellido());
+            modelo.put("dni", dni);
+            modelo.put("mail", alumno.getMail());
+            modelo.put("fechaNac", alumno.getFechaNac());
+            return "registroAlumno.html";
+        }
+        modelo.put("titulo", "Bienvenido a CalificAR");
+        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+        return "inicio.html";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PostMapping("/guardarAlumno")
+    public String modificarAlumno(HttpSession session, ModelMap modelo, @ModelAttribute Alumno alumno,
+            @RequestParam String clave, MultipartFile archivo) throws ErrorServicio {
+        Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
+        if (loginAlumno == null) {
+            return "redirect:/index";
+        }
+        try {
+            alumnoServicio.modificar2(archivo, loginAlumno.getLogin().getDni(), alumno.getNombre(),
+                    alumno.getApellido(), alumno.getMail(), clave, alumno.getFechaNac());
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", alumno.getNombre());
+            modelo.put("apellido", alumno.getApellido());
+            modelo.put("mail", alumno.getMail());
+            modelo.put("fechaNac", alumno.getFechaNac());
+            return "modificarUsuario.html";
+        }
+        return "inicio";
+    }
 
-	
-	// TODO: Falta modificar para que quede igual que ProfesorController
-	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
-	@RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
-	public String modificarAlumno(HttpSession session, ModelMap modelo, @RequestBody Alumno alumno)
-			throws ErrorServicio {
-		Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
-		if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-			return "redirect:/index";
-		}
-		try {
-			alumnoServicio.modificar(alumno.getId(), (MultipartFile) alumno.getFoto(), alumno.getLogin().getDni(),
-					alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getLogin().getClave(),
-					alumno.getFechaNac());
-		} catch (ErrorServicio ex) {
-			modelo.put("error", ex.getMessage());
-			return "registro.html";
-		}
-		modelo.put("titulo", "Su usuario fue modificado correctamente");
-		return "perfil.html";
-	}
+//    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+//    @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
+//    public String modificarAlumno(HttpSession session, ModelMap modelo, @RequestBody Alumno alumno)
+//            throws ErrorServicio {
+//        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
+//        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
+//            return "redirect:/index";
+//        }
+//        try {
+//            alumnoServicio.modificar(alumno.getId(), (MultipartFile) alumno.getFoto(), alumno.getLogin().getDni(),
+//                    alumno.getNombre(), alumno.getApellido(), alumno.getMail(), alumno.getLogin().getClave(),
+//                    alumno.getFechaNac());
+//        } catch (ErrorServicio ex) {
+//            modelo.put("error", ex.getMessage());
+//            return "registro.html";
+//        }
+//        modelo.put("titulo", "Su usuario fue modificado correctamente");
+//        return "perfil.html";
+//    }
 }

@@ -15,6 +15,7 @@ import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
 import java.util.Iterator;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @Service
 public class AlumnoServicio extends UsuarioServicio {
@@ -37,11 +38,19 @@ public class AlumnoServicio extends UsuarioServicio {
         return alumnoRepositorio.save(alumno);
     }
 
+//    @Transactional
+//    public void modificar(String Id, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
+//            String clave, LocalDate fechaNacimiento) throws ErrorServicio {
+//        super.modificar(alumnoRepositorio, Id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
+//    }
+
     @Transactional
-    public void modificar(String Id, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
+    public void modificar2(MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, LocalDate fechaNacimiento) throws ErrorServicio {
-        super.modificar(alumnoRepositorio, Id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
+        String id = alumnoRepositorio.buscarPorDniModificar(dni);
+        super.modificar(alumnoRepositorio, id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
     }
+
 
     @Transactional(readOnly = true)
     public List<Alumno> todos() {

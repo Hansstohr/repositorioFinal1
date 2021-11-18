@@ -19,4 +19,7 @@ public interface AlumnoRepositorio extends UsuarioRepositorio<Alumno> {
     @Query("SELECT c FROM Alumno c WHERE c.certificado.codigo = :certificado_codigo")
     public Alumno buscarPorCertificado(@Param("certificado_codigo") String certificado_codigo);
 
+    @Query("SELECT id FROM Alumno c WHERE c.login.dni = :dni")
+    public String buscarPorDniModificar(@Param("dni") String dni);
+
 }

@@ -156,6 +156,9 @@ public abstract class UsuarioServicio {
                 idFoto = usuarioModificado.getFoto().getIdFoto();
                 Foto foto = fotoServicio.guardar(idFoto, archivo);
                 usuarioModificado.setFoto(foto);
+            }else{//AGREGUE ESTAS COSAS
+                Foto foto = fotoServicio.guardar(idFoto, archivo);
+                usuarioModificado.setFoto(foto);
             }
             repo.save(usuarioModificado);
         } else {

@@ -34,10 +34,17 @@ public class ProfesorServicio extends UsuarioServicio {
         return profesorRepositorio.save(profesor);
     }
 
+//    @Transactional
+//    public void modificar(String Id, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
+//            String clave, LocalDate fechaNacimiento) throws ErrorServicio {
+//        super.modificar(profesorRepositorio, Id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
+//    }
+    
     @Transactional
-    public void modificar(String Id, MultipartFile archivo, String dni, String nombre, String apellido, String mail,
+    public void modificar2(MultipartFile archivo, String dni, String nombre, String apellido, String mail,
             String clave, LocalDate fechaNacimiento) throws ErrorServicio {
-        super.modificar(profesorRepositorio, Id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
+        String id = profesorRepositorio.buscarPorDniModificar(dni);
+        super.modificar(profesorRepositorio, id, archivo, dni, nombre, apellido, mail, clave, fechaNacimiento);
     }
 
     public List<Profesor> todos() {

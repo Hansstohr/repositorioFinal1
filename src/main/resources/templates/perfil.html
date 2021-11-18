@@ -53,15 +53,15 @@
           </div>
 
           <div class="columnSecond">
-            <h3>Nombre:</h3>
-            <h3>Apellido:</h3>
-            <h3>Edad:</h3>
-            <h3>Email:</h3>
-            <h3>DNI:</h3>
+              <h3>Nombre:</h3><p th:text="${nombre}"></p>
+              <h3>Apellido:</h3><p th:text="${apellido}"></p>
+              <h3>Fecha de nacimiento:</h3><p th:text="${fechaNac}"></p>
+              <h3>Email:</h3><p th:text="${mail}"></p>
+              <h3>DNI:</h3><p th:text="${dni}"></p>
           </div>
           
         </div>
-        <a class="buttontop"href="/">Editar Perfil</a>
+        <a class="buttontop" th:href="@{/profesor/modificarProfesor}">Editar Perfil</a>
     </body>
 </html>
 

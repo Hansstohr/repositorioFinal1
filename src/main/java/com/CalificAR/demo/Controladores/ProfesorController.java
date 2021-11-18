@@ -25,55 +25,58 @@ public class ProfesorController {
 
     @Autowired
     ProfesorServicio profesorServicio;
-    
-    @GetMapping("/validarProfesor")
-    public String validarProfesor() {
-        return "validarProfesor";
-    }
 
+    //TESTEADO
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/registroProfesor")
     public String registro(ModelMap modelo) {
         modelo.addAttribute("profesor", new Profesor());
         return "registroProfesor";
     }
 
-    @PostMapping("/registrarProfesor")
-    public String newProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, String dni, String clave,
-            String clave2, MultipartFile archivo) throws ErrorServicio {
-        try {
-            profesorServicio.registrar(archivo, dni, profesor.getNombre(), profesor.getApellido(), profesor.getMail(),
-                    clave, clave2, profesor.getFechaNac());
-        } catch (ErrorServicio ex) {
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", profesor.getNombre());
-            modelo.put("apellido", profesor.getApellido());
-            modelo.put("mail", profesor.getMail());
-            modelo.put("fechaNac", profesor.getFechaNac());
-            return "registroProfesor.html";
-        }
-        modelo.put("titulo", "Bienvenido a CalificAR");
-        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
-        return "inicio.html";
-    }
+//    //TESTEADO
+//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+//    @PostMapping("/registrarProfesor")
+//    public String newProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, String dni, String clave,
+//            String clave2, MultipartFile archivo) throws ErrorServicio {
+//        try {
+//            profesorServicio.registrar(archivo, dni, profesor.getNombre(), profesor.getApellido(), profesor.getMail(),
+//                    clave, clave2, profesor.getFechaNac());
+//        } catch (ErrorServicio ex) {
+//            modelo.put("error", ex.getMessage());
+//            modelo.put("nombre", profesor.getNombre());
+//            modelo.put("apellido", profesor.getApellido());
+//            modelo.put("mail", profesor.getMail());
+//            modelo.put("fechaNac", profesor.getFechaNac());
+//            return "registroProfesor.html";
+//        }
+//        modelo.put("titulo", "Bienvenido a CalificAR");
+//        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+//        return "inicio.html";
+//    }
+//
+//    //TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS
+//    //TESTEADO
+//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+//    @GetMapping("/modificarProfesor")
+//    public String modificar(ModelMap modelo) {
+//        modelo.addAttribute("profesor", new Profesor());
+//        modelo.addAttribute("login", new Login()); //POR QUE SE INSTANCIA UN NUEVO LOGIN?
+//        return "modificarProfesor";
+//    }
 
-    @GetMapping("/modificarProfesor")
-    public String modificar(ModelMap modelo) {
-        modelo.addAttribute("profesor", new Profesor());
-        modelo.addAttribute("login", new Login());
-        return "registroProfesor";
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-    @PostMapping("/modificarProfesor")
+    //TESTEADO
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PostMapping("/guardarProfesor")
     public String modificarProfesor(HttpSession session, ModelMap modelo, @ModelAttribute Profesor profesor,
-            @ModelAttribute Login loginNew, MultipartFile archivo) throws ErrorServicio {
-        Login login = (Login) session.getAttribute("profesorsession");
-        if (login == null || !login.getId().equals(loginNew.getId())) {
+            @RequestParam String clave, MultipartFile archivo) throws ErrorServicio {
+        Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
+        if (loginProfesor == null) {
             return "redirect:/index";
         }
         try {
-            profesorServicio.modificar(profesor.getId(), archivo, loginNew.getDni(), profesor.getNombre(),
-                    profesor.getApellido(), profesor.getMail(), loginNew.getClave(), profesor.getFechaNac());
+            profesorServicio.modificar2(archivo, loginProfesor.getLogin().getDni(), profesor.getNombre(),
+                    profesor.getApellido(), profesor.getMail(), clave, profesor.getFechaNac());
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", profesor.getNombre());
@@ -82,33 +85,30 @@ public class ProfesorController {
             modelo.put("fechaNac", profesor.getFechaNac());
             return "modificarProfesor.html";
         }
-        return "Perfil.html";
+        return "inicio";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-    @GetMapping("/crearMateria")
-    public String crearMateria(HttpSession session, ModelMap modelo) {
-        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-            return "redirect:/index";
-        }
-        return "materia/crearMateria.html";
-    }
-
-//    @PreAuthorize("hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-//    @PostMapping("/crearMateria")
-//    public String crearMateria(HttpSession session, ModelMap modelo) {
-//        Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-//        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-//            return "redirect:/index";
+//    //TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS
+//    //TESTEADO
+//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+//    @GetMapping("/perfil")
+//    public String perfil(HttpSession session, ModelMap modelo) throws ErrorServicio {
+//        Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
+//        if (loginProfesor == null) {
+//            return "redirect:/inicio";
 //        }
-//        return "materia/crearMateria.html";
-//    
-//    
-    
-    @RequestMapping(value = "/getProfesores", method = RequestMethod.GET)
-    public List<Profesor> getAllProfesores() {
-        List<Profesor> profesores = profesorServicio.todos();
-        return profesores;
-    }
+//        
+//        modelo.put("nombre", loginProfesor.getNombre());
+//        modelo.put("apellido", loginProfesor.getApellido());
+//        modelo.put("fechaNac", loginProfesor.getFechaNac());
+//        modelo.put("mail", loginProfesor.getMail());
+//        modelo.put("dni", loginProfesor.getLogin().getDni());
+//        return "perfil";
+//    }
+////    
+//    @RequestMapping(value = "/getProfesores", method = RequestMethod.GET)
+//    public List<Profesor> getAllProfesores() {
+//        List<Profesor> profesores = profesorServicio.todos();
+//        return profesores;
+//    }
 }

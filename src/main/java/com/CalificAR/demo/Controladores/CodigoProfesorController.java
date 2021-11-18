@@ -19,11 +19,13 @@ public class CodigoProfesorController {
     @Autowired
     CodigoProfesorServicio codigoProfesorServicio;
 
+    //TESTEADO
     @GetMapping("/validarProfesor")
     public String validarProfesor() {
         return "validarProfesor";
     }
 
+    //TESTEADO
     @PostMapping("/validacionProfesor")
     public String validarProfesor(ModelMap modelo, @RequestParam String claveingresada) {
         try {
