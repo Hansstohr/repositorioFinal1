@@ -17,6 +17,7 @@ import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.CodigoProfesorServicio;
+import com.CalificAR.demo.Servicios.NotificacionServicio;
 import com.CalificAR.demo.Servicios.ProfesorServicio;
 
 @Controller
@@ -26,6 +27,14 @@ public class ProfesorController {
     @Autowired
     ProfesorServicio profesorServicio;
 
+    @Autowired
+    NotificacionServicio notificacionServicio;
+    
+    @GetMapping("/validarProfesor")
+    public String validarProfesor() {
+        return "validarProfesor";
+    }
+
     //TESTEADO
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/registroProfesor")
@@ -34,36 +43,25 @@ public class ProfesorController {
         return "registroProfesor";
     }
 
-//    //TESTEADO
-//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-//    @PostMapping("/registrarProfesor")
-//    public String newProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, String dni, String clave,
-//            String clave2, MultipartFile archivo) throws ErrorServicio {
-//        try {
-//            profesorServicio.registrar(archivo, dni, profesor.getNombre(), profesor.getApellido(), profesor.getMail(),
-//                    clave, clave2, profesor.getFechaNac());
-//        } catch (ErrorServicio ex) {
-//            modelo.put("error", ex.getMessage());
-//            modelo.put("nombre", profesor.getNombre());
-//            modelo.put("apellido", profesor.getApellido());
-//            modelo.put("mail", profesor.getMail());
-//            modelo.put("fechaNac", profesor.getFechaNac());
-//            return "registroProfesor.html";
-//        }
-//        modelo.put("titulo", "Bienvenido a CalificAR");
-//        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
-//        return "inicio.html";
-//    }
-//
-//    //TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS
-//    //TESTEADO
-//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-//    @GetMapping("/modificarProfesor")
-//    public String modificar(ModelMap modelo) {
-//        modelo.addAttribute("profesor", new Profesor());
-//        modelo.addAttribute("login", new Login()); //POR QUE SE INSTANCIA UN NUEVO LOGIN?
-//        return "modificarProfesor";
-//    }
+    @PostMapping("/registrarProfesor")
+    public String newProfesor(ModelMap modelo, @ModelAttribute Profesor profesor, String dni, String clave,
+            String clave2, MultipartFile archivo) throws ErrorServicio {
+        try {
+            profesorServicio.registrar(archivo, dni, profesor.getNombre(), profesor.getApellido(), profesor.getMail(),
+                    clave, clave2, profesor.getFechaNac());
+            notificacionServicio.enviarBienvenidaProfe(profesor,dni,clave);
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", profesor.getNombre());
+            modelo.put("apellido", profesor.getApellido());
+            modelo.put("mail", profesor.getMail());
+            modelo.put("fechaNac", profesor.getFechaNac());
+            return "registroProfesor.html";
+        }
+        modelo.put("titulo", "Bienvenido a CalificAR");
+        modelo.put("descripcion", "Su usuario fue registrado de manera satisfactoria");
+        return "inicio.html";
+    }
 
     //TESTEADO
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -87,28 +85,4 @@ public class ProfesorController {
         }
         return "inicio";
     }
-
-//    //TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS
-//    //TESTEADO
-//    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-//    @GetMapping("/perfil")
-//    public String perfil(HttpSession session, ModelMap modelo) throws ErrorServicio {
-//        Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
-//        if (loginProfesor == null) {
-//            return "redirect:/inicio";
-//        }
-//        
-//        modelo.put("nombre", loginProfesor.getNombre());
-//        modelo.put("apellido", loginProfesor.getApellido());
-//        modelo.put("fechaNac", loginProfesor.getFechaNac());
-//        modelo.put("mail", loginProfesor.getMail());
-//        modelo.put("dni", loginProfesor.getLogin().getDni());
-//        return "perfil";
-//    }
-////    
-//    @RequestMapping(value = "/getProfesores", method = RequestMethod.GET)
-//    public List<Profesor> getAllProfesores() {
-//        List<Profesor> profesores = profesorServicio.todos();
-//        return profesores;
-//    }
 }
