@@ -55,7 +55,10 @@
                 <a class="button" th:href="@{/notas/obtenerNotas}" role="button">Ver Notas</a> 
                 <a class="button" th:href="@{/materia/misMaterias}" role="button">Mis Materias</a> 
                 <a class="button"
-                   th:href="@{/notas/agregarNotas}" role="button">Cargar Notas</a> <br> <br>
+                   th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)
+                   }" role="button">Cargar Notas</a> <a
+                   class="button" 
+                   role="button">Cargar Asistencias</a> <br> <br>
                 <br>
             </div>
         </div>
@@ -64,5 +67,4 @@
     <br>
 
 </body>
-
 </html>

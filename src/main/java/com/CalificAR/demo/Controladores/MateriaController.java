@@ -62,7 +62,6 @@ public class MateriaController {
         return "Materia";
     }
 
-    // @RequestParam(required = false) String id
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/Materia")
     public String materia(HttpSession session, ModelMap modelo, @RequestParam(required = false) String idMateria) throws ErrorServicio {
@@ -77,7 +76,7 @@ public class MateriaController {
         modelo.put("materia", materia);
         return "Materia";
     }
-
+    
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/misMaterias")
     public String listarMaterias(HttpSession session, ModelMap modelo) {

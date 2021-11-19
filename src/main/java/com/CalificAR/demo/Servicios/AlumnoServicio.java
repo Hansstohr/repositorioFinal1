@@ -14,6 +14,7 @@ import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import com.CalificAR.demo.Repositorio.MateriaRepositorio;
+import java.util.ArrayList;
 import java.util.Iterator;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -56,15 +57,16 @@ public class AlumnoServicio extends UsuarioServicio {
     public List<Alumno> todos() {
         return alumnoRepositorio.findAll();
     }
-
+//ESTO
     @Transactional(readOnly = true)
     public List<Alumno> alumnosPorMateria(String idMateria) {
         List<Alumno> alumnos = alumnoRepositorio.findAll();
-
+       
         Iterator<Alumno> it = alumnos.iterator();
         while (it.hasNext()) {
             Alumno alumno = it.next();
-            if (alumno.getMaterias().stream().anyMatch(m -> !m.getIdMateria().equals(idMateria))) {
+          
+            if (alumno.getMaterias().stream().allMatch(m -> !m.getIdMateria().equals(idMateria))) {
                 it.remove();
             }
         }

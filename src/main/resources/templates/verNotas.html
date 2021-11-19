@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CalificAR</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/estilos.css">
+        <link rel="icon" href="">
+    </head>
+
+    <body bgcolor="#E5E9F2">
+
+        <!--        <section class="container__verNota">
+                    <table class="tabla__VerNotas">
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Apellido</td>
+                            <td>Ultima nota</td>
+                        </tr>
+                        <tr th:each="nota : ${notas}">
+                            <td th:text="${nota.alumno.nombre}"></td>
+                            <td th:text="${nota.alumno.apellido}"></td>
+                            <td th:text="${nota.nota}"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">Notas totales</td> 
+                        </tr>
+                        <tr>
+                            <td th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></td>
+                        </tr>
+                    </table>
+                </section>-->
+        <section class="main__verNota" th:each="materia : ${materia}">
+            <h1 th:text="${materia.nombre}" class="title__verNotaMateria"></h1>
+            <article class="container__verNota" th:each="nota : ${notas}">
+                <div class="title__verNota">Nombre</div>
+                <div class="title__verNota">Apellido</div>
+                <div class="title__verNota">Ultima Nota</div>
+                <div class="item__verNota" th:text="${nota.alumno.nombre}"></div>
+                <div class="item__verNota" th:text="${nota.alumno.apellido}"></div>
+                <div class="item__verNota" th:text="${nota.nota}"></div>
+            </article>
+
+            <article class="container__verNotaTotales">
+                <div class="title__verNotaTotales">Notas Totales</div>
+                <div class="item__verNotaTotales" th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></div>
+                <a class="boton__verNota" th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}">
+                    <div  th:each="materia : ${materia}">Volver</div>    
+                </a> 
+            </article>
+        </section>
+
+    </body>
+
+</html>

@@ -26,8 +26,7 @@ public class Nota {
 
     private Double nota;
 
-    public Nota(String idNota, Alumno alumno, Materia materia, LocalDate fecha, Double nota) {
-        this.idNota = idNota;
+    public Nota( Alumno alumno, Materia materia, LocalDate fecha, Double nota) {
         this.alumno = alumno;
         this.materia = materia;
         this.fecha = fecha;
