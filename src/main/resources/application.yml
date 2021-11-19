@@ -2,15 +2,15 @@ spring:
   mail: 
     host: smtp.gmail.com
     port: 587
+    username: calificar.egg@gmail.com
+    password: kxqfshktmeumpwqp
     properties:
         mail:
             smtp:              
                 auth: true
                 starttls:
                     required: true
-                    enable: true    
-    username: grupo2egg@gmail.com
-    password: bheqdtwkwmlanxzw               
+                    enable: true                   
   mvc:
     format:
       date: yyyy-MM-dd
@@ -28,5 +28,9 @@ spring:
     cache: false 
 server:
   port: 8080
-  
+  session:
+      cookie:
+        http-only: true
+      tracking-modes:
+      - cookie
 

@@ -4,14 +4,17 @@ import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
+import com.CalificAR.demo.Repositorio.LoginRepositorio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
 import com.CalificAR.demo.Servicios.LoginServicio;
+import com.CalificAR.demo.Servicios.NotificacionServicio;
 
 import com.CalificAR.demo.Servicios.ProfesorServicio;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,7 +88,6 @@ public class PortalControlador {
         Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
         Optional<Profesor> profesor = profesorServicio.buscarPorMail(mail);
         if (alumno.isPresent() || profesor.isPresent()) {
-
             // Envia Mail
             if (alumno.isPresent()) {
                 loginServicio.enviarContraseñaAlumno(alumno.get());
@@ -99,7 +101,7 @@ public class PortalControlador {
         } else {
             model.put("error", "El mail ingresado es inexistente");
         }
-        return "validarContraseña.html";
+        return "recuperarContraseña.html";
     }
 
     //TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS

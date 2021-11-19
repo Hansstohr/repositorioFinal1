@@ -15,14 +15,23 @@ import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
+
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.CalificAR.demo.Servicios.NotificacionServicio;
+
 
 @Controller
 @RequestMapping("/alumno")
 public class AlumnoController {
 
+
     @Autowired
     AlumnoServicio alumnoServicio;
+
+	        @Autowired
+        NotificacionServicio notificacionServicio;
+
 
     @GetMapping("/registroAlumno")
     public String registro(ModelMap modelo) {
@@ -30,12 +39,14 @@ public class AlumnoController {
         return "registroAlumno";
     }
 
+
     @PostMapping("/crearAlumno")
     public String newAlumno(ModelMap modelo, @ModelAttribute Alumno alumno, String dni, String clave, String clave2,
             MultipartFile archivo) throws ErrorServicio {
         try {
             alumnoServicio.registrar(archivo, dni, alumno.getNombre(), alumno.getApellido(), alumno.getMail(), clave,
                     clave2, alumno.getFechaNac());
+            notificacionServicio.enviarBienvenidaAlumno(alumno,dni,clave);
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", alumno.getNombre());
@@ -71,6 +82,7 @@ public class AlumnoController {
         }
         return "inicio";
     }
+
 
 //    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
 //    @RequestMapping(value = "/modificarAlumno", method = RequestMethod.POST)
