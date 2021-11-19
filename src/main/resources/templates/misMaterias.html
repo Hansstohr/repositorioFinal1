@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CalificAR</title>
+<title>CalificAR - Mis Materias</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -16,67 +16,64 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
 	rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/estilos.css">
-<link rel="icon" href="">
+<link rel="icon" href="/img/favicon.ico">
 </head>
 <body>
-	<header class="masthead text-center text-white">
-		<div class="masthead-content">
-			<div class="container">
-				<h1 class="masthead-heading mb-0">Materias</h1>
-			</div>
-		</div>
-		<div class="bg-circle-1 bg-circle"></div>
-		<div class="bg-circle-2 bg-circle"></div>
-		<div class="bg-circle-3 bg-circle"></div>
-		<div class="bg-circle-4 bg-circle"></div>
-	</header>
+	<div class="header">
+        <div class="container">
+          <a class="homebtn" href="/index">
+          <img class="logo" src="/img/Logo.png">
+        </a>
+          <div class="conjunto"align="right">
+            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
+            <a href="/" class="molde overlay">
+              <div class="text">Mi perfil</div>
+            </a>
+            <p class="name">Nombre</p>
+            <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li class="dropdown">
+          <a class="dropbtn active" href="javascript:void(0)">Mis materias</a>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </li>
+        <li><a href="/">Inscribirme a materias</a></li>
+        <li><a href="/">Generar certificado</a></li>
+        <li><a href="/">Crear materia</a></li>
+      </ul>
+	  <div class="tablas">
+		<table>
+			<thead>
+			<th style="background-color:#47525E ">Materia</th>
+			<th style="background-color: #47525E"></th>
 
-	<section>
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-6 order-lg-2">
-					<br> </br>
+			</thead>
 
-					<table class="table table-primary">
-						<thead>
-							<th style="background-color: greenyellow">Nombre</th>
-							<th style="background-color: greenyellow" colspan="2">Acciones</th>
-
-						</thead>
 
 						<tbody>
 							<tr th:each="materia : ${materias}">
-								<td th:text="${materia.nombre}"
-                                                                    th:value="${materia.idMateria}"
-                                                                    name="idMateria"
-                                                                    style="background-color: whitesmoke"></td>
-                                                <td style="background-color: whitesmoke"><a class="button2" th:href="@{/materia/Materia(idMateria=__${materia.idMateria}__)}">Ir a materia</a></td>
-
+								<td th:text="${materia.nombre}" th:value="${materia.idMateria}" 
+								name="idMateria" style="background-color: whitesmoke"></td>
+                              <td align="right" style="background-color: whitesmoke">
+							<a class="button2" th:href="@{/materia/Materia(idMateria=__${materia.idMateria}__)}">Entrar</a></td>
 							</tr>
 
 						</tbody>
 					</table>
-
 				</div>
-			</div>
-		</div>
-	</section>
 
-
-	<!-- Footer -->
-	<footer class="py-5 bg-black">
-		<div class="container">
-			<p class="m-0 text-center text-white small">Copyright &copy; Your
-				Website 2019</p>
-		</div>
-		<!-- /.container -->
-	</footer>
-
-	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

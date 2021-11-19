@@ -325,7 +325,8 @@ li.dropdown {
 }
 
 .centrar{
-  margin-top:13%;
+  margin-bottom: 0;
+  margin-top:10%;
   width:45%;
 }
 .t1{
@@ -341,4 +342,20 @@ li.dropdown {
   margin-top: 20px;
   margin-bottom: 10px;
 
+}
+table{
+  margin-left: 25%;
+  table-layout: auto;
+  width: 75%;
+}
+th{
+  padding: 10px 5px;
+  color: white;
+}
+td{
+  padding: 10px 5px;
+  color: white;
+}
+.tablas{
+  margin-left: 0%;
 }

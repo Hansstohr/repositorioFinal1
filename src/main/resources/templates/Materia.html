@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CalificAR</title>
+        <title>CalificAR - Materia</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
@@ -31,11 +31,11 @@
                 </div>
             </div>
         </div>
-    </div>
+
     <ul>
         <li><a href="/">Inicio</a></li>
         <li class="dropdown">
-            <a class="dropbtn" href="javascript:void(0)">Mis materias</a>
+            <a class="dropbtn active" href="javascript:void(0)">Mis materias</a>
             <div class="dropdown-content">
                 <a href="#">Link 1</a>
                 <a href="#">Link 2</a>
@@ -53,18 +53,16 @@
         <div align="center">
             <div class="botones">
                 <a class="button" th:href="@{/notas/obtenerNotas}" role="button">Ver Notas</a> 
-                <a class="button" th:href="@{/}" role="button">Ver Asistencias</a>
                 <a class="button" th:href="@{/materia/misMaterias}" role="button">Mis Materias</a> 
                 <a class="button"
-                   th:href="@{/notas/agregarNotas}" role="button">Cargar Notas</a> <a
-                   class="button" 
-                   role="button">Cargar Asistencias</a> <br> <br>
+                   th:href="@{/notas/agregarNotas}" role="button">Cargar Notas</a> <br> <br>
                 <br>
             </div>
         </div>
     </section>    
     <br>
     <br>
-</div>
-</div>
+
+</body>
+
 </html>

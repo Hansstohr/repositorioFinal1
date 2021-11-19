@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CalificAR</title>
+        <title>CalificAR - Inscripción a Materias</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
@@ -41,39 +41,28 @@
                 <a href="#">Link 3</a>
               </div>
             </li>
-            <li><a href="/">Inscribirme a materias</a></li>
+            <li><a class="active" href="/">Inscribirme a materias</a></li>
             <li><a href="/">Generar certificado</a></li>
             <li><a href="/">Crear materia</a></li>
           </ul>
 
-        <section>
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 order-lg-2">
-                        <br>
-
-                        </br>
-
-                        <table class="table table-primary">
+        <div class="tablas">
+                        <table>
                             <thead>
-                            <th style="background-color:#aa81c9">Materia</th>
-                            <th style="background-color: #aa81c9">Nombre de profesor</th>
+                            <th style="background-color:#47525E ">Materia</th>
+                            <th style="background-color: #47525E"></th>
 
                             </thead>
 
                             <tbody>
                                 <tr th:each="materia : ${materias}">
                                     <td th:text="${materia.nombre}"  style="background-color: whitesmoke"></td>
-                                    <td style="background-color: whitesmoke"><a class="button2" th:href="@{/materia/inscribirMateria(idMateria=__${materia.idMateria}__)}">Inscribirse</a></td>
+                                    <td align="right" style="background-color: whitesmoke"><a class="button2" th:href="@{/materia/inscribirMateria(idMateria=__${materia.idMateria}__)}">Inscribirse</a></td>
                                 </tr>
 
                             </tbody>
                         </table>
-
-                    </div>
-                </div>
-            </div>
-        </section>
+                      </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

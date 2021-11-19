@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CalificAR - Registro</title>
+<title>CalificAR - Crear Materias</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -17,16 +17,46 @@
 	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" href="/css/estilos.css">
-<link rel="icon" href="">
+<link rel="icon" href="/img/favicon.ico">
 </head>
-<body bgcolor="#E5E9F2" align="center">
-	<section class="registro">
+<body align="center">
+	<div class="header">
+        <div class="container">
+          <a class="homebtn" href="/index">
+          <img class="logo" src="/img/Logo.png">
+        </a>
+          <div class="conjunto"align="right">
+            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
+            <a href="/" class="molde overlay">
+              <div class="text">Mi perfil</div>
+            </a>
+            <p class="name">Nombre</p>
+            <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li class="dropdown">
+          <a class="dropbtn" href="javascript:void(0)">Mis materias</a>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </li>
+        <li><a href="/">Inscribirme a materias</a></li>
+        <li><a href="/">Generar certificado</a></li>
+        <li><a class="active" href="/">Crear materia</a></li>
+      </ul>
+
+	<section class="centrar">
 		<h1 style="color: #47525E;">Crear materia</h1>
 		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
 		<form th:action="@{/materia/guardarMateria}" method="POST">
-                    <input type="text" name="nombreMateria" placeholder="nombreMateria" th:value="${nombreMateria}"
+                    <input type="text" name="nombreMateria" placeholder="Nombre de la materia" th:value="${nombreMateria}"
 			</label> <br> <br>
-			<button type="submit" class="btn btn-outline-dark p-3">Crear Materia</button>
+			<button type="submit" class="button2">Crear Materia</button>
 		</form>
 	</section>
 </body>
