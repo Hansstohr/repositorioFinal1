@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="/css/estilos.css">
 <link rel="icon" href="/img/favicon.ico">
 </head>
-<body align="center">
+<body>
 	<div class="header">
         <div class="container">
           <a class="homebtn" href="/index">
@@ -50,12 +50,12 @@
         <li><a class="active" href="/">Crear materia</a></li>
       </ul>
 
-	<section class="centrar">
+	<section align="center" class="centrar">
 		<h1 style="color: #47525E;">Crear materia</h1>
 		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
 		<form th:action="@{/materia/guardarMateria}" method="POST">
                     <input type="text" name="nombreMateria" placeholder="Nombre de la materia" th:value="${nombreMateria}"
-			</label> <br> <br>
+			<br> <br>
 			<button type="submit" class="button2">Crear Materia</button>
 		</form>
 	</section>

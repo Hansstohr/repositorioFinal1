@@ -29,14 +29,12 @@
 				<input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}">
 				<br>
 				<input class="fc2" type="password" name="claveAnterior" placeholder="Contraseña anterior" th:value="${claveAnterior}">
-				<br>
+			
 				<input class="fc2" type="password" name="claveNueva" placeholder="Contraseña nueva" th:value="${claveNueva}">
 				<br>
 				<label class="fc" style="color: #8190A5;">Fecha de nacimiento</label>
 				<br>
 				<input type="date" name="fechanac" th:field="*{fechaNac}">
-				<br>
-				<label style="color: #8190A5;">Email</label>
 				<input type="email" name="email" placeholder="Email" th:field="*{mail}">
 				<br>
 				<input id="archivo" type="file" value="archivo" name="archivo">
@@ -54,10 +52,8 @@
 				<input type="password" name="claveAnterior" placeholder="Contraseña anterior" th:value="${claveAnterior}">
 				<input type="password" name="claveNueva" placeholder="Contraseña nueva" th:value="${claveNueva}">
 				<br>
-				<label style="color: #8190A5;">Fecha de nacimiento</label>
+				<label class="fc" style="color: #8190A5;">Fecha de nacimiento</label>
 				<input type="date" name="fechanac" th:field="*{fechaNac}">
-				<br>
-				<label style="color: #8190A5;">Email</label>
 				<input type="email" name="email" placeholder="Email" th:field="*{mail}">
 				<br>
 				<input id="archivo" type="file" value="archivo" name="archivo">
