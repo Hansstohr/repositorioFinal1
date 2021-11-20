@@ -32,7 +32,7 @@ label{
     margin-right: 242px;
 }
 .fc2{
-    margin-right: 195px;
+  margin-left: 9px;
 }
 input{
     border-width: 1px;
@@ -186,6 +186,10 @@ input:focus{
 .container {
     position: relative;
     height: 100px;
+}
+.container2{
+  position: relative;
+  height: 100px;
 }
 .conjunto{
     position: inherit;
