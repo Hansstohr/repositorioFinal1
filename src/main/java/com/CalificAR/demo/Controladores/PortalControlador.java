@@ -67,7 +67,7 @@ public class PortalControlador {
 		// Es un alumno
 		if (loginAlumno != null) {
 			Optional<Alumno> optAlumno = alumnoServicio.buscarPordDni(loginAlumno.getLogin().getDni());
-			if (optAlumno.isEmpty()) {
+			if (!optAlumno.isPresent()) {
 				return "/";
 			}
 			List<Materia> materias = materiaServicio.todas();
@@ -118,14 +118,14 @@ public class PortalControlador {
 		// Es un alumno
 		if (loginAlumno != null) {
 			Optional<Alumno> alumno = alumnoServicio.buscarPordDni(loginAlumno.getLogin().getDni());
-			if (alumno.isEmpty()) {
+			if (!alumno.isPresent()) {
 				return "redirect:/index";
 			}
 			modelo.addAttribute("alumno", alumno.get());
 			return "modificarUsuario";
 		} else {
 			Optional<Profesor> profesor = profesorServicio.buscarPordDni(loginProfesor.getLogin().getDni());
-			if (profesor.isEmpty()) {
+			if (!profesor.isPresent()) {
 				return "redirect:/index";
 			}
 			modelo.addAttribute("profesor", profesor.get());

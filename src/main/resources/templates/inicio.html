@@ -51,12 +51,12 @@
 			<div class="dropdown-content">
 				<a th:if="${profesor != null}">
 					<tr th:each="materia : ${profesor.materias}">
-						<a href="/notas/obtenerNota?idMateria=${materia.idMateria}" th:text="{materia.nombre}"></a>
+						<a href="/notas/obtenerNota?idMateria=${materia.idMateria}" th:text="${materia.nombre}"></a>
 					</tr>
 				</a>
 				<a th:if="${alumno != null}">
 					<tr th:each="materia : ${alumno.materias}">
-						<a href="/notas/obtenerNota?idMateria=${materia.idMateria}" th:text="{materia.nombre}"></a>
+						<a href="/notas/obtenerNota?idMateria=${materia.idMateria}" th:text="${materia.nombre}"></a>
 					</tr>
 				</a>
 			</div>
@@ -66,7 +66,7 @@
 			<div class="dropdown-content">
 				<a>
 					<tr th:each="materia : ${materias}">
-						<a href="/materia/inscribirseMaterias?idMateria=${materia.idMateria}" th:text="{materia.nombre}"></a>
+						<a href="/materia/inscribirseMaterias?idMateria=${materia.idMateria}" th:text="${materia.nombre}"></a>
 					</tr>
 				</a>
 			</div>
