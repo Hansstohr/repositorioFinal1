@@ -14,54 +14,65 @@
         <link rel="stylesheet" href="/css/estilos.css">
         <link rel="icon" href="/img/favicon.ico">
 </head>
-    <body>
-      <div class="header">
-        <div class="container">
-          <a class="homebtn" href="/index">
-          <img class="logo" src="/img/Logo.png">
-        </a>
-          <div class="conjunto"align="right">
-            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" class="molde image">
-            <a href="/" class="molde overlay">
-              <div class="text">Mi perfil</div>
-            </a>
-            <p class="name">Nombre</p>
-            <!-- <p th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre"}></p> -->
-          </div>
-        </div>
-      </div>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li class="dropdown">
-          <a class="dropbtn" href="javascript:void(0)">Mis materias</a>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </li>
-        <li><a href="/">Inscribirme a materias</a></li>
-        <li><a href="/">Generar certificado</a></li>
-        <li><a href="/">Crear materia</a></li>
-      </ul>
+<body>
+	<div class="header">
+		<div class="container">
+			<a class="homebtn" href="/index"> <img class="logo" src="/img/Logo.png">
+			</a>
+			<div class="conjunto" align="right">
+				<img th:if="${alumno != null and alumno.foto != null}"
+					th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
+				<img th:if="${profesor != null and profesor.foto != null}"
+					th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
+				<img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
+					src="/img/default.png" alt="Foto de perfil" class="molde image">
+				<a class="molde overlay">
+					<div class="text">Mi perfil</div>
+				</a>
+				<p th:if="${alumno != null}" th:text="${alumno.nombre} + ' ' + ${alumno.apellido}"></p>
+				<p th:if="${profesor != null}" th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></p>
+			</div>
+		</div>
+	</div>
+	<ul>
+		<li><a href="/inicio">Inicio</a></li>
+		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis materias</a>
+			<div class="dropdown-content">
+				<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link 3</a>
+			</div>
+		</li>
+		<li><a href="/">Inscribirme a materias</a></li>
+		<li><a href="/">Generar certificado</a></li>
+		<li><a href="/">Crear materia</a></li>
+	</ul>
 
-        <div class="row">
+	<div class="row">
 
-          <div class="column">
-            <h1>Mi Perfil</h1>
-            <img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}" src="/img/default.png" alt="Foto de perfil" id="profilePic"/>
-          </div>
+		<div class="column">
+			<h1>Mi Perfil</h1>
+				<img th:if="${alumno != null and alumno.foto != null}"
+					th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
+				<img th:if="${profesor != null and profesor.foto != null}"
+					th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
+				<img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
+					src="/img/default.png" alt="Foto de perfil" class="molde image">
+		</div>
 
-          <div class="columnSecond">
-              <h3>Nombre:</h3><p th:text="${nombre}"></p>
-              <h3>Apellido:</h3><p th:text="${apellido}"></p>
-              <h3>Fecha de nacimiento:</h3><p th:text="${fechaNac}"></p>
-              <h3>Email:</h3><p th:text="${mail}"></p>
-              <h3>DNI:</h3><p th:text="${dni}"></p>
-          </div>
-          
-        </div>
-        <a class="buttontop" th:href="@{/profesor/modificarProfesor}">Editar Perfil</a>
-    </body>
+		<div class="columnSecond">
+			<h3>Nombre:</h3>
+			<p th:text="${usuario.nombre}"></p>
+			<h3>Apellido:</h3>
+			<p th:text="${usuario.apellido}"></p>
+			<h3>Fecha de nacimiento:</h3>
+			<p th:text="${usuario.fechaNac}"></p>
+			<h3>Email:</h3>
+			<p th:text="${usuario.mail}"></p>
+			<h3>DNI:</h3>
+			<p th:text="${usuario.login.dni}"></p>
+		</div>
+
+	</div>
+	<a class="buttontop" th:href="@{/profesor/modificarProfesor}">Editar Perfil</a>
+</body>
 </html>
 

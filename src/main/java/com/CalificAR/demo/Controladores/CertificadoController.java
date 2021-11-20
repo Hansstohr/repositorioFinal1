@@ -1,5 +1,6 @@
 package com.CalificAR.demo.Controladores;
 
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,9 +9,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.CalificAR.demo.Entidades.Alumno;
+import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.AsistenciaRepositorio;
@@ -22,59 +23,54 @@ import com.CalificAR.demo.Servicios.CertificadoServicio;
 @RequestMapping("/certificado")
 public class CertificadoController {
 
-    @Autowired
-    AsistenciaRepositorio asistenciaRepositorio;
+	@Autowired
+	AsistenciaRepositorio asistenciaRepositorio;
+	@Autowired
+	CertificadoRepositorio certificadoRepositorio;
+	@Autowired
+	AlumnoRepositorio alumnoRepositorio;
+	@Autowired
+	CertificadoServicio certificadoServicio;
+	@Autowired
+	AlumnoServicio alumnoServicio;
 
-    @Autowired
-    CertificadoRepositorio certificadoRepositorio;
+	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
+	@GetMapping("/generarCertificado")
+	public String generarCertificado(HttpSession session, ModelMap modelo) throws ErrorServicio {
+		Alumno alumnoSession = (Alumno) session.getAttribute("alumnosession");
+		if (alumnoSession == null) {
+			return "redirect:/index";
+		}
+		Alumno alumno = alumnoServicio.buscarPordDni(alumnoSession.getLogin().getDni()).get();
+		String codigo = certificadoServicio.solicitarCertificado(alumnoSession.getId());
+		if (codigo.isEmpty()) {
+			modelo.put("error", "El alumno no cumple las condiciones de regularidad");
+			List<Materia> materias = alumnoServicio.buscarMateriasParaInscribirse(alumnoSession.getId());
+			modelo.put("materias", materias);
+			modelo.put("alumno", alumno);
+			return "/inicio";
+		}
+		modelo.put("codigo", codigo);
+		modelo.put("alumno", alumno);
+		return "certificado.html";
+	}
 
-    @Autowired
-    AlumnoRepositorio alumnoRepositorio;
+	@GetMapping("/validarCertificado")
+	public String validarCertificado(ModelMap modelo) {
+		return "validarCertificado.html";
+	}
 
-    @Autowired
-    CertificadoServicio certificadoServicio;
-    
-    @Autowired
-    AlumnoServicio alumnoServicio;
-    
-    @PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
-    @RequestMapping(value = "/generarCertificado", method = RequestMethod.GET)
-    public String newCertificado(HttpSession session, ModelMap modelo) throws ErrorServicio {
-
-        Alumno alumno = (Alumno) session.getAttribute("alumnosession");
-
-        if (alumno == null || !alumno.getId().equals(session.getId())) {
-            return "redirect:/index";
-        }
-        certificadoServicio.solicitarCertificado(alumno.getId());
-        return "certificado.html";
-    }
-
-    @GetMapping("/validarCertificado")
-    public String validarCertificado(ModelMap modelo) {
-        return "validarCertificado.html";
-    }
-    
-    //AQUÍ TIENE QUE RETORNAR UN HTML CON LOS DATOS DE UN ALUMNO
-    @PostMapping("/consultarCertificado")
-    public String consultarCertificado(HttpSession session, @RequestParam String certificado_codigo) throws ErrorServicio {
-
-        Alumno loginUsuario = (Alumno) session.getAttribute("alumnosession");
-
-        if (loginUsuario == null || !loginUsuario.getId().equals(session.getId())) {
-
-            return "redirect:/index";
-        }
-        Alumno alumno = certificadoServicio.consultarCertificados(certificado_codigo);
-
-        return "certificado.html";
-
-    }
-    
-    @GetMapping("/getCertificado")
-    public String getCertificado(ModelMap modelo) throws ErrorServicio {
-    	Alumno alumno = alumnoServicio.buscarPordDni(alumnoRepositorio, "12312312").get();
-        modelo.put("alumno", alumno);
-        return "certificado.html";
-    }
+	// AQUÍ TIENE QUE RETORNAR UN HTML CON LOS DATOS DE UN ALUMNO
+	@PostMapping("/consultarCertificado")
+	public String consultarCertificado(HttpSession session, @RequestParam String certificado_codigo, ModelMap modelo)
+			throws ErrorServicio {
+		try {
+			Alumno alumno = certificadoServicio.consultarCertificados(certificado_codigo);
+			modelo.put("alumno", alumno);
+		} catch (ErrorServicio ex) {
+			modelo.put("error", ex.getMessage());
+			return "validarCertificado.html";
+		}
+		return "certificado.html";
+	}
 }

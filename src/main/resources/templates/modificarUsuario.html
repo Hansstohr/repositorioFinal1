@@ -1,54 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>CalificAR - Modificar Pefil</title>
-                    <link rel="preconnect" href="https://fonts.googleapis.com">
-                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                            <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-                                <link rel="preconnect" href="https://fonts.googleapis.com">
-                                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                                        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-                                            <link rel="stylesheet" href="/css/estilos.css">
-                                                <link rel="icon" href="/img/favicon.ico">
-                                                    </head>
-                                                    <body bgcolor="#E5E9F2" align="center">
-                                                        <section class="registro">
-                                                            <h1 style="color: #47525E;">Modificar Usuario</h1>
-                                                            <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
-                                                            <div th:if="${session.profesorsession != null}" >
-                                                            <form th:action="@{/profesor/guardarProfesor}" method="POST" th:object="${profesor}" enctype="multipart/form-data">
-                                                                <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
-                                                                    <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
-                                                                                <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
-                                                                                        <input class="fc2" type="password" name="clave" placeholder="Contraseña" th:value="${clave}"><br>
-                                                                                            <label class="fc" style="color: #8190A5;">Fecha de nacimiento Profe</label><br>
-                                                                                                <input type="date" name="fechanac" th:field="*{fechaNac}">
-                                                                                                    <label class="foto">Cargar foto
-                                                                                                        <input class="none" type="file" name="archivo">
-                                                                                                    </label> <br>
-                                                                                                        <br>
-                                                                                                            <button type="submit" class="button2">Modificar</button>
-                                                            </form>
-                                                                </div>
-                                                            <div th:if="${session.alumnosession != null}" >
-                                                          <form th:action="@{/alumno/guardarAlumno}" method="POST" th:object="${alumno}" enctype="multipart/form-data">
-                                                               <!--  <input type="hidden" name="id" th:value="*{profesor.id}"/>  ESTO LO AGREGUÉ -->
-                                                                <input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
-                                                                    <input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}"><br>
-                                                                                <input type="email" name="email" placeholder="Email" th:field="*{mail}"> <br>
-                                                                                        <input class="fc2" type="password" name="clave" placeholder="Contraseña" th:value="${clave}"><br>
-                                                                                            <label class="fc" style="color: #8190A5;">Fecha de nacimiento ALum</label><br>
-                                                                                                <input type="date" name="fechanac" th:field="*{fechaNac}">
-                                                                                                    <label class="foto">Cargar foto
-                                                                                                        <input class="none" type="file" name="archivo">
-                                                                                                    </label> <br>
-                                                                                                        <br>
-                                                                                                            <button type="submit" class="button2">Modificar</button>
-                                                                                                            </form>
-                                                                </div>
-                                                                                                            </section>
-                                                                                                            </body>
-                                                                                                            </html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalificAR - Modificar Pefil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/estilos.css">
+<link rel="icon" href="/img/favicon.ico">
+</head>
+<body bgcolor="#E5E9F2" align="center">
+	<section class="registro">
+		<h1 style="color: #47525E;">Modificar Usuario</h1>
+		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
+		<div th:if="${profesor != null}">
+			<form th:action="@{/profesor/guardarProfesor}" method="POST" th:object="${profesor}" enctype="multipart/form-data">
+				<input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
+				<input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}">
+				<br>
+				<input class="fc2" type="password" name="claveAnterior" placeholder="Contraseña anterior" th:value="${claveAnterior}">
+				<br>
+				<input class="fc2" type="password" name="claveNueva" placeholder="Contraseña nueva" th:value="${claveNueva}">
+				<br>
+				<label class="fc" style="color: #8190A5;">Fecha de nacimiento</label>
+				<br>
+				<input type="date" name="fechanac" th:field="*{fechaNac}">
+				<br>
+				<label style="color: #8190A5;">Email</label>
+				<input type="email" name="email" placeholder="Email" th:field="*{mail}">
+				<br>
+				<input id="archivo" type="file" value="archivo" name="archivo">
+				<br>
+				<br>
+				<button type="submit" class="button2">Modificar</button>
+			</form>
+		</div>
+		<div th:if="${alumno != null}">
+			<form th:action="@{/alumno/guardarAlumno}" method="POST" th:object="${alumno}" enctype="multipart/form-data">
+				<!--  <input type="hidden" name="id" th:value="*{profesor.id}"/>  ESTO LO AGREGUÉ -->
+				<input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
+				<input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}">
+				<br>
+				<input type="password" name="claveAnterior" placeholder="Contraseña anterior" th:value="${claveAnterior}">
+				<input type="password" name="claveNueva" placeholder="Contraseña nueva" th:value="${claveNueva}">
+				<br>
+				<label style="color: #8190A5;">Fecha de nacimiento</label>
+				<input type="date" name="fechanac" th:field="*{fechaNac}">
+				<br>
+				<label style="color: #8190A5;">Email</label>
+				<input type="email" name="email" placeholder="Email" th:field="*{mail}">
+				<br>
+				<input id="archivo" type="file" value="archivo" name="archivo">
+				<br>
+				<br>
+				<button type="submit" class="button2">Modificar</button>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

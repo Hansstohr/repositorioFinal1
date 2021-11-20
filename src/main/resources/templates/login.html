@@ -15,37 +15,33 @@
     <link rel="icon" href="/img/favicon.ico">
 </head>
 
-<body>
-	<a class="buttontop" th:href="@{/certificado/validarCertificado}" role="button"><div>Validar certificado</div></a>
-	
-  <section>
-  	    <h1 align="center" style="color: #47525E;">CalificAR</h1>
-  	    <p align="left" style="color: #8190A5;">Iniciar sesión</p>
+<body >
+	<a class="buttontop" th:href="@{/certificado/validarCertificado}"
+		role="button">Validar certificado</a>
 
-            <form action="logincheck" method="POST">
-                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                <p th:if="${logout != null}" th:text="${logout}" style="color:green"></p>  
+	<section align="center">
+		<h1 align="center" style="color: #47525E;">CalificAR</h1>
+		<p align="center" style="color: #8190A5;">Iniciar sesión</p>
 
-                <label class="dni" style="color: #8190A5;">DNI</label> <br>
-                <input type="text" class="form-control" name="username" maxlength=8/>
-                <br>
+		<form action="logincheck" method="POST">
+			<p th:if="${error != null}" th:text="${error}" style="color: red"></p>
+			<p th:if="${logout != null}" th:text="${logout}" style="color: green"></p>
 
-                <label style="color: #8190A5;">Contraseña</label> <br>
-                <input type="password" class="form-control" name="password"/>
-                <br>
-                <br/>
-                <button type="submit" class="button2">Ingresar</button>
-            </form>
+			<label class="dni" style="color: #8190A5;">DNI</label> <br> <input
+				type="text" class="form-control" name="username" maxlength=8 /> <br>
+
+			<label style="color: #8190A5;">Contraseña</label> <br> <input
+				type="password" class="form-control" name="password" /> <br> <br />
+			<button type="submit" class="button2">Ingresar</button>
+		</form>
 
 
-            <br>
-            <a class="button" th:href="@{/alumno/registroAlumno}" role="button">Registro alumno</a>
-            <a class="button" th:href="@{/codigo/validarProfesor}" role="button">Registro profesor</a>
-            <br>
-            <br>
-            <br>
-            <a class="link" href="/recuperarContraseña" role="link">¿Olvidaste tu contraseña?</a> 
-</section>
+		<br> <a class="button" th:href="@{/alumno/registroAlumno}"
+			role="button">Registro alumno</a> <a class="button"
+			th:href="@{/codigo/validarProfesor}" role="button">Registro
+			profesor</a> <br> <br> <br> <a class="link"
+			href="/recuperarContraseña" role="link">¿Olvidaste tu contraseña?</a>
+	</section>
 </body>
 
 </html>
