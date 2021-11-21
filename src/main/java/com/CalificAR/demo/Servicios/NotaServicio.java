@@ -78,30 +78,4 @@ public class NotaServicio {
         }
         return notasTotales;
     }
-
-//    @Transactional(readOnly = true)
-//    public List<Nota> todos() {
-//        return notaRepositorio.findAll();
-//    }
-//    public void modificarNota() {
-//        
-//    }
-//
-//	// Testeo Postman
-//	public Notas crearNotas(NotaRepositorio notaRepositorio, Notas notas) {
-//		this.notaRepositorio = notaRepositorio;
-//		return this.crearNotas(notas);
-//	}
-//
-//	// Testo Postman
-//	public List<Nota> todos(NotaRepositorio notaRepositorio) {
-//		this.notaRepositorio = notaRepositorio;
-//		return todos();
-//	}
-//
-//	// Testo Postman
-//	public List<Nota> obtenerNotas(NotaRepositorio notaRepositorio, String idAlumno, String idMateria) {
-//		this.notaRepositorio = notaRepositorio;
-//		return obtenerNotas(idAlumno, idMateria);
-//	}
 }

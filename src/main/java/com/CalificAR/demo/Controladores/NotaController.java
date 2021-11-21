@@ -27,80 +27,55 @@ import com.CalificAR.demo.Servicios.NotaServicio;
 @RequestMapping("/notas")
 public class NotaController {
 
-	@Autowired
-	NotaServicio notaServicio;
-	@Autowired
-	AlumnoServicio alumnoServicio;
-	@Autowired
-	MateriaServicio materiaServicio;
+    @Autowired
+    NotaServicio notaServicio;
+    @Autowired
+    AlumnoServicio alumnoServicio;
+    @Autowired
+    MateriaServicio materiaServicio;
 
-	@GetMapping("/cargarNota")
-	public String cargarMateriaNota(ModelMap modelo, @RequestParam(required = false) String idMateria)
-			throws ErrorServicio {
-		List<Alumno> alumnos = alumnoServicio.alumnosPorMateria(idMateria);
-		modelo.put("alumnos", alumnos);
-		modelo.put("materia", idMateria);
-		return "cargarNota.html";
-	}
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/cargarNota")
+    public String cargarMateriaNota(ModelMap modelo, @RequestParam(required = false) String idMateria)
+            throws ErrorServicio {
+        List<Alumno> alumnos = alumnoServicio.alumnosPorMateria(idMateria);
+        modelo.put("alumnos", alumnos);
+        modelo.put("materia", idMateria);
+        return "cargarNota.html";
+    }
 
-	@PostMapping("/agregarNotas")
-	public String agregarNotas(ModelMap modelo, @RequestParam String idMateria, @RequestParam String mail,
-			@RequestParam Double nota) throws ErrorServicio {
-		Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
-		Materia materia = materiaServicio.buscarPorId(idMateria);
-		try {
-			List<Nota> listaNotas = notaServicio.crearListaNotas(alumno.get(), materia, LocalDate.now(), nota);
-			Notas nuevaNota = new Notas(materia, listaNotas, LocalDate.now());
-			List<Nota> nuevaListaNotas = notaServicio.crearNotas(nuevaNota);
-			modelo.put("notas", listaNotas);
-			modelo.put("materia", listaNotas.get(0).getMateria());
-		} catch (ErrorServicio e) {
-			List<Alumno> alumnos = alumnoServicio.alumnosPorMateria(idMateria);
-			modelo.put("materia", idMateria);
-			modelo.put("alumnos", alumnos);
-			modelo.put("error", e.getMessage());
-			return "cargarNota";
-		}
-		List<Double> notasTotales = notaServicio.notasPorAlumno(alumno.get().getId(), idMateria);
-		modelo.put("notasTotales", notasTotales);
-		return "verNotas.html";
-	}
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @PostMapping("/agregarNotas")
+    public String agregarNotas(ModelMap modelo, @RequestParam String idMateria, @RequestParam String mail,
+            @RequestParam Double nota) throws ErrorServicio {
+        Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
+        Materia materia = materiaServicio.buscarPorId(idMateria);
+        try {
+            List<Nota> listaNotas = notaServicio.crearListaNotas(alumno.get(), materia, LocalDate.now(), nota);
+            Notas nuevaNota = new Notas(materia, listaNotas, LocalDate.now());
+            List<Nota> nuevaListaNotas = notaServicio.crearNotas(nuevaNota);
+            modelo.put("notas", listaNotas);
+            modelo.put("materia", listaNotas.get(0).getMateria());
+        } catch (ErrorServicio e) {
+            List<Alumno> alumnos = alumnoServicio.alumnosPorMateria(idMateria);
+            modelo.put("materia", idMateria);
+            modelo.put("alumnos", alumnos);
+            modelo.put("error", e.getMessage());
+            return "cargarNota";
+        }
+        List<Double> notasTotales = notaServicio.notasPorAlumno(alumno.get().getId(), idMateria);
+        modelo.put("notasTotales", notasTotales);
+        return "verNotas.html";
+    }
 
-	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-	@GetMapping("/guardarNotas")
-	public String guardarNotas(ModelMap modelo, HttpSession session, String idAlumno, String idMateria, Double nota)
-			throws ErrorServicio {
-		Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-		if (loginUsuario == null) {
-			return "redirect:/index";
-		}
-//        List<Nota> listaNotas = new ArrayList();
-//        Nota notas = new Nota(alumno , materia ,LocalDate.now() , nota );
-//        listaNotas.add(notas);
-//        
-//        modelo.put("notas", listaNotas);
-//        modelo.put("materia", listaNotas.get(0).getMateria());
-		return "cargarMateriaNota.html";
-	}
-
-	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')|| hasAnyRole('ROLE_PROFESOR_REGISTRADO')")
-	@PostMapping("/obtenerNota")
-	public String obtenerNota(ModelMap modelo, HttpSession session, @RequestParam String idMateria) {
-		Alumno loginAlumno = (Alumno) session.getAttribute("alumnosession");
-		Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
-		if (loginAlumno == null && loginProfesor == null) {
-			return "redirect:/index";
-		}
-		List<Nota> notas = new ArrayList<>();
-		// Es un alumno
-		if (loginAlumno != null) {
-			notas = notaServicio.obtenerNotasAlumno(loginAlumno.getId(), idMateria);
-		}
-		// Es un profesor
-		if (loginProfesor != null) {
-			notas = notaServicio.obtenerNotas(idMateria);
-		}
-		modelo.put("notas", notas);
-		return "VerNotas.html";
-	}
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/verNotas")
+    public String verNotas(ModelMap modelo, @RequestParam String idMateria, @RequestParam String mail) throws ErrorServicio {
+        Materia materia = materiaServicio.buscarPorId(idMateria);
+        Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
+        List<Double> notasTotales = notaServicio.notasPorAlumno(alumno.get().getId(), idMateria);
+        modelo.put("materia", materia);
+        modelo.put("notasTotales", notasTotales);
+        return "verNotasAlumno.html";
+    }
 }

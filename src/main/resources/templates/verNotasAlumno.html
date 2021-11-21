@@ -12,23 +12,19 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href=""> 
+        <link rel="icon" href="">
     </head>
 
-    <body>
-        <section class="container__nota">
-        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-            <form class="form__nota" id="id__form" th:action="@{/notas/agregarNotas}" method="POST">
-                <input type="hidden" name="idMateria" th:value="${materia}">
-                <select name="mail">
-                    <option th:each="alumno : ${alumnos}" th:value="${alumno.mail}" th:text="${alumno.nombre +' '+ alumno.apellido}">
-                    </option>
-                </select>
-                <input name="nota" type="number" placeholder="Nota">
-            </form>
-            <button form="id__form" type="submit" class="button__form__nota">Cargar Notas</button>
-            <a th:href="@{/inicio}" class="button__form__nota">Volver</a>
-        </section>
+    <body bgcolor="#E5E9F2">
+
+               
+        <article class="container__verNotaTotales">
+            
+        <div class="title__verNotaTotales" th:text="${materia.nombre}"></div>
+        <div class="title__verNotaTotales">Notas Totales</div>
+        <div class="item__verNotaTotales" th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></div>
+        <div><a th:href="@{/inicio}" class="button__form__nota">Volver</a></div>
+        </article>
     </body>
 
 </html>

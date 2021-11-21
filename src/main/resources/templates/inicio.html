@@ -51,12 +51,12 @@
 			<div class="dropdown-content">
 				<a th:if="${profesor != null}">
 					<tr th:each="materia : ${profesor.materias}">
-						<a href="/notas/obtenerNota?idMateria=${materia.idMateria}" th:text="${materia.nombre}"></a>
+						<a th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
 					</tr>
 				</a>
 				<a th:if="${alumno != null}">
 					<tr th:each="materia : ${alumno.materias}">
-						<a href="/notas/obtenerNota?idMateria=${materia.idMateria}" th:text="${materia.nombre}"></a>
+						<a th:href="@{/notas/verNotas(idMateria=${materia.idMateria},mail=${alumno.mail})}" th:text="${materia.nombre}"></a>
 					</tr>
 				</a>
 			</div>
