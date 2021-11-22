@@ -32,7 +32,7 @@ label{
     margin-right: 242px;
 }
 .fc2{
-  margin-left: 9px;
+    margin-left: 9px;
 }
 input{
     border-width: 1px;
@@ -188,8 +188,8 @@ input:focus{
     height: 100px;
 }
 .container2{
-  position: relative;
-  height: 100px;
+    position: relative;
+    height: 100px;
 }
 .conjunto{
     position: inherit;
@@ -393,6 +393,10 @@ td{
     height: 50px;
     border-radius: 35px;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .form__nota select{
@@ -505,6 +509,8 @@ td{
     background-color: #AA81C9;
     color:#fff;
     display: flex;
+    justify-content: center;
+    align-items: center;
     justify-content: center;
     align-items: center;
 }
