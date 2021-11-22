@@ -36,14 +36,6 @@
 	</div>
 	<ul>
 		<li><a href="/inicio">Inicio</a></li>
-		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis materias</a>
-			<div class="dropdown-content">
-				<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="#">Link 3</a>
-			</div>
-		</li>
-		<li><a href="/">Inscribirme a materias</a></li>
-		<li><a href="/">Generar certificado</a></li>
-		<li><a href="/">Crear materia</a></li>
 	</ul>
 
 	<div class="row">
@@ -51,11 +43,11 @@
 		<div class="column">
 			<h1>Mi Perfil</h1>
 				<img th:if="${alumno != null and alumno.foto != null}"
-					th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="molde image">
+					th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="image_profile">
 				<img th:if="${profesor != null and profesor.foto != null}"
-					th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="molde image">
+					th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="image_profile"/>
 				<img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
-					src="/img/default.png" alt="Foto de perfil" class="molde image">
+					src="/img/default.png" alt="Foto de perfil" class="image_profile"/>
 		</div>
 
 		<div class="columnSecond">
@@ -72,7 +64,7 @@
 		</div>
 
 	</div>
-	<a class="buttontop" th:href="@{/profesor/modificarProfesor}">Editar Perfil</a>
+	<a class="buttontop" th:href="@{/modificarusuario}">Editar Perfil</a>
 </body>
 </html>
 

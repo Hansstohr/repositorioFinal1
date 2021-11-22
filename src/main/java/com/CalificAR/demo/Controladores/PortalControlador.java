@@ -2,7 +2,9 @@ package com.CalificAR.demo.Controladores;
 
 import java.util.List;
 import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
@@ -38,12 +41,15 @@ public class PortalControlador {
 
 	@GetMapping("/login")
 	public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout,
-			ModelMap model) {
+			ModelMap model, HttpSession session) {
+		// Borrar sesiones y demás cosas agregadas al modelo.
+		session.invalidate();
+		model.clear();
 		if (error != null) {
 			model.put("error", "Usuario o clave incorrectos");
 		}
 		if (logout != null) {
-			model.put("logout", "Ha salido correctamente.");
+			model.put("logout", "Su sesión se cerró correctamente.");
 		}
 		return "login.html";
 	}
@@ -70,13 +76,17 @@ public class PortalControlador {
 			if (!optAlumno.isPresent()) {
 				return "/";
 			}
-			List<Materia> materias = materiaServicio.todas();
-			modelo.put("materias", materias);
-			modelo.put("alumno", optAlumno.get());
+			List<Materia> materias = materiaServicio.materiasParaInscribirse(loginAlumno.getLogin().getDni());
+			session.setAttribute("materias", materias);
+			session.setAttribute("alumno", optAlumno.get());
 		}
 		// Es un profesor
 		if (loginProfesor != null) {
-			modelo.put("profesor", loginProfesor);
+			Optional<Profesor> optProfesor = profesorServicio.buscarPordDni(loginProfesor.getLogin().getDni());
+			if (!optProfesor.isPresent()) {
+				return "/";
+			}
+			session.setAttribute("profesor", optProfesor.get());
 		}
 		return "inicio.html";
 	}

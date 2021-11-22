@@ -28,7 +28,7 @@
 				<input type="text" name="nombre" placeholder="Nombre" th:field="*{nombre}">
 				<input type="text" name="apellido" placeholder="Apellido" th:field="*{apellido}">
 				<br>
-				<input class="fc2" type="password" name="claveAnterior" placeholder="Contraseña anterior" th:value="${claveAnterior}">
+				<input class="fc2" type="password" name="claveAnterior" placeholder="Contraseña anterior" th:value="${claveAnterior}" required>
 			
 				<input class="fc2" type="password" name="claveNueva" placeholder="Contraseña nueva" th:value="${claveNueva}">
 				<br>

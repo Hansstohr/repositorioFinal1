@@ -8,11 +8,13 @@ package com.CalificAR.demo.Servicios;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
@@ -26,9 +28,10 @@ public class ProfesorServicio extends UsuarioServicio {
 
 	@Transactional
 	public Profesor registrar(MultipartFile archivo, String dni, String nombre, String apellido, String mail,
-			String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
+			String clave, String clave2, LocalDate fechaNacimiento, String codigoValidacionProfesor)
+			throws ErrorServicio {
 		Usuario usuario = super.registrarUsuario(profesorRepositorio, archivo, dni, nombre, apellido, mail, clave,
-				clave2, fechaNacimiento);
+				clave2, fechaNacimiento, codigoValidacionProfesor);
 		Profesor profesor = usuario.crearProfesor();
 		return profesorRepositorio.save(profesor);
 	}

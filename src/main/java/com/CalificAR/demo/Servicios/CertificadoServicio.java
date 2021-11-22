@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Certificado;
 import com.CalificAR.demo.Entidades.Materia;
@@ -61,6 +63,7 @@ public class CertificadoServicio {
 		}
 		if (certificadoValido) {
 			Certificado certificado = new Certificado();
+			certificado.setVencimiento(LocalDate.now().plus(3L, ChronoUnit.MONTHS));
 			certificado = certificadoRepositorio.save(certificado);
 			alumno.setCertificado(certificado);
 			alumnoRepositorio.save(alumno);

@@ -30,83 +30,69 @@
 		<div class="container2">
 			<a class="homebtn" href="/"> <img class="logo" src="/img/Logo.png"></a>
 			<div class="conjunto" align="right">
-				<img th:if="${alumno != null and alumno.foto != null}"
-					th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil"
+				<img th:if="${session.alumnosession != null and session.alumnosession.foto != null}"
+					th:src="${'/foto/alumno/' + session.alumnosession.id}" alt="Foto de perfil"
 					class="molde image">
-				<img th:if="${profesor != null and profesor.foto != null}"
-					th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil"
+				<img th:if="${session.profesorsession != null and session.profesorsession.foto != null}"
+					th:src="${'/foto/profesor/' + session.profesorsession.id}" alt="Foto de perfil"
 					class="molde image">
-				<img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
+				<img th:if="${(session.profesorsession == null or session.profesorsession.foto == null) and (session.alumnosession == null or session.alumnosession.foto == null)}"
 					src="/img/default.png" alt="Foto de perfil" class="molde image">
 				<a th:href="@{/perfil}" class="molde overlay">
 					<div class="text">Mi perfil</div>
 				</a>
-				<p th:if="${alumno != null}" th:text="${alumno.nombre} + ' ' + ${alumno.apellido}"></p>
-				<p th:if="${profesor != null}" th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></p>
+				<p th:if="${session.alumnosession != null}" th:text="${session.alumnosession.nombre} + ' ' + ${session.alumnosession.apellido}"></p>
+				<p th:if="${session.profesorsession != null}" th:text="${session.profesorsession.nombre} + ' ' + ${session.profesorsession.apellido}"></p>
 			</div>
 		</div>
 	</div>
 	<ul>
 		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis materias</a>
-			<div class="dropdown-content">
-				<a th:if="${profesor != null}">
-					<tr th:each="materia : ${profesor.materias}">
-						<a th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
-					</tr>
-				</a>
-				<a th:if="${alumno != null}">
-					<tr th:each="materia : ${alumno.materias}">
-						<a th:href="@{/notas/verNotas(idMateria=${materia.idMateria},mail=${alumno.mail})}" th:text="${materia.nombre}"></a>
-					</tr>
-				</a>
+			<div th:if="${session.profesorsession != null}" class="dropdown-content">
+				<tr th:each="materia : ${session.profesorsession.materias}">
+					<a style="text-indent:50px;" th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
+				</tr>
+			</div>
+			
+			<div th:if="${session.alumnosession != null}" class="dropdown-content">
+				<tr th:each="materia : ${session.alumnosession.materias}">
+					<a style="text-indent:50px;" th:href="@{/notas/verNotas(idMateria=${materia.idMateria},mail=${session.alumnosession.mail})}" th:text="${materia.nombre}"></a>
+				</tr>
 			</div>
 		</li>
 		
-		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Inscribirme a materias</a>
+		<li th:if="${session.alumnosession != null}" class="dropdown"><a class="dropbtn" href="javascript:void(0)">Inscribirme a materias</a>
 			<div class="dropdown-content">
-				<a>
-					<tr th:each="materia : ${materias}">
-						<a href="/materia/inscribirseMaterias?idMateria=${materia.idMateria}" th:text="${materia.nombre}"></a>
-					</tr>
-				</a>
+				<tr th:each="materia : ${session.materias}">
+					<!-- "${'/foto/alumno/' + session.alumnosession.id}" 
+					<a style="text-indent:50px;" href="@{/materia/inscribirseMaterias?idMateria=${materia.idMateria}}" th:text="${materia.nombre}"></a>
+					-->
+					<a style="text-indent:50px;" th:href="@{'/materia/inscribirseMaterias?idMateria=' + ${materia.idMateria}}" th:text="${materia.nombre}"></a>
+				</tr>
 			</div>
 		</li>
-		<li><a href="/certificado/generarCertificado">Generar certificado</a></li>
-		<li><a th:if="${profesor != null}" th:href="@{/materia/crearMateria}">Crear materia</a></li>
-		<li><a th:href="@{/modificarusuario}">Modificar usuario</a></li>
-		<li><a class="" href="/">Salir</a></li>
+		<li><a th:if="${session.alumnosession != null}" href="/certificado/generarCertificado">Generar certificado</a></li>
+		<li><a th:if="${session.profesorsession != null}" th:href="@{/materia/crearMateria}">Crear materia</a></li>
+		<li><a class="" href="/login?logout=true">Salir</a></li>
 	</ul>
-	<p th:if="${error != null}" th:text="${error}" style="color: red;" align="right"></p>
+	<p th:if="${error != null}" th:text="${error}" style="color: red;" align="center"></p>
+	<p th:if="${exito != null}" th:text="${exito}" style="color: green"></p>
 	<div class="row">
 		<div class="card text-center text-white bg-dark mb-3"
 			style="width: 18rem;">
 			<img class="card-img-top" src="/img/img2.jpg" alt="">
-			<div class="card-body">
-
-				<a href="#" class="btn btn-secondary">Mis materias</a>
-			</div>
 		</div>
-		<div th:if="${alumno != null}" class="card text-center text-white bg-dark mb-3"
+		<div class="card text-center text-white bg-dark mb-3"
 			style="width: 18rem;">
 			<img class="card-img-top" src="/img/img4.jpg" alt="">
-			<div class="card-body">
-				<a th:href="@{/materia/inscribirseMateria}"
-					class="btn btn-secondary">Inscribirme a materias</a>
-			</div>
 		</div>
 		<div class="card text-center text-white bg-dark mb-3"
 			style="width: 18rem;">
 			<img class="card-img-top" src="/img/img1.jpg" alt="">
-			<div class="card-body">
-				<a href="#" class="btn btn-secondary">Generar certificado</a>
-			</div>
 		</div>
-		<div th:if="${profesor != null}" class="card text-center text-white bg-dark mb-3"
+		<div class="card text-center text-white bg-dark mb-3"
 			style="width: 18rem;">
 			<img class="card-img-top" src="/img/img3.jpg" alt="">
-			<div class="card-body">
-				<a href="#" class="btn btn-secondary">Crear materia</a>
-			</div>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

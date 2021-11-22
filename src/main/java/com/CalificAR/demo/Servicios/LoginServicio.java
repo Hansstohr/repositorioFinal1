@@ -2,7 +2,9 @@ package com.CalificAR.demo.Servicios;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,8 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Login;
+import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
@@ -33,6 +37,8 @@ public class LoginServicio implements UserDetailsService {
 	private AlumnoRepositorio alumnoRepositorio;
 	@Autowired
 	private NotificacionServicio notificacionServicio;
+	@Autowired
+	private MateriaServicio materiaServicio;
 
 	@Override
 	public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
@@ -59,6 +65,8 @@ public class LoginServicio implements UserDetailsService {
 					session.setAttribute("alumnosession", alumno);
 					GrantedAuthority p2 = new SimpleGrantedAuthority("ROLE_ALUMNO_REGISTRADO");
 					permisos.add(p2);
+					List<Materia> materias = materiaServicio.materiasParaInscribirse(alumno.getLogin().getDni());
+					session.setAttribute("materias", materias);
 				} else {
 					// Esto no debería pasar
 					return null;

@@ -25,7 +25,7 @@
 
 		<form action="logincheck" method="POST">
 			<p th:if="${error != null}" th:text="${error}" style="color: red"></p>
-			<p th:if="${logout != null}" th:text="${logout}" style="color: green"></p>
+			<b><p th:if="${logout != null}" th:text="${logout}" style="color: green"></p></b>
 
 			<label class="dni" style="color: #8190A5;">DNI</label> <br> <input
 				type="text" class="form-control" name="username" maxlength=8 /> <br>

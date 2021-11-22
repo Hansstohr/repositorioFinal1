@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Usuario;
@@ -29,7 +31,7 @@ public class AlumnoServicio extends UsuarioServicio {
 			String clave, String clave2, LocalDate fechaNacimiento) throws ErrorServicio {
 		// Valida los datos del usuario y devuelve una instancia de Usuario.
 		Usuario usuario = super.registrarUsuario(alumnoRepositorio, archivo, dni, nombre, apellido, mail, clave, clave2,
-				fechaNacimiento);
+				fechaNacimiento, null);
 		Alumno alumno = usuario.crearAlumno();
 		return alumnoRepositorio.save(alumno);
 	}

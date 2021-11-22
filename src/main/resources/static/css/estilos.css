@@ -202,7 +202,10 @@ input:focus{
 .image {
     border-radius:50%;
 }
-
+.image_profile {
+    width: 300px;
+    height: 400px;
+}
 .overlay {
     border-radius: 50%;
     position: absolute; 

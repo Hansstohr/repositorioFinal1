@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
+import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
@@ -28,12 +31,17 @@ public abstract class UsuarioServicio {
 	private FotoServicio fotoServicio;
 	@Autowired
 	private LoginRepositorio loginRepositorio;
+	@Autowired
+	private CodigoProfesorServicio codigoProfesorServicio;
 
 	@Transactional
 	public <U extends Usuario> Usuario registrarUsuario(UsuarioRepositorio<U> repo, MultipartFile archivo, String dni,
-			String nombre, String apellido, String mail, String clave, String clave2, LocalDate fechaNacimiento)
-			throws ErrorServicio {
+			String nombre, String apellido, String mail, String clave, String clave2, LocalDate fechaNacimiento,
+			String codigoValidacionProfesor) throws ErrorServicio {
 		validarRegistrarUsuario(repo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
+		if (repo instanceof ProfesorRepositorio) {
+			validarCodigo(codigoValidacionProfesor);
+		}
 		Usuario usuario = new Usuario();
 		if (usuario.getLogin() != null) {
 			usuario.getLogin().setDni(dni);
@@ -53,6 +61,10 @@ public abstract class UsuarioServicio {
 		// notificacionServicio.enviar("Bienvenidos a Calific-AR", "
 		// ",usuario.getMail());
 		return usuario;
+	}
+
+	private void validarCodigo(String codigoValidacionProfesor) throws ErrorServicio {
+		codigoProfesorServicio.validarProfesor(codigoValidacionProfesor, true);
 	}
 
 	private <U extends Usuario> void validarModificacion(String id, UsuarioRepositorio<U> repo, String dni,
@@ -155,11 +167,8 @@ public abstract class UsuarioServicio {
 				usuarioModificado.getLogin().setClave(encriptada);
 			}
 			String idFoto = null;
-			if (usuarioModificado.getFoto() != null) {
+			if (!archivo.isEmpty()) {
 				idFoto = usuarioModificado.getFoto().getIdFoto();
-				Foto foto = fotoServicio.guardar(idFoto, archivo);
-				usuarioModificado.setFoto(foto);
-			} else {// AGREGUE ESTAS COSAS
 				Foto foto = fotoServicio.guardar(idFoto, archivo);
 				usuarioModificado.setFoto(foto);
 			}

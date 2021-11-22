@@ -2,7 +2,10 @@ package com.CalificAR.demo.Controladores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,12 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
 import com.CalificAR.demo.Servicios.MateriaServicio;
+import com.CalificAR.demo.Servicios.ProfesorServicio;
 
 @Controller
 @RequestMapping("/materia")
@@ -25,16 +30,19 @@ public class MateriaController {
 	@Autowired
 	AlumnoServicio alumnoServicio;
 	@Autowired
+	ProfesorServicio profesorServicio;
+	@Autowired
 	MateriaServicio materiaServicio;
 
 	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 	@GetMapping("/crearMateria")
-	public String crearMateria(HttpSession session) {
-		Profesor loginUsuario = (Profesor) session.getAttribute("profesorsession");
-		System.out.println(loginUsuario);
-		if (loginUsuario == null) {
+	public String crearMateria(HttpSession session, ModelMap modelo) {
+		Profesor sessionProfesor = (Profesor) session.getAttribute("profesorsession");
+		if (sessionProfesor == null) {
 			return "redirect:/index";
 		}
+		Optional<Profesor> optProfesor = profesorServicio.buscarPordDni(sessionProfesor.getLogin().getDni());
+		modelo.put("profesor", optProfesor.get());
 		return "crearMateria";
 	}
 
@@ -47,12 +55,15 @@ public class MateriaController {
 			return "redirect:/index";
 		}
 		try {
-			materiaServicio.crearMateria(nombreMateria, loginUsuario.getLogin().getDni());
+			Materia materia = materiaServicio.crearMateria(nombreMateria, loginUsuario.getLogin().getDni());
+			modelo.put("exito", "La materia " + materia.getNombre() + " se creó correctamente");
+			Optional<Profesor> optProfesor = profesorServicio.buscarPordDni(loginUsuario.getLogin().getDni());
+			modelo.put("profesor", optProfesor.get());
+			return "/inicio";
 		} catch (Exception ex) {
 			modelo.put("error", ex.getMessage());
 			return "crearMateria.html";
 		}
-		return "materia";
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -101,15 +112,18 @@ public class MateriaController {
 		try {
 			materiaServicio.inscribirMateria(idMateria, loginUsuario.getLogin().getDni());
 		} catch (ErrorServicio e) {
-			modelo.put("error", e.getMessage()); // <p th:if="${error != null}" th:text="${error}"
-													// style="color:red;"></p>
+			modelo.put("error", e.getMessage());
 			List<Materia> materias = alumnoServicio.buscarMateriasParaInscribirse(loginUsuario.getId());
-			modelo.put("materias", materias);
+			Optional<Alumno> optAlumno = alumnoServicio.buscarPordDni(loginUsuario.getLogin().getDni());
+			session.setAttribute("alumnosession", optAlumno.get());
+			session.setAttribute("materias", materias);
 			return "inicio";
 		}
-		modelo.put("mensaje", "Inscripto correctamente!");
-		Materia materia = materiaServicio.buscarPorId(idMateria);
-		modelo.put("materia", materia);
-		return "Materia";
+		Optional<Alumno> optAlumno = alumnoServicio.buscarPordDni(loginUsuario.getLogin().getDni());
+		List<Materia> materias = materiaServicio.materiasParaInscribirse(loginUsuario.getLogin().getDni());
+		session.setAttribute("alumnosession", optAlumno.get());
+		session.setAttribute("materias", materias);
+		modelo.put("exito", "Inscripto correctamente!");
+		return "/inicio";
 	}
 }

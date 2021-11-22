@@ -2,9 +2,11 @@ package com.CalificAR.demo.Servicios;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
@@ -30,11 +32,14 @@ public class MateriaServicio {
 		Materia materia = new Materia();
 		materia.setNombre(nombreMateria);
 		Profesor profesor = profesorRepositorio.buscarPorDni(dniProfesor);
+		materia = materiaRepositorio.save(materia);
 		List<Materia> materias = profesor.getMaterias();
 		materias.add(materia);
-		profesor.setMaterias(materias);
+		// No hace falta setearlo en profesor ya que hacer el add a materias (obtenida
+		// del profesor, ya hace que se agregue dentro del objeto profesor
+		// profesor.setMaterias(materias);
 		profesorRepositorio.save(profesor);
-		return materiaRepositorio.save(materia);
+		return materia;
 	}
 
 	public void validarMateria(String nombreMateria) throws ErrorServicio {
@@ -67,8 +72,13 @@ public class MateriaServicio {
 		}
 	}
 
-	public List<Materia> todas() {
-		return materiaRepositorio.findAll();
+	// Devuelve la lista de materias en las que se puede inscribir un alumno (trae
+	// todas y quita de la lista en las que ya está inscripto)
+	public List<Materia> materiasParaInscribirse(String dni) {
+		List<Materia> materias = materiaRepositorio.findAll();
+		List<Materia> materiasPorAlumno = materiasPorAlumno(dni);
+		materias.removeAll(materiasPorAlumno);
+		return materias;
 	}
 
 	@Transactional(readOnly = true)
