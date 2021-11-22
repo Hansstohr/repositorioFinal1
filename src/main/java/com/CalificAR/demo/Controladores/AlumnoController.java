@@ -80,8 +80,10 @@ public class AlumnoController {
 			modelo.put("fechaNac", alumno.getFechaNac());
 			return "modificarUsuario.html";
 		}
+		// Se actualiza la sesion con el alumno ya modificado
 		session.setAttribute("alumnosession", alumno);
-		return "redirect:/inicio";
+		modelo.put("exito", "Datos del alumno modificados exitosamente");
+		return "/perfil";
 	}
 
 }

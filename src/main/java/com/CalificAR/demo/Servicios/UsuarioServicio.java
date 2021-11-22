@@ -168,7 +168,9 @@ public abstract class UsuarioServicio {
 			}
 			String idFoto = null;
 			if (!archivo.isEmpty()) {
-				idFoto = usuarioModificado.getFoto().getIdFoto();
+				if (usuarioModificado.getFoto() != null) {
+					idFoto = usuarioModificado.getFoto().getIdFoto();
+				}
 				Foto foto = fotoServicio.guardar(idFoto, archivo);
 				usuarioModificado.setFoto(foto);
 			}

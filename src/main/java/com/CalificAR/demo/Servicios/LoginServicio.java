@@ -21,6 +21,7 @@ import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
+import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.LoginRepositorio;
@@ -79,34 +80,16 @@ public class LoginServicio implements UserDetailsService {
 		}
 	}
 
-	public void enviarContraseñaAlumno(Alumno alumno) throws ErrorServicio {
+	public <U extends Usuario> void enviarContraseña(U u) throws ErrorServicio {
 		String claveNuevaDefault = generarContraseña();
-		Login login = loginRepositorio.buscarPorDni(alumno.getLogin().getDni());
+		Login login = loginRepositorio.buscarPorDni(u.getLogin().getDni());
 		try {
 			String encriptada = new BCryptPasswordEncoder().encode(claveNuevaDefault);
 			login.setClave(encriptada);
 			loginRepositorio.save(login);
-			String cuerpo = "¡Hola " + alumno.getNombre() + "!¡¿De nuevo aquí?! Su contraseña nueva es: "
-					+ claveNuevaDefault + ".";
-			System.out.println(alumno.getMail());
-			notificacionServicio.enviar(cuerpo, "Se restablecio la contraseña", alumno.getMail());
-		} catch (Exception e) {
-			throw new ErrorServicio(
-					"Ocurrio un error al reestablecer la contraseña. Intente de nuevamente." + e.getMessage());
-		}
-	}
-
-	public void enviarContraseñaProfesor(Profesor profesor) throws ErrorServicio {
-		String claveNuevaDefault = generarContraseña();
-		Login login = loginRepositorio.buscarPorDni(profesor.getLogin().getDni());
-		try {
-			System.out.println("Lllego hasta aca 1!");
-			String encriptada = new BCryptPasswordEncoder().encode(claveNuevaDefault);
-			login.setClave(encriptada);
-			loginRepositorio.save(login);
-			String cuerpo = "¡Hola " + profesor.getNombre() + "!¡¿De nuevo aquí?! Su contraseña nueva es: "
-					+ claveNuevaDefault + ".";
-			notificacionServicio.enviar(cuerpo, "Se restablecio la contraseña", profesor.getMail());
+			String cuerpo = "¡Hola " + u.getNombre() + "!¡¿De nuevo aquí?! Su usuario es: " + login.getDni()
+					+ " y su contraseña nueva es: " + claveNuevaDefault + ".";
+			notificacionServicio.enviar(cuerpo, "Se restablecio la contraseña", u.getMail());
 		} catch (Exception e) {
 			throw new ErrorServicio(
 					"Ocurrio un error al reestablecer la contraseña. Intente de nuevamente." + e.getMessage());
@@ -115,7 +98,6 @@ public class LoginServicio implements UserDetailsService {
 
 	public String generarContraseña() {
 		int num = (int) (Math.random() * 1000000);
-		System.out.println(num);
 		return String.valueOf(num);
 	}
 }

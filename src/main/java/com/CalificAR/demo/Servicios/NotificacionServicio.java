@@ -1,6 +1,7 @@
 package com.CalificAR.demo.Servicios;
 
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -11,9 +12,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Profesor;
 
@@ -42,32 +45,15 @@ public class NotificacionServicio {
 		});
 		try {
 			Message message = new MimeMessage(session);
+			message.setHeader("Content-Type", "text/plain;charset=utf-8");
 			message.setFrom(new InternetAddress(mailFrom));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mail));
 			message.setSubject(titulo);
-			String msg = cuerpo;
-			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent(msg, "text/html");
-			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(mimeBodyPart);
-			message.setContent(multipart);
+			message.setText(cuerpo);
 			Transport.send(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//        System.out.println("Enviando Email....");
-//        System.out.println(mail);
-//        System.out.println(cuerpo);
-//        System.out.println(titulo);
-//        SimpleMailMessage mensaje = new SimpleMailMessage();
-//        mensaje.setTo(mail);
-//        mensaje.setFrom("no-Reply@calificar.com");
-//        mensaje.setSubject(titulo);
-//        mensaje.setText(cuerpo);
-//        
-//        mailSender.send(mensaje);
-//        System.out.println("Email enviado");
-//    }
 	}
 
 	public void enviarBienvenidaProfe(Profesor profesor, String usuario, String clave) {

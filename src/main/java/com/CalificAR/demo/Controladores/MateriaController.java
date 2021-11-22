@@ -42,7 +42,8 @@ public class MateriaController {
 			return "redirect:/index";
 		}
 		Optional<Profesor> optProfesor = profesorServicio.buscarPordDni(sessionProfesor.getLogin().getDni());
-		modelo.put("profesor", optProfesor.get());
+		// Se actualiza la sesión, para que aparezca la nueva materia creada
+		session.setAttribute("profesorsession", optProfesor.get());
 		return "crearMateria";
 	}
 

@@ -103,10 +103,10 @@ public class PortalControlador {
 		if (alumno.isPresent() || profesor.isPresent()) {
 			// Envia Mail
 			if (alumno.isPresent()) {
-				loginServicio.enviarContraseñaAlumno(alumno.get());
+				loginServicio.enviarContraseña(alumno.get());
 				return "exitoContraseña.html";
 			} else {
-				loginServicio.enviarContraseñaProfesor(profesor.get());
+				loginServicio.enviarContraseña(profesor.get());
 				return "exitoContraseña.html";
 			}
 		} else {
@@ -152,14 +152,6 @@ public class PortalControlador {
 		Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
 		if (loginAlumno == null && loginProfesor == null) {
 			return "redirect:/index";
-		}
-		// Es un alumno
-		if (loginAlumno != null) {
-			modelo.put("alumno", loginAlumno);
-			modelo.put("usuario", loginAlumno);
-		} else {
-			modelo.put("profesor", loginProfesor);
-			modelo.put("usuario", loginProfesor);
 		}
 		return "perfil";
 	}

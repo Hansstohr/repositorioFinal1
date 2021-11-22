@@ -74,7 +74,9 @@ public class ProfesorController {
 			modelo.put("fechaNac", profesor.getFechaNac());
 			return "modificarProfesor.html";
 		}
+		// Se actualiza la sesion con el profesor ya modificado
 		session.setAttribute("profesorsession", profesor);
-		return "inicio";
+		modelo.put("exito", "Datos del profesor modificados exitosamente");
+		return "/perfil";
 	}
 }
