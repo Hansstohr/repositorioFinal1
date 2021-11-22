@@ -10,6 +10,7 @@ import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.NotaRepositorio;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,27 +47,29 @@ public class NotaServicio {
 
     @Transactional(readOnly = true)
     public List<Nota> crearListaNotas(Alumno alumno, Materia materia, LocalDate fecha, Double nota) throws ErrorServicio {
-        validarNotas(nota ,materia ,alumno);
+        validarNotas(nota, materia, alumno, fecha);
         List<Nota> listaNotas = new ArrayList();
-        Nota notas = new Nota(alumno, materia, LocalDate.now(), nota);
+        Nota notas = new Nota(alumno, materia, fecha, nota);
         listaNotas.add(notas);
 
         return listaNotas;
     }
 
-    private void validarNotas(Double nota , Materia materia , Alumno alumno) throws ErrorServicio {
+    private void validarNotas(Double nota, Materia materia, Alumno alumno, LocalDate fecha) throws ErrorServicio {
         if (nota == null || nota > 10) {
             throw new ErrorServicio("La nota no puede ser nula o estar vacia, además debe ser entre 1 y 10.");
         }
-        
+
         List<Double> notasTotales = notaServicio.notasPorAlumno(alumno.getId(), materia.getIdMateria());
-        
+
         if (notasTotales.size() >= 3) {
             throw new ErrorServicio("Solo puede ingresar 3 calificaciones por alumno.");
         }
-    }
 
-    private void validarNotasTotales(int cont) throws ErrorServicio {
+        LocalDate hoy = LocalDate.now();
+        if (fecha == null || (Period.between(fecha, hoy).getYears() > 1) || (hoy.getDayOfMonth() < fecha.getDayOfMonth())) {
+            throw new ErrorServicio("Ingrese una fecha válida");
+        }
     }
 
     @Transactional(readOnly = true)

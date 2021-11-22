@@ -36,23 +36,25 @@ public class NotaController {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/cargarNota")
-    public String cargarMateriaNota(ModelMap modelo, @RequestParam(required = false) String idMateria)
+    public String cargarMateriaNota(ModelMap modelo , @RequestParam(required = false) String idMateria)
             throws ErrorServicio {
         List<Alumno> alumnos = alumnoServicio.alumnosPorMateria(idMateria);
+        List<Double> notas = new ArrayList();
         modelo.put("alumnos", alumnos);
         modelo.put("materia", idMateria);
+        modelo.put("notas" , notas);
         return "cargarNota.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/agregarNotas")
     public String agregarNotas(ModelMap modelo, @RequestParam String idMateria, @RequestParam String mail,
-            @RequestParam Double nota) throws ErrorServicio {
+            @RequestParam Double nota , @RequestParam LocalDate fecha) throws ErrorServicio {
         Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
         Materia materia = materiaServicio.buscarPorId(idMateria);
         try {
-            List<Nota> listaNotas = notaServicio.crearListaNotas(alumno.get(), materia, LocalDate.now(), nota);
-            Notas nuevaNota = new Notas(materia, listaNotas, LocalDate.now());
+            List<Nota> listaNotas = notaServicio.crearListaNotas(alumno.get(), materia, fecha, nota);
+            Notas nuevaNota = new Notas(materia, listaNotas, fecha);
             List<Nota> nuevaListaNotas = notaServicio.crearNotas(nuevaNota);
             modelo.put("notas", listaNotas);
             modelo.put("materia", listaNotas.get(0).getMateria());
