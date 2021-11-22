@@ -17,7 +17,7 @@
 
     <body>
         <section class="container__nota">
-        <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
             <form class="form__nota" id="id__form" th:action="@{/notas/agregarNotas}" method="POST">
                 <input type="hidden" name="idMateria" th:value="${materia}">
                 <select name="mail">
@@ -28,6 +28,17 @@
             </form>
             <button form="id__form" type="submit" class="button__form__nota">Cargar Notas</button>
             <a th:href="@{/inicio}" class="button__form__nota">Volver</a>
+        </section>
+        <section class="container__nota">
+            <form class="form__nota" th:action="@{/notas/verNotas}" method="GET">
+                <select name="mail">
+                    <option th:each="alumno : ${alumnos}" th:value="${alumno.mail}" th:text="${alumno.nombre +' '+ alumno.apellido}">
+                    </option>
+                </select>
+                <input type="hidden" name="idMateria" th:value="${materia}">
+                <button type="submit" class="button__form__nota">Ver Notas</button>
+            </form>
+
         </section>
     </body>
 
