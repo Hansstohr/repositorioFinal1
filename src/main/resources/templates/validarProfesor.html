@@ -21,9 +21,11 @@
 <link rel="icon" href="/img/favicon.ico">
 </head>
 
-<<<<<<< Updated upstream
 <body bgcolor="#E5E9F2" align="center">
-	<section align="center">
+	<section>
+		<a class="logo2" href="/inicio">
+			<img align="center" class="logo2" src="/img/Logo.png">
+		</a>
 		<h1 align="center" style="color: #47525E;">Validar Profesor</h1>
 		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
 		<p align="center" style="color: #8190A5;">Ingrese la contraseña
@@ -41,24 +43,4 @@
 			</div>
 		</form>
 </body>
-=======
-                                                    <body bgcolor="#E5E9F2" align="center">
-                                                        <a class="homebtn" href="/"  style="margin-left: 20px;"
-                                                        > <img class="logo" src="/img/Logo.png"></a>
-                                                        <section align="center">
-                                                            <h1 align="center" style="color: #47525E;">Validar Profesor</h1>
-                                                            <p align="center" style="color: #8190A5;">Ingrese la contraseña que le fue dada por la institución</p>
-                                                            <form th:action="@{/codigo/validacionProfesor}" method="POST">
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-label">
-                                                                            <label id="clavecss">Clave</label>
-                                                                            <input type="password" name="claveingresada" class="form-control" placeholder="Clave" th:value="${claveingresada}">
-                                                                        </div>
-                                                                        <div class="d-flex justify-content-center">
-                                                                            <button type="submit" class="button2">Ingresar</button>
-                                                                        </div>
-                                                                    </div>
-                                                            </form>
->>>>>>> Stashed changes
-
 </html>

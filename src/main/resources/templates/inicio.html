@@ -50,7 +50,7 @@
 		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis materias</a>
 			<div th:if="${session.profesorsession != null}" class="dropdown-content">
 				<tr th:each="materia : ${session.profesorsession.materias}">
-					<a style="text-indent:50px;" th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
+					<a style="text-indent:50px;" th:href="@{/notas/notas(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
 				</tr>
 			</div>
 			

@@ -1,16 +1,13 @@
 package com.CalificAR.demo.Servicios;
-
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Usuario;
@@ -20,7 +17,6 @@ import com.CalificAR.demo.Repositorio.MateriaRepositorio;
 
 @Service
 public class AlumnoServicio extends UsuarioServicio {
-
 	@Autowired
 	private AlumnoRepositorio alumnoRepositorio;
 	@Autowired
@@ -102,5 +98,9 @@ public class AlumnoServicio extends UsuarioServicio {
 
 	public ResponseEntity<byte[]> obtenerFoto(String id) throws ErrorServicio {
 		return super.obtenerFoto(id, alumnoRepositorio);
+	}
+
+	public Optional<Alumno> buscarPordId(String id) {
+		return alumnoRepositorio.findById(id);
 	}
 }

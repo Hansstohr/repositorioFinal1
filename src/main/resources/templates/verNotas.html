@@ -1,45 +1,87 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CalificAR</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
-    </head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
-    <body bgcolor="#E5E9F2">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CalificAR</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+		rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/estilos.css">
+	<link rel="icon" href="/img/favicon.ico">
+</head>
 
-                <section class="main__verNota" th:each="materia : ${materia}">
-                    <h1 th:text="${materia.nombre}" class="title__verNotaMateria"></h1>
-                    <article class="container__verNota" th:each="nota : ${notas}">
-                        <div class="title__verNota">Nombre</div>
-                        <div class="title__verNota">Apellido</div>
-                        <div class="title__verNota">Ultima Nota</div>
-                        <div class="item__verNota" th:text="${nota.alumno.nombre}"></div>
-                        <div class="item__verNota" th:text="${nota.alumno.apellido}"></div>
-                        <div class="item__verNota" th:text="${nota.nota}"></div>
-                    </article>
-        
-                    <article class="container__verNotaTotales">
-                        <div class="title__verNotaTotales">Notas Totales</div>
-                        <div class="item__verNotaTotales" th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></div>
-                        <a class="boton__verNota" th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}">
-                            <div  th:each="materia : ${materia}">Volver</div>    
-                        </a> 
-                    </article>
-                </section>
+<body>
+	<div class="header">
+		<div class="container2">
+			<a class="homebtn" href="/"> <img class="logo" src="/img/Logo.png"></a>
+			<div class="conjunto" align="right">
+				<img th:if="${session.profesorsession.foto != null}"
+					th:src="${'/foto/profesor/' + session.profesorsession.id}" alt="Foto de perfil"
+					class="molde image">
+				<img th:if="${session.profesorsession.foto == null}"
+					src="/img/default.png" alt="Foto de perfil" class="molde image">
+				<a th:href="@{/perfil}" class="molde overlay">
+					<div class="text">Mi perfil</div>
+				</a>
+				<p th:if="${session.profesorsession != null}" th:text="${session.profesorsession.nombre} + ' ' + ${session.profesorsession.apellido}"></p>
+			</div>
+		</div>
+	</div>
+	<ul>
+		<li><a href="/inicio">Volver</a></li>
+	</ul>
 
-<!--        <div class="title__verNotaTotales">Notas Totales</div>
+	<section align="center" class="centrar">
+		<h1 th:text="${materia.nombre}" class="title__verNotaMateria"></h1>
+		<tr th:each="alumno : ${alumnos}">
+			<div>Nombre</div>
+			<div>Apellido</div>
+			<div>Ultima Nota</div>
+			<div class="item__verNota" th:text="${nota.alumno.nombre}"></div>
+			<div class="item__verNota" th:text="${nota.alumno.apellido}"></div>
+			<div class="item__verNota" th:text="${nota.nota}"></div>
+			<a style="text-indent:50px;" th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
+		</tr>
+		
+		
+		<article class="container__verNota" th:each="nota : ${notas}">
+			<div class="title__verNota">Nombre</div>
+			<div class="title__verNota">Apellido</div>
+			<div class="title__verNota">Ultima Nota</div>
+			<div class="item__verNota" th:text="${nota.alumno.nombre}"></div>
+			<div class="item__verNota" th:text="${nota.alumno.apellido}"></div>
+			<div class="item__verNota" th:text="${nota.nota}"></div>
+		</article>
+
+		<article class="container__verNotaTotales">
+			<div class="title__verNotaTotales">Notas Totales</div>
+			<div class="item__verNotaTotales"
+				th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></div>
+			<a class="boton__verNota"
+				th:href="@{/notas/cargarNota(idMateria=__${materia.idMateria}__)}">
+				<div th:each="materia : ${materia}">Volver</div>
+			</a>
+		</article>
+	</section>
+
+	<!--        <div class="title__verNotaTotales">Notas Totales</div>
         <div class="item__verNotaTotales" th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></div>-->
 
-    </body>
+</body>
 
 </html>

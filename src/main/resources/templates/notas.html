@@ -24,7 +24,6 @@
 	<link rel="stylesheet" href="/css/estilos.css">
 	<link rel="icon" href="/img/favicon.ico">
 </head>
-
 <body>
 	<div class="header">
 		<div class="container2">
@@ -45,26 +44,29 @@
 	<ul>
 		<li><a href="/inicio">Volver</a></li>
 	</ul>
+	<p th:if="${error != null}" th:text="${error}" style="color: red"></p>
 	<section align="center" class="centrar">
-		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
-		<form th:action="@{/materia/guardarMateria}" method="POST">
-                    <input type="text" name="nombreMateria" placeholder="Nombre de la materia" th:value="${nombreMateria}">
+		<p><FONT SIZE=5>
+			<b>Materia:</b>
+			<a th:text="${materia.nombre}"></a>
+		</FONT></p>
+		<form th:action="@{/notas/cargarNotas}" method="POST">
+			<input type="hidden" name="nombreMateria" placeholder="Nombre de la materia" th:value="${materia.nombre}">
+			<input type="hidden" name="idMateria" th:value="${materia.idMateria}">
 			<br> <br>
-			<button type="submit" class="button2">Crear Materia</button>
+			<button type="submit" class="button2">Cargar Notas</button>
+		</form>
+		<br>
+		<br>
+		<form class="form__nota" th:action="@{/notas/verNotas}" method="GET">
+			<input type="hidden" name="idMateria" th:value="${materia}">
+			<select name="mail">
+				<option th:each="alumno : ${alumnos}" th:value="${alumno.mail}" th:text="${alumno.nombre +' '+ alumno.apellido}">
+                </option>
+			</select>
+			<button type="submit" class="button2">Ver Notas</button>
 		</form>
 	</section>
-	
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
 </body>
 
 </html>

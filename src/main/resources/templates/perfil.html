@@ -43,21 +43,12 @@
 
 		<div class="column">
 			<h1>Mi Perfil</h1>
-<<<<<<< Updated upstream
 				<img th:if="${session.alumnosession != null and session.alumnosession.foto != null}"
 					th:src="${'/foto/alumno/' + session.alumnosession.id}" alt="Foto de perfil" class="image_profile">
 				<img th:if="${session.profesorsession != null and session.profesorsession.foto != null}"
 					th:src="${'/foto/profesor/' + session.profesorsession.id}" alt="Foto de perfil" class="image_profile"/>
 				<img th:if="${(session.profesorsession == null or session.profesorsession.foto == null) and (session.alumnosession == null or session.alumnosession.foto == null)}"
 					src="/img/default.png" alt="Foto de perfil" class="image_profile"/>
-=======
-				<img th:if="${alumno != null and alumno.foto != null}"
-					th:src="${'/foto/alumno/' + alumno.id}" alt="Foto de perfil" class="image">
-				<img th:if="${profesor != null and profesor.foto != null}"
-					th:src="${'/foto/profesor/' + profesor.id}" alt="Foto de perfil" class="image">
-				<img th:if="${(profesor == null or profesor.foto == null) and (alumno == null or alumno.foto == null)}"
-					src="default.png" alt="Foto de perfil" class="image">
->>>>>>> Stashed changes
 		</div>
 
 		<div class="columnSecond">

@@ -1,5 +1,4 @@
 package com.CalificAR.demo.Entidades;
-
 import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,75 +9,75 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Nota {
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String idNota;
+	@ManyToOne
+	private Alumno alumno;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Materia materia;
+	private LocalDate fecha;
+	private Double nota;
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String idNota;
+	public Nota(Alumno alumno, Materia materia, LocalDate fecha, Double nota) {
+		this.alumno = alumno;
+		this.materia = materia;
+		this.fecha = fecha;
+		this.nota = nota;
+	}
 
-    @ManyToOne
-    private Alumno alumno;
+	public Nota() {
+	}
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Materia materia;
+	public Nota(Alumno alumno, Materia materia) {
+		this.alumno = alumno;
+		this.materia = materia;
+	}
 
-    private LocalDate fecha;
+	public String getIdNota() {
+		return idNota;
+	}
 
-    private Double nota;
+	public void setIdNota(String idNota) {
+		this.idNota = idNota;
+	}
 
-    public Nota( Alumno alumno, Materia materia, LocalDate fecha, Double nota) {
-        this.alumno = alumno;
-        this.materia = materia;
-        this.fecha = fecha;
-        this.nota = nota;
-    }
+	public Double getNota() {
+		return nota;
+	}
 
-    public Nota() {
-    }
+	public void setNota(Double nota) {
+		this.nota = nota;
+	}
 
-    public String getIdNota() {
-        return idNota;
-    }
+	public Alumno getAlumno() {
+		return alumno;
+	}
 
-    public void setIdNota(String idNota) {
-        this.idNota = idNota;
-    }
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
 
-    public Double getNota() {
-        return nota;
-    }
+	public Materia getMateria() {
+		return materia;
+	}
 
-    public void setNota(Double nota) {
-        this.nota = nota;
-    }
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
 
-    public Alumno getAlumno() {
-        return alumno;
-    }
+	public LocalDate getFecha() {
+		return fecha;
+	}
 
-    public void setAlumno(Alumno alumno) {
-        this.alumno = alumno;
-    }
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
 
-    public Materia getMateria() {
-        return materia;
-    }
-
-    public void setMateria(Materia materia) {
-        this.materia = materia;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    @Override
-    public String toString() {
-        return "Nota{" + "idNota=" + idNota + ", alumno=" + alumno + ", materia=" + materia + ", fecha=" + fecha + ", nota=" + nota + '}';
-    }
-
+	@Override
+	public String toString() {
+		return "Nota{" + "idNota=" + idNota + ", alumno=" + alumno + ", materia=" + materia + ", fecha=" + fecha
+				+ ", nota=" + nota + '}';
+	}
 }
