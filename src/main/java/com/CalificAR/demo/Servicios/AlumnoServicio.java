@@ -41,7 +41,7 @@ public class AlumnoServicio extends UsuarioServicio {
 
 //ESTO
 	@Transactional(readOnly = true)
-	public List<Alumno> alumnosPorMateria(String idMateria) {
+	public List<Alumno> alumnosPorMateria(String idMateria) throws ErrorServicio {
 		List<Alumno> alumnos = alumnoRepositorio.findAll();
 		Iterator<Alumno> it = alumnos.iterator();
 		while (it.hasNext()) {
@@ -52,6 +52,9 @@ public class AlumnoServicio extends UsuarioServicio {
 			if (alumno.getMaterias().stream().allMatch(m -> !m.getIdMateria().equals(idMateria))) {
 				it.remove();
 			}
+		}
+		if (alumnos.isEmpty()) {
+			throw new ErrorServicio("No hay alumnos inscriptos en esta materia");
 		}
 		return alumnos;
 	}
