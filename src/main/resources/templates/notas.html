@@ -59,7 +59,7 @@
 		<br>
 		<br>
 		<form class="form__nota" th:action="@{/notas/verNotas}" method="GET">
-			<input type="hidden" name="idMateria" th:value="${materia}">
+			<input type="hidden" name="idMateria" th:value="${materia.idMateria}">
 			<select name="mail">
 				<option th:each="alumno : ${alumnos}" th:value="${alumno.mail}" th:text="${alumno.nombre +' '+ alumno.apellido}">
                 </option>

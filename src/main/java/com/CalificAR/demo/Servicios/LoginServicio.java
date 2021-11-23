@@ -1,10 +1,7 @@
 package com.CalificAR.demo.Servicios;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Materia;
@@ -29,7 +25,6 @@ import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
 public class LoginServicio implements UserDetailsService {
-
 	@Autowired
 	private LoginRepositorio loginRepositorio;
 	@Autowired
@@ -49,7 +44,6 @@ public class LoginServicio implements UserDetailsService {
 			List<GrantedAuthority> permisos = new ArrayList<>();
 			GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
 			permisos.add(p1);
-			// System.out.println("Llegó hasta acá");
 			// Esto me permite guardar el OBJETO USUARIO LOG, para luego ser utilizado
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 			HttpSession session = attr.getRequest().getSession(true);
@@ -89,14 +83,14 @@ public class LoginServicio implements UserDetailsService {
 			loginRepositorio.save(login);
 			String cuerpo = "¡Hola " + u.getNombre() + "!¡¿De nuevo aquí?! Su usuario es: " + login.getDni()
 					+ " y su contraseña nueva es: " + claveNuevaDefault + ".";
-			notificacionServicio.enviar(cuerpo, "Se restablecio la contraseña", u.getMail());
+			notificacionServicio.enviarContraseniaOlvidada(cuerpo, "Se restablecio la contraseña", u.getMail());
 		} catch (Exception e) {
 			throw new ErrorServicio(
 					"Ocurrio un error al reestablecer la contraseña. Intente de nuevamente." + e.getMessage());
 		}
 	}
 
-	public String generarContraseña() {
+	private String generarContraseña() {
 		int num = (int) (Math.random() * 1000000);
 		return String.valueOf(num);
 	}

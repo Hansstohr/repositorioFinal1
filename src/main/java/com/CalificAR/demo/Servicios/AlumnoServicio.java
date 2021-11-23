@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.CalificAR.demo.Entidades.Alumno;
-import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
@@ -40,11 +39,6 @@ public class AlumnoServicio extends UsuarioServicio {
 				claveAnterior);
 	}
 
-	@Transactional(readOnly = true)
-	public List<Alumno> todos() {
-		return alumnoRepositorio.findAll();
-	}
-
 //ESTO
 	@Transactional(readOnly = true)
 	public List<Alumno> alumnosPorMateria(String idMateria) {
@@ -60,30 +54,6 @@ public class AlumnoServicio extends UsuarioServicio {
 			}
 		}
 		return alumnos;
-	}
-
-	@Transactional(readOnly = true)
-	public Materia buscarMateriasporAlumno(String idAlumno) throws ErrorServicio {
-		Optional<Materia> respuesta = materiaRepositorio.findById(idAlumno);
-		if (respuesta.isPresent()) {
-			Materia materia = respuesta.get();
-			return materia;
-		} else {
-			throw new ErrorServicio("El alumno no está inscripto a ninguna materia este año");
-		}
-	}
-
-	public List<Materia> buscarMateriasParaInscribirse(String idAlumno) {
-		Alumno alumno = alumnoRepositorio.findById(idAlumno).get();
-		List<Materia> materias = materiaRepositorio.findAll();
-		Iterator<Materia> iteratorMaterias = materias.iterator();
-		while (iteratorMaterias.hasNext()) {
-			Materia materia = iteratorMaterias.next();
-			if (alumno.getMaterias().stream().anyMatch(m -> m.getIdMateria().equals(materia.getIdMateria()))) {
-				iteratorMaterias.remove();
-			}
-		}
-		return materias;
 	}
 
 	@Transactional(readOnly = true)

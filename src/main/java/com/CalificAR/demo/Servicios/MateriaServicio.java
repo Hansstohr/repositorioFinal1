@@ -1,12 +1,9 @@
 package com.CalificAR.demo.Servicios;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
@@ -17,7 +14,6 @@ import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
 public class MateriaServicio {
-
 	@Autowired
 	private MateriaRepositorio materiaRepositorio;
 	@Autowired
@@ -92,15 +88,6 @@ public class MateriaServicio {
 		}
 	}
 
-//    public List<Materia> materias(Usuario usuario) {
-//        List<Materia> materias;
-//        if (usuario instanceof Alumno) {
-//            materias = alumnoRepositorio.findById(usuario.getId()).get().getMaterias();
-//        } else {
-//            materias = profesorRepositorio.findById(usuario.getId()).get().getMaterias();
-//        }
-//        return materias;
-//    }
 	public List<Materia> materiasPorProfesor(String dni) {
 		List<Materia> materias;
 		materias = profesorRepositorio.buscarPorDni(dni).getMaterias();

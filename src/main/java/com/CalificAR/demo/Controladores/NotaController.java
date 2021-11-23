@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
+import com.CalificAR.demo.Entidades.Nota;
 import com.CalificAR.demo.Entidades.Notas;
 import com.CalificAR.demo.Errores.ErrorServicio;
 import com.CalificAR.demo.Servicios.AlumnoServicio;
@@ -66,9 +67,9 @@ public class NotaController {
 			throws ErrorServicio {
 		Materia materia = materiaServicio.buscarPorId(idMateria);
 		Optional<Alumno> alumno = alumnoServicio.buscarPorMail(mail);
-		List<Double> notasTotales = notaServicio.notasPorAlumno(alumno.get().getId(), idMateria);
+		List<Nota> notas = notaServicio.notasPorAlumno(alumno.get().getId(), idMateria);
 		modelo.put("materia", materia);
-		modelo.put("notasTotales", notasTotales);
+		modelo.put("notas", notas);
 		return "verNotasAlumno.html";
 	}
 }

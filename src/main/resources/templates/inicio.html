@@ -64,9 +64,6 @@
 		<li th:if="${session.alumnosession != null}" class="dropdown"><a class="dropbtn" href="javascript:void(0)">Inscribirme a materias</a>
 			<div class="dropdown-content">
 				<tr th:each="materia : ${session.materias}">
-					<!-- "${'/foto/alumno/' + session.alumnosession.id}" 
-					<a style="text-indent:50px;" href="@{/materia/inscribirseMaterias?idMateria=${materia.idMateria}}" th:text="${materia.nombre}"></a>
-					-->
 					<a style="text-indent:50px;" th:href="@{'/materia/inscribirseMaterias?idMateria=' + ${materia.idMateria}}" th:text="${materia.nombre}"></a>
 				</tr>
 			</div>

@@ -61,7 +61,7 @@
 			</p>
 			<br>
 			<br>
-			
+			<!-- toma la nota y la posicion de la nota -->
 			<tr th:each="nota, itemStat : *{notas}">
 				<input type="hidden" name="Id alumno" placeholder="Id Alumno" th:field="*{notas[__${itemStat.index}__].alumno.id}">
 				<input type="hidden" name="Id materia" placeholder="Id Materia" th:field="*{notas[__${itemStat.index}__].materia.idMateria}">
