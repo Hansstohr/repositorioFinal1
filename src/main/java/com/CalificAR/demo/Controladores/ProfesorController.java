@@ -68,7 +68,7 @@ public class ProfesorController {
 			modelo.put("apellido", profesor.getApellido());
 			modelo.put("mail", profesor.getMail());
 			modelo.put("fechaNac", profesor.getFechaNac());
-			return "modificarProfesor.html";
+			return "modificarUsuario";
 		}
 		// Se actualiza la sesion con el profesor ya modificado
 		session.setAttribute("profesorsession", profesor);

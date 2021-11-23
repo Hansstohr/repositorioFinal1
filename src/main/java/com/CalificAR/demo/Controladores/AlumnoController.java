@@ -68,7 +68,7 @@ public class AlumnoController {
 			modelo.put("apellido", alumno.getApellido());
 			modelo.put("mail", alumno.getMail());
 			modelo.put("fechaNac", alumno.getFechaNac());
-			return "modificarUsuario.html";
+			return "modificarUsuario";
 		}
 		// Se actualiza la sesion con el alumno ya modificado
 		session.setAttribute("alumnosession", alumno);
