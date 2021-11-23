@@ -49,7 +49,6 @@ public class PortalControlador {
 		return "login.html";
 	}
 
-	// ESTO NO VA ACA
 	@PreAuthorize("hasAnyRole('ROLE_ALUMNO_REGISTRADO')")
 	@GetMapping("validarCertificado")
 	public String validarCertificado(HttpSession session) {
@@ -110,8 +109,6 @@ public class PortalControlador {
 		return "recuperarContraseña.html";
 	}
 
-	// TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS
-	// TESTEADO
 	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 	@GetMapping("/modificarusuario")
 	public String modificar(HttpSession session, ModelMap modelo) {
@@ -138,8 +135,6 @@ public class PortalControlador {
 		}
 	}
 
-	// TENDRÍA QUE SER EL MISMO PARA LOS DOS USUARIOS
-	// TESTEADO
 	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 	@GetMapping("/perfil")
 	public String perfil(HttpSession session, ModelMap modelo) throws ErrorServicio {

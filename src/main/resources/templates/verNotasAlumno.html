@@ -53,7 +53,7 @@
 	<p th:if="${error != null}" th:text="${error}" style="color: red;" align="center"></p>
 	<section>
 		<h3 align="center"> <a th:text="${materia.nombre}"></a></h3>
-		<h3 align="center"> <a th:text="${nombreAlumno}"></a><a th:text="${apellidoAlumno}"></a></h3>
+		<h3 align="center">Alumno: <a th:text="${nombreAlumno}"></a> <a th:text="${apellidoAlumno}"></a></h3>
 		<br>
 		<FONT SIZE=5><b><pre align="center">Fecha           Notas</pre></b></FONT>
 		<tr th:each="nota : ${notas}">

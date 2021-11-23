@@ -44,8 +44,9 @@
 	<ul>
 		<li><a href="/inicio">Volver</a></li>
 	</ul>
-	<p th:if="${error != null}" th:text="${error}" style="color: red"></p>
+	
 	<section align="center" class="centrar">
+            <p th:if="${error != null}" th:text="${error}" style="color: red"></p>
 		<form th:action="@{/notas/guardarNotas}" method="POST" th:object="${notas}">
 			<p><FONT SIZE=5>
 				<b>Materia:</b>

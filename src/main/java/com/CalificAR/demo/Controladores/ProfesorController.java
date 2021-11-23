@@ -49,7 +49,6 @@ public class ProfesorController {
 		return "redirect:/login";
 	}
 
-	// TESTEADO
 	@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 	@PostMapping("/guardarProfesor")
 	public String modificarProfesor(HttpSession session, ModelMap modelo, @ModelAttribute Profesor profesor,
