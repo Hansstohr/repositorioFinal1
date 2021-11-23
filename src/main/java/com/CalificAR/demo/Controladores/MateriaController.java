@@ -1,11 +1,8 @@
 package com.CalificAR.demo.Controladores;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
@@ -26,7 +22,6 @@ import com.CalificAR.demo.Servicios.ProfesorServicio;
 @Controller
 @RequestMapping("/materia")
 public class MateriaController {
-
 	@Autowired
 	AlumnoServicio alumnoServicio;
 	@Autowired
@@ -42,7 +37,8 @@ public class MateriaController {
 			return "redirect:/index";
 		}
 		Optional<Profesor> optProfesor = profesorServicio.buscarPordDni(sessionProfesor.getLogin().getDni());
-		modelo.put("profesor", optProfesor.get());
+		// Se actualiza la sesión, para que aparezca la nueva materia creada
+		session.setAttribute("profesorsession", optProfesor.get());
 		return "crearMateria";
 	}
 
@@ -58,7 +54,7 @@ public class MateriaController {
 			Materia materia = materiaServicio.crearMateria(nombreMateria, loginUsuario.getLogin().getDni());
 			modelo.put("exito", "La materia " + materia.getNombre() + " se creó correctamente");
 			Optional<Profesor> optProfesor = profesorServicio.buscarPordDni(loginUsuario.getLogin().getDni());
-			modelo.put("profesor", optProfesor.get());
+			session.setAttribute("profesorsession", optProfesor.get());
 			return "/inicio";
 		} catch (Exception ex) {
 			modelo.put("error", ex.getMessage());
@@ -113,7 +109,7 @@ public class MateriaController {
 			materiaServicio.inscribirMateria(idMateria, loginUsuario.getLogin().getDni());
 		} catch (ErrorServicio e) {
 			modelo.put("error", e.getMessage());
-			List<Materia> materias = alumnoServicio.buscarMateriasParaInscribirse(loginUsuario.getId());
+			List<Materia> materias = materiaServicio.materiasParaInscribirse(loginUsuario.getLogin().getDni());
 			Optional<Alumno> optAlumno = alumnoServicio.buscarPordDni(loginUsuario.getLogin().getDni());
 			session.setAttribute("alumnosession", optAlumno.get());
 			session.setAttribute("materias", materias);

@@ -1,11 +1,7 @@
 package com.CalificAR.demo.Servicios;
-
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Entidades.Login;
 import com.CalificAR.demo.Entidades.Usuario;
@@ -25,7 +20,6 @@ import com.CalificAR.demo.Repositorio.UsuarioRepositorio;
 
 // Se centralizaron los servicios de Profesor y Alumno en la clase Usuario Servicio ya que compartían todos los métodos.
 public abstract class UsuarioServicio {
-
 	private static final int MIN_EDAD = 18;
 	@Autowired
 	private FotoServicio fotoServicio;
@@ -40,7 +34,7 @@ public abstract class UsuarioServicio {
 			String codigoValidacionProfesor) throws ErrorServicio {
 		validarRegistrarUsuario(repo, dni, nombre, apellido, mail, clave, clave2, fechaNacimiento);
 		if (repo instanceof ProfesorRepositorio) {
-			validarCodigo(codigoValidacionProfesor);
+			codigoProfesorServicio.validarProfesor(codigoValidacionProfesor, true);
 		}
 		Usuario usuario = new Usuario();
 		if (usuario.getLogin() != null) {
@@ -61,10 +55,6 @@ public abstract class UsuarioServicio {
 		// notificacionServicio.enviar("Bienvenidos a Calific-AR", "
 		// ",usuario.getMail());
 		return usuario;
-	}
-
-	private void validarCodigo(String codigoValidacionProfesor) throws ErrorServicio {
-		codigoProfesorServicio.validarProfesor(codigoValidacionProfesor, true);
 	}
 
 	private <U extends Usuario> void validarModificacion(String id, UsuarioRepositorio<U> repo, String dni,
@@ -141,13 +131,6 @@ public abstract class UsuarioServicio {
 		}
 	}
 
-	// Funcion auxiliar que deveulve un Calendar a partir de un Date
-	public static Calendar getCalendar(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		return cal;
-	}
-
 	// U extiende de Usuario. Es decir puede ser un Profesor o un Alumno.
 	@Transactional
 	public <U extends Usuario> U modificar(UsuarioRepositorio<U> repo, String id, MultipartFile archivo, String dni,
@@ -168,7 +151,9 @@ public abstract class UsuarioServicio {
 			}
 			String idFoto = null;
 			if (!archivo.isEmpty()) {
-				idFoto = usuarioModificado.getFoto().getIdFoto();
+				if (usuarioModificado.getFoto() != null) {
+					idFoto = usuarioModificado.getFoto().getIdFoto();
+				}
 				Foto foto = fotoServicio.guardar(idFoto, archivo);
 				usuarioModificado.setFoto(foto);
 			}

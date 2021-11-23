@@ -4,17 +4,13 @@
  * and open the template in the editor.
  */
 package com.CalificAR.demo.Servicios;
-
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.CalificAR.demo.Entidades.Profesor;
 import com.CalificAR.demo.Entidades.Usuario;
 import com.CalificAR.demo.Errores.ErrorServicio;
@@ -22,7 +18,6 @@ import com.CalificAR.demo.Repositorio.ProfesorRepositorio;
 
 @Service
 public class ProfesorServicio extends UsuarioServicio {
-
 	@Autowired
 	private ProfesorRepositorio profesorRepositorio;
 
@@ -42,21 +37,6 @@ public class ProfesorServicio extends UsuarioServicio {
 		String id = profesorRepositorio.buscarPorDniModificar(dni);
 		return super.modificar(profesorRepositorio, id, archivo, dni, nombre, apellido, mail, claveNueva,
 				fechaNacimiento, claveAnterior);
-	}
-
-	public List<Profesor> todos() {
-		return profesorRepositorio.findAll();
-	}
-
-	@Transactional(readOnly = true)
-	public Profesor buscarPorId(String id) throws ErrorServicio {
-		Optional<Profesor> respuesta = profesorRepositorio.findById(id);
-		if (respuesta.isPresent()) {
-			Profesor profesor = respuesta.get();
-			return profesor;
-		} else {
-			throw new ErrorServicio("No se encontró el profesor solicitado");
-		}
 	}
 
 	@Transactional(readOnly = true)

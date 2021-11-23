@@ -1,24 +1,18 @@
 package com.CalificAR.demo.Servicios;
-
 import java.io.IOException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Foto;
 import com.CalificAR.demo.Errores.ErrorServicio;
-import com.CalificAR.demo.Repositorio.AlumnoRepositorio;
 import com.CalificAR.demo.Repositorio.FotoRepositorio;
 
 @Service
 public class FotoServicio {
-
 	@Autowired
 	private FotoRepositorio fotoRepositorio;
-	@Autowired
-	private AlumnoRepositorio alumnoRepositorio;
 
 	@Transactional
 	public Foto guardar(String idFoto, MultipartFile archivo) throws ErrorServicio {
@@ -40,16 +34,5 @@ public class FotoServicio {
 			}
 		}
 		return null;
-	}
-
-	@Transactional
-	public void actualizarFoto(Alumno alumno, Foto fotoAnterior, MultipartFile archivo) throws ErrorServicio {
-		String idFoto = null;
-		if (fotoAnterior != null) {
-			idFoto = fotoAnterior.getIdFoto();
-		}
-		Foto foto = guardar(idFoto, archivo);
-		alumno.setFoto(foto);
-		alumnoRepositorio.save(alumno);
 	}
 }

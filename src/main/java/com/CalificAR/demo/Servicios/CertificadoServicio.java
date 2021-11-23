@@ -1,14 +1,11 @@
 package com.CalificAR.demo.Servicios;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Certificado;
 import com.CalificAR.demo.Entidades.Materia;
@@ -20,7 +17,6 @@ import com.CalificAR.demo.Repositorio.NotaRepositorio;
 
 @Service
 public class CertificadoServicio {
-
 	// constatnte
 	private static final Double NOTA_PROMEDIO_REGULAR = 6.0;
 	@Autowired
@@ -29,16 +25,6 @@ public class CertificadoServicio {
 	private NotaRepositorio notaRepositorio;
 	@Autowired
 	private CertificadoRepositorio certificadoRepositorio;
-
-	@Transactional(readOnly = true)
-	public void validarCertificado(String codigoIngresado, String idAlumno) throws ErrorServicio {
-		Optional<Certificado> respuesta = certificadoRepositorio.buscarCodigo(codigoIngresado);
-		if (respuesta.isPresent()) {
-			solicitarCertificado(idAlumno);
-		} else {
-			throw new ErrorServicio("El código ingresado es invalido");
-		}
-	}
 
 	// El certificado se entrega si en una de todas las materias en las que el
 	// alumno esta inscripto ese año
@@ -73,7 +59,7 @@ public class CertificadoServicio {
 	}
 
 	@Transactional(readOnly = true)
-	public Alumno consultarCertificados(String certificado_codigo) throws ErrorServicio {
+	public Alumno validarCertificado(String certificado_codigo) throws ErrorServicio {
 		Optional<Certificado> certificado = certificadoRepositorio.findById(certificado_codigo);
 		if (!certificado.isPresent()) {
 			throw new ErrorServicio("No existe un certificado para el código ingresado");

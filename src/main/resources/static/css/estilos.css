@@ -22,8 +22,7 @@ h1{
 }
 label{
     margin-right: 101px;
-    margin-bottom: 8px
-        ;
+    margin-bottom: 8px;
     font-size: small;
     font-weight:300;
 }
@@ -61,7 +60,23 @@ input:focus{
     transition-duration: 0.4s;
 }
 .button:hover {
+    text-decoration: none;
     background-color: #606e7d;
+    color: white;
+}
+.button__ingresar{
+    font-size:x-large;
+    text-decoration: none;
+    background-color: #453c54;
+    color: white;
+
+    padding: 5px 13px 8px 13px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+.button__ingresar:hover {
+    text-decoration: none;
+    background-color: #675b7a;
     color: white;
 }
 .button2{
@@ -167,6 +182,10 @@ input:focus{
     margin: 0;
     float: left;
 }
+.logo2{
+    width: 135.7px;
+    height: 106.6px;
+}
 .logosecond{
     width: 111.09px;
     height: 87.36px;
@@ -178,12 +197,6 @@ input:focus{
     height: 106.6px;
     margin: 0;
     float: left;
-}
-.ingresar{
-    color: white;
-}
-.ingresar:hover{
-    color:white;
 }
 .container {
     position: relative;
@@ -205,7 +218,7 @@ input:focus{
     border-radius:50%;
 }
 .image_profile {
-    width: 300px;
+    width: 330px;
     height: 400px;
 }
 .overlay {
@@ -339,20 +352,25 @@ li.dropdown {
     width:45%;
 }
 .t1{
-    color: black;
-      padding: 2px;
-    margin-right: 0px;
-    margin-left: 80px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:black;
 }
 .t2{
-    color: black;
-      padding: 2px;
-    margin-right: 0px;
-    margin-left: 80px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    color:black;
+}
+.carousel-caption{
+width: fit-content;
+height: fit-content;
+margin: auto;
+padding-right: 10px;
+padding-left: 10px;
+margin-bottom: 14%;
+border-radius: 50%;
+backdrop-filter: blur(1px);
+/* background-color: white;
+border: 1px solid black;
+opacity: 0.6; */
 }
 .card{
     padding: 2px;

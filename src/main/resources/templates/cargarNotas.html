@@ -24,7 +24,6 @@
 	<link rel="stylesheet" href="/css/estilos.css">
 	<link rel="icon" href="/img/favicon.ico">
 </head>
-
 <body>
 	<div class="header">
 		<div class="container2">
@@ -45,26 +44,40 @@
 	<ul>
 		<li><a href="/inicio">Volver</a></li>
 	</ul>
+	<p th:if="${error != null}" th:text="${error}" style="color: red"></p>
 	<section align="center" class="centrar">
-		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
-		<form th:action="@{/materia/guardarMateria}" method="POST">
-                    <input type="text" name="nombreMateria" placeholder="Nombre de la materia" th:value="${nombreMateria}">
+		<form th:action="@{/notas/guardarNotas}" method="POST" th:object="${notas}">
+			<p><FONT SIZE=5>
+				<b>Materia:</b>
+				<a th:text="${materia.nombre}"></a>
+			</FONT></p>
+			
+			<br>
+			
+			<p>
+				<FONT SIZE=5><b>Fecha</b></FONT>
+				<input type="date" name="fecha" th:value="${notas.fecha}">
+			</p>
+			<br>
+			<br>
+			<!-- toma la nota y la posicion de la nota -->
+			<tr th:each="nota, itemStat : *{notas}">
+				<input type="hidden" name="Id alumno" placeholder="Id Alumno" th:field="*{notas[__${itemStat.index}__].alumno.id}">
+				<input type="hidden" name="Id materia" placeholder="Id Materia" th:field="*{notas[__${itemStat.index}__].materia.idMateria}">
+				<input type="hidden" name="nombre" placeholder="Nombre" th:field="*{notas[__${itemStat.index}__].alumno.nombre}">
+				<input type="hidden" name="apellido" placeholder="Apellido" th:field="*{notas[__${itemStat.index}__].alumno.apellido}">				
+				<p>
+					<a th:text="*{notas[__${itemStat.index}__].alumno.nombre}"></a>
+					<a th:text="*{notas[__${itemStat.index}__].alumno.apellido}"></a>
+					<input type="number" step="0.01" placeholder="Nota" name="nota" th:field="*{notas[__${itemStat.index}__].nota}">
+				</p>
+			</tr>
+			
+			
 			<br> <br>
-			<button type="submit" class="button2">Crear Materia</button>
+			<button type="submit" class="button2">Cargar Notas</button>
 		</form>
 	</section>
-	
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
 </body>
 
 </html>

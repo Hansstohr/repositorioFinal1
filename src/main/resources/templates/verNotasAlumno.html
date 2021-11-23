@@ -1,30 +1,69 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CalificAR</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/css/estilos.css">
-        <link rel="icon" href="">
-    </head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
-    <body bgcolor="#E5E9F2">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CalificAR</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+		rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/estilos.css">
+	<link rel="icon" href="/img/favicon.ico">
+</head>
 
-               
-        <article class="container__verNotaTotales">
-            
-        <div class="title__verNotaTotales" th:text="${materia.nombre}"></div>
-        <div class="title__verNotaTotales">Notas Totales</div>
-        <div class="item__verNotaTotales" th:each="notasTotales : ${notasTotales}" th:text="${notasTotales}"></div>
-        <div><a th:href="@{/inicio}" class="button__form__nota">Volver</a></div>
-        </article>
-    </body>
+<body>
+	<div class="header">
+		<div class="container2">
+			<a class="homebtn" href="/"> <img class="logo" src="/img/Logo.png"></a>
+			<div class="conjunto" align="right">
+				<img th:if="${session.alumnosession != null and session.alumnosession.foto != null}"
+					th:src="${'/foto/alumno/' + session.alumnosession.id}" alt="Foto de perfil"
+					class="molde image">
+				<img th:if="${session.profesorsession != null and session.profesorsession.foto != null}"
+					th:src="${'/foto/profesor/' + session.profesorsession.id}" alt="Foto de perfil"
+					class="molde image">
+				<img th:if="${(session.profesorsession == null or session.profesorsession.foto == null) and (session.alumnosession == null or session.alumnosession.foto == null)}"
+					src="/img/default.png" alt="Foto de perfil" class="molde image">
+				<a th:href="@{/perfil}" class="molde overlay">
+					<div class="text">Mi perfil</div>
+				</a>
+				<p th:if="${session.alumnosession != null}" th:text="${session.alumnosession.nombre} + ' ' + ${session.alumnosession.apellido}"></p>
+				<p th:if="${session.profesorsession != null}" th:text="${session.profesorsession.nombre} + ' ' + ${session.profesorsession.apellido}"></p>
+			</div>
+		</div>
+	</div>
+	
+	<ul>
+		<li><a href="/inicio">Volver</a></li>
+	</ul>
+	<p th:if="${error != null}" th:text="${error}" style="color: red;" align="center"></p>
+	<section>
+		<h3 align="center"> <a th:text="${materia.nombre}"></a></h3>
+		<h3 align="center"> <a th:text="${nombreAlumno}"></a><a th:text="${apellidoAlumno}"></a></h3>
+		<br>
+		<FONT SIZE=5><b><pre align="center">Fecha           Notas</pre></b></FONT>
+		<tr th:each="nota : ${notas}">
+			<p>
+				<input readonly="readonly" type="date" name="fecha" th:value="${nota.fecha}">
+				<input readonly="readonly" type="numeric" th:value="${nota.nota}"></a>
+			</p>
+		</tr>
+	</section>
+
+</body>
 
 </html>

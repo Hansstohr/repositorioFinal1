@@ -1,8 +1,6 @@
 package com.CalificAR.demo.Entidades;
-
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +13,6 @@ import javax.persistence.Table;
 @Table(name = "profesor")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Profesor extends Usuario {
-
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Materia> materias;
 

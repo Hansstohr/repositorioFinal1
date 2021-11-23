@@ -1,10 +1,7 @@
 package com.CalificAR.demo.Controladores;
-
 import java.util.List;
 import java.util.Optional;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -12,7 +9,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.CalificAR.demo.Entidades.Alumno;
 import com.CalificAR.demo.Entidades.Materia;
 import com.CalificAR.demo.Entidades.Profesor;
@@ -24,7 +20,6 @@ import com.CalificAR.demo.Servicios.ProfesorServicio;
 
 @Controller
 public class PortalControlador {
-
 	@Autowired
 	AlumnoServicio alumnoServicio;
 	@Autowired
@@ -78,7 +73,7 @@ public class PortalControlador {
 			}
 			List<Materia> materias = materiaServicio.materiasParaInscribirse(loginAlumno.getLogin().getDni());
 			session.setAttribute("materias", materias);
-			session.setAttribute("alumno", optAlumno.get());
+			session.setAttribute("alumnosession", optAlumno.get());
 		}
 		// Es un profesor
 		if (loginProfesor != null) {
@@ -86,7 +81,7 @@ public class PortalControlador {
 			if (!optProfesor.isPresent()) {
 				return "/";
 			}
-			session.setAttribute("profesor", optProfesor.get());
+			session.setAttribute("profesorsession", optProfesor.get());
 		}
 		return "inicio.html";
 	}
@@ -103,10 +98,10 @@ public class PortalControlador {
 		if (alumno.isPresent() || profesor.isPresent()) {
 			// Envia Mail
 			if (alumno.isPresent()) {
-				loginServicio.enviarContraseñaAlumno(alumno.get());
+				loginServicio.enviarContraseña(alumno.get());
 				return "exitoContraseña.html";
 			} else {
-				loginServicio.enviarContraseñaProfesor(profesor.get());
+				loginServicio.enviarContraseña(profesor.get());
 				return "exitoContraseña.html";
 			}
 		} else {
@@ -152,14 +147,6 @@ public class PortalControlador {
 		Profesor loginProfesor = (Profesor) session.getAttribute("profesorsession");
 		if (loginAlumno == null && loginProfesor == null) {
 			return "redirect:/index";
-		}
-		// Es un alumno
-		if (loginAlumno != null) {
-			modelo.put("alumno", loginAlumno);
-			modelo.put("usuario", loginAlumno);
-		} else {
-			modelo.put("profesor", loginProfesor);
-			modelo.put("usuario", loginProfesor);
 		}
 		return "perfil";
 	}
