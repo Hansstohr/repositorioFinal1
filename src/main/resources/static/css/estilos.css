@@ -350,10 +350,24 @@ li.dropdown {
     width:45%;
 }
 .t1{
-    color: black;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:black;
 }
 .t2{
-    color: black;
+    color:black;
+}
+.carousel-caption{
+width: fit-content;
+height: fit-content;
+margin: auto;
+padding-right: 10px;
+padding-left: 10px;
+margin-bottom: 14%;
+border-radius: 50%;
+backdrop-filter: blur(1px);
+/* background-color: white;
+border: 1px solid black;
+opacity: 0.6; */
 }
 .card{
     padding: 2px;
