@@ -1,6 +1,8 @@
 
 body{
     font-family: 'Lato', sans-serif;
+    background-image:url('/img/fondo.jpg') ;
+    background-size: cover;
 }
 section{
     background: #FFFFFF;
@@ -338,9 +340,19 @@ li.dropdown {
 }
 .t1{
     color: black;
+      padding: 2px;
+    margin-right: 0px;
+    margin-left: 80px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 .t2{
     color: black;
+      padding: 2px;
+    margin-right: 0px;
+    margin-left: 80px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 .card{
     padding: 2px;
@@ -548,4 +560,13 @@ td{
     justify-content: center;
     align-items: center;
     border-bottom: solid 3px #aa81c9;
+}
+div.footer{
+    width: 100%;
+    height: 300px;   
+    background-repeat: repeat;
+    background-image: url('/img/footer5.PNG');
+    
+    
+   
 }
