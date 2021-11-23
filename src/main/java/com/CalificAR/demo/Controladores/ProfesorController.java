@@ -38,6 +38,8 @@ public class ProfesorController {
 		} catch (ErrorServicio ex) {
 			modelo.put("error", ex.getMessage());
 			modelo.put("nombre", profesor.getNombre());
+			modelo.put("codigo", codigo);
+			modelo.put("dni", dni);
 			modelo.put("apellido", profesor.getApellido());
 			modelo.put("mail", profesor.getMail());
 			modelo.put("fechaNac", profesor.getFechaNac());
