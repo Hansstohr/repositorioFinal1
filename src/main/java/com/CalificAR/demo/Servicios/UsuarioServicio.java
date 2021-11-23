@@ -52,8 +52,6 @@ public abstract class UsuarioServicio {
 		Login login = new Login(dni, encriptada);
 		login = loginRepositorio.save(login);
 		usuario.setLogin(login);
-		// notificacionServicio.enviar("Bienvenidos a Calific-AR", "
-		// ",usuario.getMail());
 		return usuario;
 	}
 
