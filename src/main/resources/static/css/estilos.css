@@ -59,7 +59,23 @@ input:focus{
     transition-duration: 0.4s;
 }
 .button:hover {
+    text-decoration: none;
     background-color: #606e7d;
+    color: white;
+}
+.button__ingresar{
+    font-size:x-large;
+    text-decoration: none;
+    background-color: #453c54;
+    color: white;
+
+    padding: 5px 13px 8px 13px;
+    border-radius: 4px;
+    transition-duration: 0.4s;
+}
+.button__ingresar:hover {
+    text-decoration: none;
+    background-color: #675b7a;
     color: white;
 }
 .button2{
@@ -165,6 +181,10 @@ input:focus{
     margin: 0;
     float: left;
 }
+.logo2{
+    width: 135.7px;
+    height: 106.6px;
+}
 .logosecond{
     width: 111.09px;
     height: 87.36px;
@@ -176,12 +196,6 @@ input:focus{
     height: 106.6px;
     margin: 0;
     float: left;
-}
-.ingresar{
-    color: white;
-}
-.ingresar:hover{
-    color:white;
 }
 .container {
     position: relative;
