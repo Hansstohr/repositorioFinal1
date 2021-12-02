@@ -43,11 +43,12 @@
 				</a>
 				<p th:if="${session.alumnosession != null}" th:text="${session.alumnosession.nombre} + ' ' + ${session.alumnosession.apellido}"></p>
 				<p th:if="${session.profesorsession != null}" th:text="${session.profesorsession.nombre} + ' ' + ${session.profesorsession.apellido}"></p>
+				<p th:if="${session.adminsession != null}">ADMIN</p>
 			</div>
 		</div>
 	</div>
 	<ul>
-		<li class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis materias</a>
+		<li th:if="${session.adminsession == null}" class="dropdown"><a class="dropbtn" href="javascript:void(0)">Mis materias</a>
 			<div th:if="${session.profesorsession != null}" class="dropdown-content">
 				<tr th:each="materia : ${session.profesorsession.materias}">
 					<a style="text-indent:50px;" th:href="@{/notas/notas(idMateria=__${materia.idMateria}__)}" th:text="${materia.nombre}"></a>
@@ -70,10 +71,11 @@
 		</li>
 		<li><a th:if="${session.alumnosession != null}" href="/certificado/generarCertificado">Generar certificado</a></li>
 		<li><a th:if="${session.profesorsession != null}" th:href="@{/materia/crearMateria}">Crear materia</a></li>
+		<li><a th:if="${session.adminsession != null}" th:href="@{/codigo/crearCodigo}">Crear Código de Profesor</a></li>
 		<li><a class="" href="/login?logout=true">Salir</a></li>
 	</ul>
-	<p th:if="${error != null}" th:text="${error}" style="color: red;" align="center"></p>
-	<p th:if="${exito != null}" th:text="${exito}" style="color: green" align="center"></p>
+	<p th:if="${error != null}" th:text="${error}" style="background-color: white; color: red;" align="center"></p>
+	<p th:if="${exito != null}" th:text="${exito}" style="background-color: white; color: green" align="center"></p>
 	<div class="row">
 		<div class="card text-center text-white bg-dark mb-3"
 			style="width: 18rem;">

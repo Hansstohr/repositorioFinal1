@@ -15,17 +15,19 @@ import org.hibernate.annotations.GenericGenerator;
 public class CodigoProfesor {
 
     @Id
-    
-    private String codigo = String.format("%040d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
+    private String codigo;
 
     private Boolean alta;
 
-    public CodigoProfesor(Boolean alta) {
+    public CodigoProfesor(String codigo, Boolean alta) {
+        this.codigo = codigo;
         this.alta = alta;
     }
 
+    
     public CodigoProfesor() {
     }
+    
 
     public String getCodigo() {
         return codigo;

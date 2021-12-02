@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalificAR - Validar Profesor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato:wght@100;300;400;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/estilos.css">
+<link rel="icon" href="/img/favicon.ico">
+</head>
+
+<body bgcolor="#E5E9F2" align="center" style="filter:alpha(opacity=50); opacity:0.8;">
+	<section>
+		<a class="logo2" href="/inicio">
+			<img align="center" class="logo2" src="/img/Logo.png">
+		</a>
+		<h1 align="center" style="color: #47525E;">Cargar Código de Profesor</h1>
+		<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
+		<p align="center" style="color: #8190A5;">Ingrese un código</p>
+		<form th:action="@{/codigo/cargarCodigo}" method="POST">
+			<div class="col-lg-6">
+				<div class="form-label">
+					<label id="clavecss">Código</label> <input type="password"
+						name="codigo" class="form-control" placeholder="Codigo"
+						th:value="${codigo}">
+				</div>
+				<div class="d-flex justify-content-center">
+					<button type="submit" class="button2">Ingresar</button>
+				</div>
+			</div>
+		</form>
+</body>
+</html>
